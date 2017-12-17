@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccentRipple</item>
+    </style>
+
+    <style name="AppBarTheme" parent="AppTheme">
+        <item name="actionMenuTextColor">@color/textWhitePrimary</item>
+        <item name="android:textColorPrimary">@color/textWhitePrimary</item>
+        <item name="android:textColorSecondary">@color/textWhitePrimary</item>
+    </style>
+
+
+    <!-- Text -->
+    <style name="Title">
+        <item name="android:lineSpacingExtra">2sp</item>
+        <item name="android:textSize">@dimen/text_size_tall</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/oswald</item>
+    </style>
+
+    <style name="Title.Accent" parent="Title">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="Title.Black" parent="Title">
+        <item name="android:textColor">@color/textBlackPrimary</item>
+    </style>
+
+    <style name="Title.White" parent="Title">
+        <item name="android:textColor">@color/textWhitePrimary</item>
+    </style>
+
+    <style name="SubTitle">
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/oswald</item>
+    </style>
+
+    <style name="SubTitle.Accent" parent="SubTitle">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="SubTitle.Black" parent="SubTitle">
+        <item name="android:textColor">@color/textBlackPrimary</item>
+    </style>
+
+    <style name="SubTitle.White" parent="SubTitle">
+        <item name="android:textColor">@color/textWhitePrimary</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textSize">@dimen/text_size_regular</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Text.Accent" parent="Text">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="Text.Black" parent="Text">
+        <item name="android:textColor">@color/textBlackPrimary</item>
+    </style>
+
+    <style name="Text.Black.Secondary" parent="Text">
+        <item name="android:textColor">@color/textBlackSecondary</item>
+    </style>
+
+    <style name="Text.White" parent="Text">
+        <item name="android:textColor">@color/textWhitePrimary</item>
+    </style>
+
+    <style name="TextWithIcon" parent="Text.Black">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:drawablePadding">@dimen/card_horizontal_padding</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divider</item>
+    </style>
+</resources>

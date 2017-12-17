@@ -1,0 +1,30 @@
+<resources>
+    <dimen name="margin">16dp</dimen>
+    <dimen name="horizontal_margin">@dimen/margin</dimen>
+    <dimen name="vertical_margin">@dimen/margin</dimen>
+
+    <dimen name="padding">8dp</dimen>
+    <dimen name="horizontal_padding">@dimen/padding</dimen>
+    <dimen name="vertical_padding">@dimen/padding</dimen>
+
+    <dimen name="card_margin">8dp</dimen>
+    <dimen name="card_margin_half">4dp</dimen>
+    <dimen name="card_horizontal_margin">@dimen/card_margin</dimen>
+    <dimen name="card_vertical_margin">@dimen/card_margin</dimen>
+
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="card_horizontal_padding">@dimen/card_padding</dimen>
+    <dimen name="card_vertical_padding">@dimen/card_padding</dimen>
+
+    <dimen name="zero">0dp</dimen> <!-- For Databinding -->
+
+    <dimen name="compound_drawables_size">24dp</dimen>
+    <dimen name="normal_fab_size">56dp</dimen>
+
+    <!-- Text -->
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_regular">14sp</dimen>
+    <dimen name="text_size_tall">20sp</dimen>
+    <dimen name="text_size_very_tall">28sp</dimen>
+
+</resources>
