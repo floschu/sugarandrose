@@ -2,4 +2,10 @@
 <resources>
     <string name="name">sugar&amp;rose</string>
     <string name="cont">Weiterlesen</string>
+
+    <string name="menu_bnv_new">New</string>
+    <string name="menu_bnv_categories">Categories</string>
+    <string name="menu_bnv_test">Test</string>
+
+    <string name="notification_channel_fb_name">Push Nachrichten</string>
 </resources>

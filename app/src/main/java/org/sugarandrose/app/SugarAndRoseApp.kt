@@ -76,7 +76,6 @@ class SugarAndRoseApp : Application() {
         )
     }
 
-
     companion object {
 
         lateinit var instance: SugarAndRoseApp

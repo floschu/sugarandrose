@@ -6,10 +6,16 @@ import org.sugarandrose.app.ui.main.MainViewModel
 
 import dagger.Binds
 import dagger.Module
-import org.sugarandrose.app.ui.main.recyclerview.PostItemMvvm
-import org.sugarandrose.app.ui.main.recyclerview.PostItemViewModel
+import org.sugarandrose.app.ui.categories.CategoriesMvvm
+import org.sugarandrose.app.ui.categories.CategoriesViewModel
+import org.sugarandrose.app.ui.news.recyclerview.PostItemMvvm
+import org.sugarandrose.app.ui.news.recyclerview.PostItemViewModel
+import org.sugarandrose.app.ui.news.NewMvvm
+import org.sugarandrose.app.ui.news.NewViewModel
 import org.sugarandrose.app.ui.post.PostMvvm
 import org.sugarandrose.app.ui.post.PostViewModel
+import org.sugarandrose.app.ui.test.TestMvvm
+import org.sugarandrose.app.ui.test.TestViewModel
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -35,5 +41,14 @@ abstract class ViewModelModule {
 
     @Binds
     internal abstract fun bindPostViewModel(viewModel: PostViewModel): PostMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindNewViewModel(viewModel: NewViewModel): NewMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindTestViewModel(viewModel: TestViewModel): TestMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindCategoriesViewModel(viewModel: CategoriesViewModel): CategoriesMvvm.ViewModel
 
 }

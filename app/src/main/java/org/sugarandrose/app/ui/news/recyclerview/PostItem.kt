@@ -1,4 +1,4 @@
-package org.sugarandrose.app.ui.main.recyclerview
+package org.sugarandrose.app.ui.news.recyclerview
 
 import android.view.View
 import org.sugarandrose.app.data.model.LocalPost
@@ -10,7 +10,6 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.post.PostActivity
-import org.sugarandrose.app.util.WebManager
 import javax.inject.Inject
 
 /**
@@ -40,7 +39,7 @@ class PostItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemPostBindin
 
 @PerViewHolder
 class PostItemViewModel @Inject
-constructor(private val webManager: WebManager) : BaseViewModel<PostItemMvvm.View>(), PostItemMvvm.ViewModel {
+constructor(private val navigator: Navigator) : BaseViewModel<PostItemMvvm.View>(), PostItemMvvm.ViewModel {
     override lateinit var post: LocalPost
 
     override fun update(post: LocalPost) {
@@ -48,5 +47,5 @@ constructor(private val webManager: WebManager) : BaseViewModel<PostItemMvvm.Vie
         notifyChange()
     }
 
-    override fun onClick() = webManager.open(post.url)
+    override fun onClick() = navigator.startActivity(PostActivity::class.java, post)
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bnv_new"
+        android:icon="@drawable/ic_bnv_new"
+        android:title="@string/menu_bnv_new"/>
+
+    <item
+        android:id="@+id/bnv_categories"
+        android:icon="@drawable/ic_bnv_categories"
+        android:title="@string/menu_bnv_categories"/>
+
+    <item
+        android:id="@+id/bnv_test"
+        android:icon="@drawable/ic_bnv_test"
+        android:title="@string/menu_bnv_test"/>
+</menu>

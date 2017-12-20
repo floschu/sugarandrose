@@ -10,67 +10,72 @@
             type="org.sugarandrose.app.ui.main.MainMvvm.ViewModel" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinatorLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:theme="@style/AppBarTheme">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <android.support.design.widget.CollapsingToolbarLayout
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentScrim="@color/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                app:theme="@style/AppBarTheme">
 
-                <ImageView
+                <android.support.design.widget.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/header"
-                    app:layout_collapseMode="parallax"
-                    app:layout_collapseParallaxMultiplier="0.5" />
+                    app:contentScrim="@color/colorPrimary"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin">
-
-                    <TextView
-                        android:id="@+id/toolbar_title"
-                        style="@style/Title.White"
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lines="1"
-                        android:maxLines="1"
-                        tools:text="@string/name" />
-                </android.support.v7.widget.Toolbar>
-            </android.support.design.widget.CollapsingToolbarLayout>
-        </android.support.design.widget.AppBarLayout>
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/header"
+                        app:layout_collapseMode="parallax"
+                        app:layout_collapseParallaxMultiplier="0.5" />
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:foreground="?android:windowContentOverlay"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:onRefresh="@{vm::onRefresh}"
-            app:refreshing="@{vm.refreshing}">
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        app:layout_collapseMode="pin">
 
-            <android.support.v7.widget.RecyclerView
+                        <TextView
+                            android:id="@+id/toolbar_title"
+                            style="@style/Title.White"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lines="1"
+                            android:maxLines="1"
+                            tools:text="@string/name" />
+                    </android.support.v7.widget.Toolbar>
+                </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <FrameLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:padding="@dimen/card_margin_half"
-                android:scrollbars="vertical"
-                app:adapter="@{vm.adapter}"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </android.support.design.widget.CoordinatorLayout>
+                android:layout_weight="1"
+                android:foreground="?android:windowContentOverlay"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.design.widget.CoordinatorLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="?attr/colorPrimary"
+            app:itemIconTint="@drawable/bnv_item_color"
+            app:itemTextColor="@drawable/bnv_item_color"
+            app:menu="@menu/menu_bnv" />
+    </LinearLayout>
 </layout>

@@ -20,6 +20,7 @@ class LocalPost(val id: Int,
                 val excerpt: String,
                 val image: String
 ) : PaperParcelable {
+    constructor() : this(0, ZonedDateTime.now(), "", "", "", "", "")
     constructor(post: Post, media: Media) : this(post.id, post.date_gmt, post.title.rendered, post.link, post.content.rendered, post.excerpt.rendered, media.source_url)
 
     companion object {

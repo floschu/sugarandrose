@@ -30,7 +30,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import android.webkit.WebView
 
 
-@BindingMethods(BindingMethod(type = SwipeRefreshLayout::class, attribute = "bind:onRefresh", method = "setOnRefreshListener"))
+@BindingMethods(BindingMethod(type = SwipeRefreshLayout::class, attribute = "app:onRefresh", method = "setOnRefreshListener"))
 object BindingAdapters {
 
     @BindingAdapter("android:visibility")

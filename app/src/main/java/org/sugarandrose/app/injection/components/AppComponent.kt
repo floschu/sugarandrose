@@ -14,6 +14,7 @@ import org.sugarandrose.app.ui.base.feedback.Toaster
 import dagger.Component
 import io.realm.Realm
 import okhttp3.OkHttpClient
+import org.sugarandrose.app.util.NotificationsManager
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -54,4 +55,6 @@ interface AppComponentProvides {
     fun okHttpClient(): OkHttpClient
 
     fun toaster(): Toaster
+
+    fun notificationManager(): NotificationsManager
 }

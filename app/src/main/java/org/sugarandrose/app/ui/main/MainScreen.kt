@@ -14,29 +14,19 @@
 
 package org.sugarandrose.app.ui.main
 
-import android.content.Intent
-import android.databinding.Bindable
 import android.net.Uri
 import android.os.Bundle
-import io.reactivex.android.schedulers.AndroidSchedulers
-import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.ActivityMainBinding
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import timber.log.Timber
 import javax.inject.Inject
 import android.support.design.widget.AppBarLayout
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import org.sugarandrose.app.ui.main.recyclerview.PostAdapter
 import org.sugarandrose.app.ui.post.PostActivity
-import org.sugarandrose.app.util.WebManager
 
 
 interface MainMvvm {
@@ -45,18 +35,12 @@ interface MainMvvm {
 
     interface ViewModel : MvvmViewModel<View> {
         fun openArticle(uri: Uri)
-
-        val adapter: PostAdapter
-
-        @get:Bindable
-        val refreshing: Boolean
-
-        fun onRefresh()
     }
 }
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), MainMvvm.View {
+    private lateinit var adapter: MainAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +49,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
         setAndBindContentView(savedInstanceState, R.layout.activity_main)
 
         setSupportActionBar(binding.toolbar)
+
+        MainAdapter.disableShiftMode(binding.bottomNavigationView)
+        adapter = MainAdapter(supportFragmentManager, R.id.container, R.id.bnv_new, savedInstanceState).apply {
+            setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+            attachTo(binding.bottomNavigationView)
+        }
 
         binding.appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             internal var isShowing = false
@@ -87,10 +77,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
         intent.data?.let { viewModel.openArticle(it) }
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.onRefresh()
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        adapter.onSaveInstanceState(outState)
     }
 
 }
@@ -98,22 +87,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 
 @PerActivity
 class MainViewModel @Inject
-constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter, private val navigator: Navigator) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
-
-    override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
+constructor(private val navigator: Navigator) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
 
     override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, uri)
-
-    override fun onRefresh() {
-        refreshing = true
-        api.getPosts().flattenAsFlowable { it }
-                .flatMapSingle { post -> api.getMedia(post.featured_media).map { LocalPost(post, it) } }
-                .map {
-                    it.excerpt
-                    it
-                }
-                .toList()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ adapter.data = it.sortedByDescending { it.date }; refreshing = false }, Timber::e).let { disposable.add(it) }
-    }
 }
