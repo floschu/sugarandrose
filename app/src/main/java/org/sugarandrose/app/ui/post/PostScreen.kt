@@ -1,7 +1,9 @@
 package org.sugarandrose.app.ui.post
 
 import android.databinding.Bindable
+import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.MenuItem
 import android.webkit.*
 import org.sugarandrose.app.BR
@@ -50,7 +52,13 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.post = intent.getParcelableExtra(Navigator.EXTRA_ARG)
+        val parcelable = intent.getParcelableExtra<Parcelable>(Navigator.EXTRA_ARG)
+        when (parcelable) {
+            is Uri -> {
+                //todo reload data
+            }
+            is LocalPost -> viewModel.post = parcelable
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

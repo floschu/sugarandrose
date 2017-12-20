@@ -64,8 +64,8 @@
 
 
 # Change this to your app's final package name
--keep class com.tailoredapps.template.** { *; }
--dontwarn com.tailoredapps.template.**
+-keep class org.sugarandrose.app.** { *; }
+-dontwarn org.sugarandrose.app.**
 -keep class android.support.design.widget.AppBarLayout$Behavior { *; }
 
 # Okio
@@ -156,3 +156,24 @@
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
+
+# ThreeTen
+
+-dontwarn sun.util.calendar.*
+
+
+# Picasso
+
+-dontwarn com.squareup.okhttp.**
+
+
+# OkHttp3 specific rules
+
+-dontwarn okhttp3.**
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.* { *; }
+
+
+# Android Annotations
+
+-dontwarn org.springframework.**

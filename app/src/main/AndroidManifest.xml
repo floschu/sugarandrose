@@ -12,13 +12,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.main.MainActivity">
+        <activity
+            android:name=".ui.main.IntentForwardingActivity"
+            android:launchMode="singleTask">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="sugarandrose.org"
+                    android:scheme="https" />
+            </intent-filter>
         </activity>
 
+        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.post.PostActivity" />
 
         <meta-data

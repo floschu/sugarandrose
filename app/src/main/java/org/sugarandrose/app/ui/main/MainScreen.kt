@@ -14,7 +14,9 @@
 
 package org.sugarandrose.app.ui.main
 
+import android.content.Intent
 import android.databinding.Bindable
+import android.net.Uri
 import android.os.Bundle
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.sugarandrose.app.BR
@@ -31,7 +33,10 @@ import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
 import javax.inject.Inject
 import android.support.design.widget.AppBarLayout
+import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.main.recyclerview.PostAdapter
+import org.sugarandrose.app.ui.post.PostActivity
+import org.sugarandrose.app.util.WebManager
 
 
 interface MainMvvm {
@@ -39,18 +44,19 @@ interface MainMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        fun onRefresh()
+        fun openArticle(uri: Uri)
 
         val adapter: PostAdapter
 
         @get:Bindable
         val refreshing: Boolean
+
+        fun onRefresh()
     }
 }
 
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), MainMvvm.View {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +67,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
         setSupportActionBar(binding.toolbar)
 
         binding.appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
-            internal var isShow = false
+            internal var isShowing = false
             internal var scrollRange = -1
 
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
@@ -70,13 +76,21 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
                 }
                 if (scrollRange + verticalOffset == 0) {
                     binding.toolbarTitle.text = string(R.string.name)
-                    isShow = true
-                } else if (isShow) {
+                    isShowing = true
+                } else if (isShowing) {
                     binding.toolbarTitle.text = ""
-                    isShow = false
+                    isShowing = false
                 }
             }
         })
+
+        intent.data?.let { viewModel.openArticle(it) }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onRefresh()
     }
 
 }
@@ -84,19 +98,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 
 @PerActivity
 class MainViewModel @Inject
-constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
+constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter, private val navigator: Navigator) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
 
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
-    override fun attachView(view: MainMvvm.View, savedInstanceState: Bundle?) {
-        super.attachView(view, savedInstanceState)
-        onRefresh()
-    }
+    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, uri)
 
     override fun onRefresh() {
         refreshing = true
         api.getPosts().flattenAsFlowable { it }
                 .flatMapSingle { post -> api.getMedia(post.featured_media).map { LocalPost(post, it) } }
+                .map {
+                    it.excerpt
+                    it
+                }
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ adapter.data = it.sortedByDescending { it.date }; refreshing = false }, Timber::e).let { disposable.add(it) }

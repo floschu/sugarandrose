@@ -4,16 +4,23 @@ apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     signingConfigs {
-        release {
-            keyAlias 'todo'
-            keyPassword 'todo'
-            storeFile file('../keystore.jks')
-            storePassword 'todo'
+        if (keystorePropertiesFile.exists()) {
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
         }
+
     }
     defaultConfig {
         applicationId "org.sugarandrose.app"
@@ -27,7 +34,6 @@ android {
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles 'proguard-rules.pro'
@@ -35,13 +41,17 @@ android {
     }
     flavorDimensions "backend"
     productFlavors {
-        devBackend {
+        dev {
+            signingConfig signingConfigs.debug
             applicationIdSuffix ".dev"
             resValue "string", "app_name", "sugar&rose DEV"
             buildConfigField "String", "BASE_URL", "\"https://sugarandrose.org/wp-json/wp/v2/\""
             dimension "backend"
         }
-        productionBackend {
+        prod {
+            if (keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            }
             resValue "string", "app_name", "sugar&rose"
             buildConfigField "String", "BASE_URL", "\"https://sugarandrose.org/wp-json/wp/v2/\""
             dimension "backend"

@@ -9,7 +9,7 @@ import paperparcel.PaperParcelable
  */
 
 @PaperParcel
-class DisplayText(val rendered: String) : PaperParcelable {
+class DisplayText(var rendered: String) : PaperParcelable {
     companion object {
         val CREATOR = PaperParcelDisplayText.CREATOR
     }
