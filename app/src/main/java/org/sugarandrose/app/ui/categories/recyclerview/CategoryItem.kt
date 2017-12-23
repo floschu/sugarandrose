@@ -1,17 +1,16 @@
-package org.sugarandrose.app.ui.news.recyclerview
+package org.sugarandrose.app.ui.categories.recyclerview
 
 import android.view.View
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.remote.Category
+import org.sugarandrose.app.databinding.ItemCategoryBinding
 import org.sugarandrose.app.databinding.ItemPostBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
-import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.BaseFragmentViewHolder
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.post.PostActivity
 import javax.inject.Inject
 
 /**
@@ -19,19 +18,18 @@ import javax.inject.Inject
  * florian.schuster@tailored-apps.com
  */
 
-
-interface PostItemMvvm {
+interface CategoryItemMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        fun update(post: LocalPost)
+        fun update(category: Category)
         fun onClick()
 
-        var post: LocalPost
+        var category: Category
     }
 }
 
-class PostItemViewHolder(itemView: View) : BaseFragmentViewHolder<ItemPostBinding, PostItemMvvm.ViewModel>(itemView), PostItemMvvm.View {
+class CategoryItemViewHolder(itemView: View) : BaseFragmentViewHolder<ItemCategoryBinding, CategoryItemMvvm.ViewModel>(itemView), CategoryItemMvvm.View {
     override val fragmentContainerId get() = R.id.container
 
     init {
@@ -41,14 +39,16 @@ class PostItemViewHolder(itemView: View) : BaseFragmentViewHolder<ItemPostBindin
 }
 
 @PerViewHolder
-class PostItemViewModel @Inject
-constructor(private val navigator: Navigator) : BaseViewModel<PostItemMvvm.View>(), PostItemMvvm.ViewModel {
-    override lateinit var post: LocalPost
+class CategoryItemViewModel @Inject
+constructor(private val navigator: Navigator) : BaseViewModel<CategoryItemMvvm.View>(), CategoryItemMvvm.ViewModel {
+    override lateinit var category: Category
 
-    override fun update(post: LocalPost) {
-        this.post = post
+    override fun update(category: Category) {
+        this.category = category
         notifyChange()
     }
 
-    override fun onClick() = navigator.startActivity(PostActivity::class.java, post)
+    override fun onClick() {
+//        navigator.startActivity(::class.java, category)
+    }
 }

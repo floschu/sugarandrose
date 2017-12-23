@@ -18,10 +18,11 @@ class LocalPost(val id: Int,
                 val url: String,
                 val content: String,
                 val excerpt: String,
-                val image: String
+                val image: String?
 ) : PaperParcelable {
-    constructor() : this(0, ZonedDateTime.now(), "", "", "", "", "")
-    constructor(post: Post, media: Media) : this(post.id, post.date_gmt, post.title.rendered, post.link, post.content.rendered, post.excerpt.rendered, media.source_url)
+    constructor() : this(0, ZonedDateTime.now(), "", "", "", "", null)
+    constructor(post: Post, media: Media) : this(post.id, post.date, post.title.rendered, post.link, post.content.rendered, post.excerpt.rendered, media.source_url)
+    constructor(post: Post) : this(post.id, post.date, post.title.rendered, post.link, post.content.rendered, post.excerpt.rendered, null)
 
     companion object {
         @JvmField

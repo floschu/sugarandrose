@@ -12,6 +12,7 @@ import timber.log.Timber
 import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
+import org.sugarandrose.app.ui.calendar.CalendarFragment
 import org.sugarandrose.app.ui.categories.CategoriesFragment
 import org.sugarandrose.app.ui.test.TestFragment
 
@@ -27,6 +28,7 @@ class MainAdapter(fragmentManager: FragmentManager, @IdRes containerId: Int, @Id
     override fun getFragment(@IdRes menuItemId: Int): Fragment = when (menuItemId) {
         R.id.bnv_new -> NewFragment()
         R.id.bnv_categories -> CategoriesFragment()
+        R.id.bnv_calendar -> CalendarFragment()
         else -> TestFragment()
     }
 

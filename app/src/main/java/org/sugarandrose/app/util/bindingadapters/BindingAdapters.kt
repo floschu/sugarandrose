@@ -28,9 +28,11 @@ import com.squareup.picasso.Picasso
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import android.webkit.WebView
+import android.widget.CalendarView
+import org.threeten.bp.LocalDate
 
 
-@BindingMethods(BindingMethod(type = SwipeRefreshLayout::class, attribute = "app:onRefresh", method = "setOnRefreshListener"))
+@BindingMethods(BindingMethod(type = SwipeRefreshLayout::class, attribute = "onRefresh", method = "setOnRefreshListener"))
 object BindingAdapters {
 
     @BindingAdapter("android:visibility")

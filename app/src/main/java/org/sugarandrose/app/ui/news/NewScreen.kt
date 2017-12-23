@@ -2,16 +2,17 @@ package org.sugarandrose.app.ui.news
 
 import android.databinding.Bindable
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
+import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
 import org.sugarandrose.app.databinding.FragmentNewBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
@@ -33,14 +34,12 @@ interface NewMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        var currentPage: Int
-
         val adapter: PostAdapter
         @get:Bindable
         var refreshing: Boolean
 
         fun onRefresh()
-        fun loadNextPage(doneCallback: (() -> Unit)? = null)
+        fun loadNextPage()
     }
 }
 
@@ -60,13 +59,9 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.itemAnimator = SlideInUpAnimator()
-        binding.recyclerView.addOnScrollListener(object : PaginationScrollListener(binding.recyclerView.layoutManager as LinearLayoutManager) {
-            override fun loadMoreItems() {
-                viewModel.adapter.isLoading = true
-                viewModel.loadNextPage { viewModel.adapter.isLoading = false }
-            }
-
-            override fun isLoading() = viewModel.adapter.isLoading
+        binding.recyclerView.addOnScrollListener(object : PaginationScrollListener() {
+            override fun loadMoreItems() = viewModel.loadNextPage()
+            override fun isLoading() = viewModel.refreshing
         })
     }
 
@@ -82,20 +77,31 @@ class NewViewModel @Inject
 constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
-    override var currentPage = 1
+    private var currentPage = 1
+    private var maximumNumberOfPages = 100
 
     override fun onRefresh() {
         adapter.clear()
         currentPage = 1
-        refreshing = true
-        loadNextPage { refreshing = false }
+        api.getNumberOfPages()
+                .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfPages = it } }
+                .toCompletable()
+                .andThen(loadPage())
+                .subscribe().let { disposable.add(it) }
     }
 
-    override fun loadNextPage(doneCallback: (() -> Unit)?) {
-        currentPage += 1
-        api.getPosts(currentPage).flattenAsFlowable { it }
-                .flatMapSingle { post -> api.getMedia(post.featured_media).map { LocalPost(post, it) } }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ adapter.add(it) }, { Timber.e(it); doneCallback?.invoke() }, { doneCallback?.invoke() }).let { disposable.add(it) }
+    override fun loadNextPage() {
+        if (currentPage >= maximumNumberOfPages) return
+        currentPage++
+        loadPage().subscribe().let { disposable.add(it) }
     }
+
+    private fun loadPage() = api.getPosts(currentPage)
+            .flattenAsFlowable { it }
+            .flatMapSingle { post -> if (post.featured_media != 0) api.getMedia(post.featured_media).map { LocalPost(post, it) } else Single.just(LocalPost(post)) }
+            .toList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { refreshing = true }
+            .doOnSuccess { adapter.add(it.sortedByDescending { it.date }); refreshing = false }
+            .doOnError { Timber.e(it); refreshing = false }
 }

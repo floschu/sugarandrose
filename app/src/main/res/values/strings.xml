@@ -5,7 +5,10 @@
 
     <string name="menu_bnv_new">New</string>
     <string name="menu_bnv_categories">Categories</string>
+    <string name="menu_bnv_calendar">Calendar</string>
     <string name="menu_bnv_test">Test</string>
+
+    <string name="categories_number">%d Posts</string>
 
     <string name="notification_channel_fb_name">Push Nachrichten</string>
 </resources>

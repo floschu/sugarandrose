@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="org.sugarandrose.app.ui.categories.CategoriesMvvm.ViewModel" />
+            type="org.sugarandrose.app.ui.calendar.CalendarMvvm.ViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -21,14 +21,12 @@
             app:onRefresh="@{vm::onRefresh}"
             app:refreshing="@{vm.refreshing}">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
+            <CalendarView
+                android:id="@+id/calendar_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                app:adapter="@{vm.adapter}"
-                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_category" />
+                android:layout_height="wrap_content"
+                android:firstDayOfWeek="2"
+                android:date="@={vm.selectedDate}" />
         </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

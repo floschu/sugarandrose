@@ -11,6 +11,11 @@
         android:title="@string/menu_bnv_categories"/>
 
     <item
+        android:id="@+id/bnv_calendar"
+        android:icon="@drawable/ic_bnv_calendar"
+        android:title="@string/menu_bnv_calendar"/>
+
+    <item
         android:id="@+id/bnv_test"
         android:icon="@drawable/ic_bnv_test"
         android:title="@string/menu_bnv_test"/>

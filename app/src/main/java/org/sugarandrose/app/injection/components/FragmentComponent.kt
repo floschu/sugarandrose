@@ -5,6 +5,7 @@ import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerFragment
 
 import dagger.Component
+import org.sugarandrose.app.ui.calendar.CalendarFragment
 import org.sugarandrose.app.ui.categories.CategoriesFragment
 import org.sugarandrose.app.ui.news.NewFragment
 import org.sugarandrose.app.ui.test.TestFragment
@@ -32,8 +33,9 @@ interface FragmentComponent : FragmentComponentProvides {
     // create inject methods for your Fragments here
 
     fun inject(fragment: NewFragment)
-    fun inject(fragment: TestFragment)
     fun inject(fragment: CategoriesFragment)
+    fun inject(fragment: CalendarFragment)
+    fun inject(fragment: TestFragment)
 }
 
 interface FragmentComponentProvides : ActivityComponentProvides {
