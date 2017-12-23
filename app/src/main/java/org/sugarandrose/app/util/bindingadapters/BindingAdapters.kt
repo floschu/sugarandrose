@@ -92,4 +92,10 @@ object BindingAdapters {
     fun loadHtml(view: WebView, html: String) {
         view.loadData(html, "text/html", "UTF-8")
     }
+
+    @BindingAdapter("onDateSelect")
+    @JvmStatic
+    fun onDateSelect(view: CalendarView, callback: (LocalDate) -> Unit) {
+        view.setOnDateChangeListener { _, year, month, dayOfMonth -> callback.invoke(LocalDate.of(year, month + 1, dayOfMonth)) }
+    }
 }
