@@ -34,11 +34,11 @@ interface NewMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        val adapter: PostAdapter
         @get:Bindable
         var refreshing: Boolean
-
         fun onRefresh()
+
+        val adapter: PostAdapter
         fun loadNextPage()
     }
 }

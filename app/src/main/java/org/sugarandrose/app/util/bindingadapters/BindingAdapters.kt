@@ -75,22 +75,10 @@ object BindingAdapters {
         else onImageLoadedRunnable?.run()
     }
 
-    @BindingAdapter("webchromeclient")
-    @JvmStatic
-    fun setWebViewClient(view: WebView, client: WebChromeClient) {
-        view.webChromeClient = client
-    }
-
     @BindingAdapter("loadUrl")
     @JvmStatic
     fun loadUrl(view: WebView, url: String) {
         view.loadUrl(url)
-    }
-
-    @BindingAdapter("loadHtml")
-    @JvmStatic
-    fun loadHtml(view: WebView, html: String) {
-        view.loadData(html, "text/html", "UTF-8")
     }
 
     @BindingAdapter("onDateSelect")

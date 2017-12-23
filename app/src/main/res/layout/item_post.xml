@@ -27,7 +27,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/card_padding">
+                android:paddingEnd="@dimen/card_horizontal_padding"
+                android:paddingStart="@dimen/card_horizontal_padding"
+                android:paddingTop="@dimen/card_vertical_padding">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"

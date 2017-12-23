@@ -14,6 +14,8 @@
 
 package org.sugarandrose.app.ui.main
 
+import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import org.sugarandrose.app.R
@@ -77,17 +79,24 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
         intent.data?.let { viewModel.openArticle(it) }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.data?.let { viewModel.openArticle(it) }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         adapter.onSaveInstanceState(outState)
     }
-
 }
 
 
 @PerActivity
 class MainViewModel @Inject
-constructor(private val navigator: Navigator) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
+constructor(private val navigator: Navigator, private val resources: Resources) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
 
-    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, uri)
+    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, {
+        it.putExtra(PostActivity.EXTRA_TITLE, resources.getString(R.string.name))
+        it.putExtra(PostActivity.EXTRA_URL, uri.toString())
+    })
 }

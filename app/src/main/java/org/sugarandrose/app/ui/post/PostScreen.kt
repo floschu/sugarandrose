@@ -1,5 +1,6 @@
 package org.sugarandrose.app.ui.post
 
+import android.annotation.SuppressLint
 import android.databinding.Bindable
 import android.net.Uri
 import android.os.Bundle
@@ -18,6 +19,12 @@ import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import javax.inject.Inject
+import android.webkit.WebView
+import android.content.Intent
+import android.webkit.WebResourceRequest
+import android.os.Build
+import android.annotation.TargetApi
+import android.webkit.WebViewClient
 
 
 /**
@@ -30,15 +37,26 @@ interface PostMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
+        @get:Bindable
+        var refreshing: Boolean
+
+        fun onRefresh()
 
         @get:Bindable
-        var post: LocalPost?
-        val client: WebChromeClient
+        var title: String?
+        @get:Bindable
+        var url: String?
     }
 }
 
 
 class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), PostMvvm.View {
+    @Inject lateinit var navigator: Navigator
+
+    companion object {
+        val EXTRA_TITLE = "org.sugarandrose.app.ui.post.PostActivity.title"
+        val EXTRA_URL = "org.sugarandrose.app.ui.post.PostActivity.url"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,13 +70,10 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        val parcelable = intent.getParcelableExtra<Parcelable>(Navigator.EXTRA_ARG)
-        when (parcelable) {
-            is Uri -> {
-                //todo reload data
-            }
-            is LocalPost -> viewModel.post = parcelable
-        }
+        viewModel.title = intent.getStringExtra(EXTRA_TITLE)
+        viewModel.url = intent.getStringExtra(EXTRA_URL)
+
+        initWebView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,13 +87,61 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         if (binding.webview.canGoBack()) binding.webview.goBack()
         else super.onBackPressed()
     }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun initWebView() {
+        binding.webview.webChromeClient = WebChromeClient()
+        binding.webview.webViewClient = AppWebViewClient()
+        binding.webview.settings.javaScriptEnabled = true
+    }
+
+    private inner class AppWebViewClient : WebViewClient() {
+
+        @Suppress("OverridingDeprecatedMember")
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            val uri = Uri.parse(url)
+            val handled = handleUri(uri)
+            if (!handled) view.loadUrl(url)
+            return true
+        }
+
+        @TargetApi(Build.VERSION_CODES.N)
+        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+            val uri = request.url
+            val handled = handleUri(uri)
+            if (!handled) view.loadUrl(uri.toString())
+            return true
+        }
+
+        private fun handleUri(uri: Uri): Boolean = when (uri.scheme) {
+            "mailto" -> {
+                navigator.startActivity(Intent.ACTION_SENDTO, uri)
+                true
+            }
+            "tel" -> {
+                navigator.startActivity(Intent.ACTION_DIAL, uri)
+                true
+            }
+            else -> false
+        }
+
+        override fun onPageFinished(view: WebView, url: String) {
+            viewModel.refreshing = false
+            super.onPageFinished(view, url)
+        }
+    }
 }
 
 
 @PerActivity
 class PostViewModel @Inject
 constructor() : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
+    override var refreshing: Boolean by NotifyPropertyChangedDelegate(true, BR.refreshing)
+    override var title: String? by NotifyPropertyChangedDelegate(null, BR.title)
+    override var url: String? by NotifyPropertyChangedDelegate(null, BR.url)
 
-    override var post: LocalPost? by NotifyPropertyChangedDelegate(null, BR.post)
-    override val client = object : WebChromeClient() {}
+    override fun onRefresh() {
+        refreshing = true
+        notifyPropertyChanged(BR.url)
+    }
 }

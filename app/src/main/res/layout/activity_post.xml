@@ -18,21 +18,28 @@
         <include
             android:id="@+id/include_toolbar"
             layout="@layout/toolbar_custom_title"
-            app:title="@{vm.post.title}" />
+            app:title="@{vm.title}" />
 
-        <android.support.v4.widget.NestedScrollView
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
             android:foreground="?android:windowContentOverlay"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:onRefresh="@{vm::onRefresh}"
+            app:refreshing="@{vm.refreshing}">
 
-            <WebView
-                android:id="@+id/webview"
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:loadHtml="@{vm.post.content}"
-                app:webchromeclient="@{vm.client}" />
-        </android.support.v4.widget.NestedScrollView>
+                android:scrollbars="vertical">
+
+                <WebView
+                    android:id="@+id/webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:loadUrl="@{vm.url}" />
+            </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -23,6 +23,7 @@ import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import android.support.v4.content.ContextCompat.startActivity
 import android.content.ActivityNotFoundException
+import org.sugarandrose.app.ui.main.IntentForwardingActivity
 
 
 /**
@@ -61,20 +62,19 @@ class TestViewModel @Inject
 constructor(@ActivityContext private val context: Context, private val notificationsManager: NotificationsManager, private val navigator: Navigator) : BaseViewModel<TestMvvm.View>(), TestMvvm.ViewModel {
 
     override fun pushNotification() {
-        notificationsManager.pushRemote(Intent(SugarAndRoseApp.instance, MainActivity::class.java).apply {
+        notificationsManager.pushRemote(Intent(SugarAndRoseApp.instance, IntentForwardingActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        }, "test", "test2", "test3")
+            data = Uri.parse("https://sugarandrose.org/2017/12/24/adventskalender-tuer-24/")
+            action = Intent.ACTION_VIEW
+        }, "Adventskalender Tür 24", "vom 24.12.2017", "Neuer Post")
     }
 
     override fun onFacebookClick() {
         val facebookUrl = "https://www.facebook.com/${BuildConfig.FB_NAME}"
         val uri = try {
             val applicationInfo = context.applicationContext.packageManager.getApplicationInfo("com.facebook.katana", 0)
-            if (applicationInfo.enabled) {
-                Uri.parse("fb://page/${BuildConfig.FB_ID}")
-            } else {
-                Uri.parse(facebookUrl)
-            }
+            if (applicationInfo.enabled) Uri.parse("fb://page/${BuildConfig.FB_ID}")
+            else Uri.parse(facebookUrl)
         } catch (e: Exception) {
             Uri.parse(facebookUrl)
         }
@@ -84,9 +84,7 @@ constructor(@ActivityContext private val context: Context, private val notificat
     override fun onInstagramClick() {
         val uri = Uri.parse("http://instagram.com/_u/${BuildConfig.INSTA_NAME}")
         try {
-            navigator.startActivity(Intent(Intent.ACTION_VIEW, uri).apply {
-                `package` = "com.instagram.android"
-            })
+            navigator.startActivity(Intent(Intent.ACTION_VIEW, uri).apply { `package` = "com.instagram.android" })
         } catch (e: Exception) {
             navigator.startActivity(Intent(Intent.ACTION_VIEW, uri))
         }

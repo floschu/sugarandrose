@@ -1,11 +1,11 @@
 package org.sugarandrose.app.ui.news.recyclerview
 
+import android.net.Uri
 import android.view.View
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.databinding.ItemPostBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
-import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.BaseFragmentViewHolder
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -50,5 +50,8 @@ constructor(private val navigator: Navigator) : BaseViewModel<PostItemMvvm.View>
         notifyChange()
     }
 
-    override fun onClick() = navigator.startActivity(PostActivity::class.java, post)
+    override fun onClick() = navigator.startActivity(PostActivity::class.java, {
+        it.putExtra(PostActivity.EXTRA_TITLE, post.title)
+        it.putExtra(PostActivity.EXTRA_URL, post.url)
+    })
 }
