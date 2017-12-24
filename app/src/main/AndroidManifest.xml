@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.main.IntentForwardingActivity"
+            android:name=".ui.main.MainActivity"
             android:launchMode="singleTask">
 
             <intent-filter>
@@ -33,7 +33,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.post.PostActivity" />
 
 
