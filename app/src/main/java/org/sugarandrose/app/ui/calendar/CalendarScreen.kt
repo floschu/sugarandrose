@@ -53,6 +53,11 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding, CalendarMvvm.View
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.itemAnimator = SlideInUpAnimator()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.calendarView.setDate(System.currentTimeMillis(), false, true)
         viewModel.init()
     }
 }

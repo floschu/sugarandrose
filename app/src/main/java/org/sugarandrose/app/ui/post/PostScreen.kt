@@ -25,6 +25,7 @@ import android.webkit.WebResourceRequest
 import android.os.Build
 import android.annotation.TargetApi
 import android.webkit.WebViewClient
+import timber.log.Timber
 
 
 /**
@@ -62,6 +63,7 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         super.onCreate(savedInstanceState)
 
         activityComponent.inject(this)
+        WebView.enableSlowWholeDocumentDraw()
         setAndBindContentView(savedInstanceState, R.layout.activity_post)
 
         setSupportActionBar(binding.includeToolbar?.toolbar)
@@ -88,10 +90,20 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         else super.onBackPressed()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.webview.onResume()
+    }
+
+    override fun onPause() {
+        binding.webview.onPause()
+        super.onPause()
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        binding.webview.webChromeClient = WebChromeClient()
         binding.webview.webViewClient = AppWebViewClient()
+        binding.webview.webChromeClient = AppWebChromeClient()
         binding.webview.settings.javaScriptEnabled = true
     }
 
@@ -128,6 +140,14 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         override fun onPageFinished(view: WebView, url: String) {
             viewModel.refreshing = false
             super.onPageFinished(view, url)
+        }
+    }
+
+    private inner class AppWebChromeClient : WebChromeClient() {
+
+        override fun onReceivedTitle(view: WebView, title: String) {
+            super.onReceivedTitle(view, title)
+            if (viewModel.title == null) viewModel.title = title
         }
     }
 }

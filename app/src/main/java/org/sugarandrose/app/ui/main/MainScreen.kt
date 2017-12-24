@@ -58,7 +58,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
             attachTo(binding.bottomNavigationView)
         }
 
-        binding.appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+        binding.appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener { //todo: animate toolbartitle out left and in right or something
             internal var isShowing = false
             internal var scrollRange = -1
 
@@ -93,10 +93,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 
 @PerActivity
 class MainViewModel @Inject
-constructor(private val navigator: Navigator, private val resources: Resources) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
+constructor(private val navigator: Navigator) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
 
-    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, {
-        it.putExtra(PostActivity.EXTRA_TITLE, resources.getString(R.string.name))
-        it.putExtra(PostActivity.EXTRA_URL, uri.toString())
-    })
+    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, { it.putExtra(PostActivity.EXTRA_URL, uri.toString()) })
 }
