@@ -23,6 +23,9 @@ interface SugarAndRoseApi {
     fun getPosts(@Query("page") page: Int): Single<List<Post>>
 
     @GET("posts/?order=desc&?orderby=date_gmt")
+    fun getPosts(@Query("search") query: String): Single<List<Post>>
+
+    @GET("posts/?order=desc&?orderby=date_gmt")
     fun getPostsForDay(@Query("after") after: String, @Query("before") before: String): Single<List<Post>>
 
     @GET("media/{id}")

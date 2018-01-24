@@ -1,9 +1,9 @@
 package org.sugarandrose.app.injection.modules
 
-import org.sugarandrose.app.data.local.MyRepo
-import org.sugarandrose.app.data.local.MyRepoImpl
+import org.sugarandrose.app.data.local.FavoritedRepo
+import org.sugarandrose.app.data.local.impl.RealmFavoritedRepo
 import org.sugarandrose.app.data.local.PrefRepo
-import org.sugarandrose.app.data.local.SharedPrefRepo
+import org.sugarandrose.app.data.local.impl.SharedPrefRepo
 
 import dagger.Binds
 import dagger.Module
@@ -25,7 +25,7 @@ import dagger.Module
 abstract class DataModule {
 
     @Binds
-    internal abstract fun bindMyRepo(repo: MyRepoImpl): MyRepo
+    internal abstract fun bindMyRepo(repo: RealmFavoritedRepo): FavoritedRepo
 
     @Binds
     internal abstract fun bindPrefRepo(repo: SharedPrefRepo): PrefRepo

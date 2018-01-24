@@ -1,9 +1,10 @@
-package org.sugarandrose.app.data.local
+package org.sugarandrose.app.data.local.impl
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Base64
+import org.sugarandrose.app.data.local.PrefRepo
 
 import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerApplication

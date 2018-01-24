@@ -4,11 +4,18 @@
     <string name="cont">Weiterlesen</string>
 
     <string name="menu_bnv_new">New</string>
-    <string name="menu_bnv_categories">Categories</string>
-    <string name="menu_bnv_calendar">Calendar</string>
-    <string name="menu_bnv_test">Test</string>
+    <string name="menu_bnv_search">Suche</string>
+    <string name="menu_bnv_favorited">Merkzettel</string>
+    <string name="menu_bnv_more">Mehr</string>
 
     <string name="categories_number">%d Posts</string>
 
     <string name="notification_channel_fb_name">Push Nachrichten</string>
+
+    <string name="search_text_title">Suche</string>
+    <string name="search_categories_title">Kategorien</string>
+    <string name="search_hint">Suche nach Posts, Medien, …</string>
+
+    <string name="more_facebook">Like me on Facebook</string>
+    <string name="more_instagram">Follow me on Instagram</string>
 </resources>

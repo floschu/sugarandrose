@@ -16,6 +16,8 @@ package org.sugarandrose.app.util.extensions
 
 import io.realm.Realm
 import io.realm.RealmModel
+import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import timber.log.Timber
 import java.io.Closeable
 import javax.inject.Provider
@@ -67,3 +69,7 @@ inline fun <reified M : RealmModel> Realm.findFirst(detach: Boolean = false): M?
     }
     return first
 }
+
+val DATE_TIME_FORMATTER_INTERNAL: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX")
+fun ZonedDateTime.toRealmString(): String = this.format(DATE_TIME_FORMATTER_INTERNAL)
+fun String.fromRealmString(): ZonedDateTime = ZonedDateTime.parse(this, DATE_TIME_FORMATTER_INTERNAL)

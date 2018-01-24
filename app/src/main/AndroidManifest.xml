@@ -35,6 +35,18 @@
 
         <activity android:name=".ui.post.PostActivity" />
 
+        <activity android:name=".ui.categories.detail.CategoryDetailActivity" />
+
+        <!-- Provider -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.myapp.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
 
         <!-- Services -->
         <service android:name=".service.SARFirebaseMessagingService">

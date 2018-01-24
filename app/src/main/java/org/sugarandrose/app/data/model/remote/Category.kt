@@ -1,5 +1,6 @@
 package org.sugarandrose.app.data.model.remote
 
+import com.google.gson.annotations.SerializedName
 import paperparcel.PaperParcel
 import paperparcel.PaperParcelable
 
@@ -11,6 +12,8 @@ import paperparcel.PaperParcelable
 @PaperParcel
 class Category(var id: Int,
                var name: String,
+               @SerializedName("description")
+               var image: String,
                var link: String,
                var count: Int
 ) : PaperParcelable {

@@ -1,10 +1,11 @@
-package org.sugarandrose.app.ui.categories.recyclerview
+package org.sugarandrose.app.ui.categories.overview.recyclerview
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.remote.Category
 import org.sugarandrose.app.injection.scopes.PerFragment
+import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemViewHolder
 import org.sugarandrose.app.util.NotifyDatasetChangedDelegate
 import org.sugarandrose.app.util.Utils
 import javax.inject.Inject

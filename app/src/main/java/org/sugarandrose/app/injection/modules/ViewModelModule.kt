@@ -6,20 +6,30 @@ import org.sugarandrose.app.ui.main.MainViewModel
 
 import dagger.Binds
 import dagger.Module
-import org.sugarandrose.app.ui.calendar.CalendarMvvm
-import org.sugarandrose.app.ui.calendar.CalendarViewModel
-import org.sugarandrose.app.ui.categories.CategoriesMvvm
-import org.sugarandrose.app.ui.categories.CategoriesViewModel
-import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemMvvm
-import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewModel
+import org.sugarandrose.app.ui.categories.detail.CategoryDetailMvvm
+import org.sugarandrose.app.ui.categories.detail.CategoryDetailViewModel
+import org.sugarandrose.app.ui.favorited.FavoritedMvvm
+import org.sugarandrose.app.ui.favorited.FavoritedViewModel
+import org.sugarandrose.app.ui.more.MoreMvvm
+import org.sugarandrose.app.ui.more.MoreViewModel
+import org.sugarandrose.app.ui.more.recyclerview.MoreItemMvvm
+import org.sugarandrose.app.ui.more.recyclerview.MoreItemViewModel
+import org.sugarandrose.app.ui.categories.overview.CategoriesMvvm
+import org.sugarandrose.app.ui.categories.overview.CategoriesViewModel
+import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemMvvm
+import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemViewModel
 import org.sugarandrose.app.ui.news.recyclerview.PostItemMvvm
 import org.sugarandrose.app.ui.news.recyclerview.PostItemViewModel
 import org.sugarandrose.app.ui.news.NewMvvm
 import org.sugarandrose.app.ui.news.NewViewModel
+import org.sugarandrose.app.ui.news.recyclerview.MediaItemMvvm
+import org.sugarandrose.app.ui.news.recyclerview.MediaItemViewModel
 import org.sugarandrose.app.ui.post.PostMvvm
 import org.sugarandrose.app.ui.post.PostViewModel
-import org.sugarandrose.app.ui.test.TestMvvm
-import org.sugarandrose.app.ui.test.TestViewModel
+import org.sugarandrose.app.ui.search.SearchMvvm
+import org.sugarandrose.app.ui.search.SearchViewModel
+import org.sugarandrose.app.ui.textsearch.TextSearchMvvm
+import org.sugarandrose.app.ui.textsearch.TextSearchViewModel
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -50,15 +60,30 @@ abstract class ViewModelModule {
     internal abstract fun bindPostItemViewModel(viewModel: PostItemViewModel): PostItemMvvm.ViewModel
 
     @Binds
-    internal abstract fun bindCalendarViewModel(viewModel: CalendarViewModel): CalendarMvvm.ViewModel
-
-    @Binds
-    internal abstract fun bindTestViewModel(viewModel: TestViewModel): TestMvvm.ViewModel
+    internal abstract fun bindTestViewModel(viewModel: MoreViewModel): MoreMvvm.ViewModel
 
     @Binds
     internal abstract fun bindCategoriesViewModel(viewModel: CategoriesViewModel): CategoriesMvvm.ViewModel
 
     @Binds
     internal abstract fun bindCategoryItemViewModel(viewModel: CategoryItemViewModel): CategoryItemMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindMoreItemViewModel(viewModel: MoreItemViewModel): MoreItemMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindFavoritedViewModel(viewModel: FavoritedViewModel): FavoritedMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindMediaItemViewModel(viewModel: MediaItemViewModel): MediaItemMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindSearchViewModel(viewModel: SearchViewModel): SearchMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindTextSearchViewModel(viewModel: TextSearchViewModel): TextSearchMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindCategoryDetailViewModel(viewModel: CategoryDetailViewModel): CategoryDetailMvvm.ViewModel
 
 }

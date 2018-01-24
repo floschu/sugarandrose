@@ -17,6 +17,7 @@ package org.sugarandrose.app.util.bindingadapters
 import android.databinding.BindingAdapter
 import android.databinding.BindingMethod
 import android.databinding.BindingMethods
+import android.support.annotation.DrawableRes
 import android.support.v4.widget.SwipeRefreshLayout
 import android.text.Html
 import android.view.View
@@ -29,6 +30,7 @@ import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import android.webkit.WebView
 import android.widget.CalendarView
+import org.sugarandrose.app.util.extensions.fromRealmString
 import org.threeten.bp.LocalDate
 
 
@@ -47,32 +49,24 @@ object BindingAdapters {
         v.setOnClickListener { runnable.run() }
     }
 
-    @BindingAdapter("fromHtml")
-    @JvmStatic
-    fun setHtmlText(v: TextView, html: String) {
-        v.text = Html.fromHtml(html)
-    }
-
     @BindingAdapter("date")
     @JvmStatic
-    fun setDateText(v: TextView, date: ZonedDateTime) {
-        v.text = date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+    fun setDateText(v: TextView, date: String) {
+        v.text = date.fromRealmString().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
     }
 
-    @BindingAdapter("android:src", "onImageLoaded", requireAll = false)
+    @BindingAdapter("android:src")
     @JvmStatic
-    fun setImageWithPicasso(view: ImageView, path: String?, onImageLoadedRunnable: Runnable?) {
-        if (path != null && path.isNotEmpty())
-            Picasso.with(view.context.applicationContext).load(path).into(view, object : Callback {
-                override fun onError() {
-                    onImageLoadedRunnable?.run()
-                }
+    fun setImageSrc(view: ImageView, @DrawableRes src: Int) {
+        view.setImageResource(src)
+    }
 
-                override fun onSuccess() {
-                    onImageLoadedRunnable?.run()
-                }
-            })
-        else onImageLoadedRunnable?.run()
+    @BindingAdapter("android:src")
+    @JvmStatic
+    fun setImageWithPicassoString(view: ImageView, path: String?) {
+        if (!path.isNullOrEmpty()) {
+            Picasso.with(view.context.applicationContext).load(path).fit().centerCrop().into(view)
+        } else view.setImageDrawable(null)
     }
 
     @BindingAdapter("loadUrl")

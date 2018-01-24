@@ -1,16 +1,16 @@
-package org.sugarandrose.app.ui.categories.recyclerview
+package org.sugarandrose.app.ui.categories.overview.recyclerview
 
 import android.view.View
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.remote.Category
 import org.sugarandrose.app.databinding.ItemCategoryBinding
-import org.sugarandrose.app.databinding.ItemPostBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseFragmentViewHolder
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
+import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
 import javax.inject.Inject
 
 /**
@@ -48,7 +48,6 @@ constructor(private val navigator: Navigator) : BaseViewModel<CategoryItemMvvm.V
         notifyChange()
     }
 
-    override fun onClick() {
-//        navigator.startActivity(::class.java, category)
-    }
+    override fun onClick() = navigator.startActivity(CategoryDetailActivity::class.java, category)
+
 }

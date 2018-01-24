@@ -1,7 +1,8 @@
-package org.sugarandrose.app.ui.categories
+package org.sugarandrose.app.ui.categories.overview
 
 import android.databinding.Bindable
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +12,12 @@ import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
-import org.sugarandrose.app.databinding.FragmentTestBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
+import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoriesAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
 import javax.inject.Inject
@@ -37,6 +37,7 @@ interface CategoriesMvvm {
         var refreshing: Boolean
 
         fun onRefresh()
+        fun onResume()
     }
 }
 
@@ -55,12 +56,13 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvv
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.itemAnimator = SlideInUpAnimator()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.onRefresh()
+        viewModel.onResume()
     }
 }
 
@@ -70,8 +72,15 @@ class CategoriesViewModel @Inject
 constructor(private val api: SugarAndRoseApi, override val adapter: CategoriesAdapter) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
+    override fun onResume() {
+        if (adapter.data.isEmpty()) onRefresh()
+    }
+
     override fun onRefresh() {
-        refreshing = true
-        api.getCategories().observeOn(AndroidSchedulers.mainThread()).subscribe({ adapter.data = it.sortedByDescending { it.count }; refreshing = false }, { Timber.e(it); refreshing = false }).let { disposable.add(it) }
+        api.getCategories().observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { refreshing = true }
+                .doOnEvent { _, _ -> refreshing = false }
+                .subscribe({ adapter.data = it.sortedBy { it.name } }, Timber::e)
+                .let { disposable.add(it) }
     }
 }

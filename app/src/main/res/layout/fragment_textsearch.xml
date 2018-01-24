@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="org.sugarandrose.app.ui.textsearch.TextSearchMvvm.ViewModel" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            app:elevation="0dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_margin="@dimen/card_margin"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/padding">
+
+                    <EditText
+                        android:id="@+id/et_search"
+                        style="@style/Text.Black"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/transparent"
+                        android:drawablePadding="@dimen/card_horizontal_padding"
+                        android:drawableStart="@drawable/ic_search_black"
+                        android:hint="@string/search_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="textCapSentences|textAutoCorrect"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:text="@={vm.query}" />
+                </FrameLayout>
+            </android.support.v7.widget.CardView>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:enabled="false"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:refreshing="@{vm.loading}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:padding="@dimen/card_margin_half"
+                android:scrollbars="vertical"
+                app:adapter="@{vm.adapter}"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_post" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

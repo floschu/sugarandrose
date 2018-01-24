@@ -4,7 +4,9 @@ import org.sugarandrose.app.injection.modules.ViewHolderModule
 import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import dagger.Component
-import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewHolder
+import org.sugarandrose.app.ui.more.recyclerview.MoreItemViewHolder
+import org.sugarandrose.app.ui.news.recyclerview.MediaItemViewHolder
+import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemViewHolder
 import org.sugarandrose.app.ui.news.recyclerview.PostItemViewHolder
 
 /* Copyright 2017 Tailored Media GmbH
@@ -25,4 +27,6 @@ import org.sugarandrose.app.ui.news.recyclerview.PostItemViewHolder
 interface FragmentViewHolderComponent {
     fun inject(vh: PostItemViewHolder)
     fun inject(vh: CategoryItemViewHolder)
+    fun inject(vh: MoreItemViewHolder)
+    fun inject(vh: MediaItemViewHolder)
 }

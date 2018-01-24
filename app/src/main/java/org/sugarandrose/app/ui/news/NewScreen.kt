@@ -34,8 +34,11 @@ interface NewMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
+        fun onResume()
+
         @get:Bindable
         var refreshing: Boolean
+
         fun onRefresh()
 
         val adapter: PostAdapter
@@ -58,6 +61,7 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.recyclerView.itemAnimator = SlideInUpAnimator()
         binding.recyclerView.addOnScrollListener(object : PaginationScrollListener() {
             override fun loadMoreItems() = viewModel.loadNextPage()
@@ -67,7 +71,7 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
     override fun onResume() {
         super.onResume()
-        viewModel.onRefresh()
+        viewModel.onResume()
     }
 }
 
@@ -79,6 +83,10 @@ constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter)
 
     private var currentPage = 1
     private var maximumNumberOfPages = 100
+
+    override fun onResume() {
+        if (adapter.isEmpty) onRefresh()
+    }
 
     override fun onRefresh() {
         adapter.clear()
@@ -98,10 +106,14 @@ constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter)
 
     private fun loadPage() = api.getPosts(currentPage)
             .flattenAsFlowable { it }
-            .flatMapSingle { post -> if (post.featured_media != 0) api.getMedia(post.featured_media).map { LocalPost(post, it) } else Single.just(LocalPost(post)) }
+            .flatMapSingle { post ->
+                if (post.featured_media != 0) api.getMedia(post.featured_media).map { LocalPost(post, it) }
+                else Single.just(LocalPost(post))
+            }
             .toList()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { refreshing = true }
-            .doOnSuccess { adapter.add(it.sortedByDescending { it.date }); refreshing = false }
-            .doOnError { Timber.e(it); refreshing = false }
+            .doOnSuccess { adapter.add(it.sortedByDescending { it.date }) }
+            .doOnError(Timber::e)
+            .doOnEvent { _, _ -> refreshing = false }
 }

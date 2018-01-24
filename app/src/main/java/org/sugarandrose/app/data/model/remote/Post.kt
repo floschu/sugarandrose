@@ -11,7 +11,5 @@ class Post(var id: Int,
            var date: ZonedDateTime,
            var title: DisplayText,
            var link: String,
-           var content: DisplayText,
-           var excerpt: DisplayText,
            val featured_media: Int
 )

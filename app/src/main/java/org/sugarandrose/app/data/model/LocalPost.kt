@@ -1,7 +1,10 @@
 package org.sugarandrose.app.data.model
 
+import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import org.sugarandrose.app.data.model.remote.Media
 import org.sugarandrose.app.data.model.remote.Post
+import org.sugarandrose.app.util.extensions.toRealmString
 import org.threeten.bp.ZonedDateTime
 import paperparcel.PaperParcel
 import paperparcel.PaperParcelable
@@ -12,24 +15,18 @@ import paperparcel.PaperParcelable
  */
 
 @PaperParcel
-class LocalPost(val id: Int,
-                val date: ZonedDateTime,
-                val title: String,
-                val url: String,
-                val excerpt: String,
-                val image: String?
-) : PaperParcelable {
-    constructor() : this(0, ZonedDateTime.now(), "", "", "", null)
-    constructor(post: Post, media: Media) : this(post.id, post.date, post.title.rendered, post.link, removeHtmlTagsExcerpt(post.excerpt.rendered), media.source_url)
-    constructor(post: Post) : this(post.id, post.date, post.title.rendered, post.link, removeHtmlTagsExcerpt(post.excerpt.rendered), null)
+open class LocalPost(@PrimaryKey var id: Int,
+                     override var date: String,
+                     var title: String,
+                     var url: String,
+                     var image: String?
+) : PaperParcelable, RealmObject(), LocalDisplayItem {
+    constructor() : this(0, ZonedDateTime.now().toRealmString(), "", "", null)
+    constructor(post: Post, media: Media) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, media.source_url)
+    constructor(post: Post) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, null)
 
     companion object {
         @JvmField
         val CREATOR = PaperParcelLocalPost.CREATOR
-
-        private fun removeHtmlTagsExcerpt(exc: String): String {
-            return exc.removeSuffix("\n").removePrefix("<p>").removeSuffix("</p>")
-        }
     }
-
 }

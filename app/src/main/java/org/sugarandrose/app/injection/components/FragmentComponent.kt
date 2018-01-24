@@ -5,10 +5,13 @@ import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerFragment
 
 import dagger.Component
-import org.sugarandrose.app.ui.calendar.CalendarFragment
-import org.sugarandrose.app.ui.categories.CategoriesFragment
+import org.sugarandrose.app.ui.favorited.FavoritedFragment
+import org.sugarandrose.app.ui.more.MoreFragment
+import org.sugarandrose.app.ui.categories.overview.CategoriesFragment
 import org.sugarandrose.app.ui.news.NewFragment
-import org.sugarandrose.app.ui.test.TestFragment
+import org.sugarandrose.app.ui.news.recyclerview.PostAdapter
+import org.sugarandrose.app.ui.search.SearchFragment
+import org.sugarandrose.app.ui.textsearch.TextSearchFragment
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -33,11 +36,13 @@ interface FragmentComponent : FragmentComponentProvides {
     // create inject methods for your Fragments here
 
     fun inject(fragment: NewFragment)
+    fun inject(fragment: MoreFragment)
+    fun inject(fragment: FavoritedFragment)
+    fun inject(fragment: SearchFragment)
+    fun inject(fragment: TextSearchFragment)
     fun inject(fragment: CategoriesFragment)
-    fun inject(fragment: CalendarFragment)
-    fun inject(fragment: TestFragment)
 }
 
 interface FragmentComponentProvides : ActivityComponentProvides {
-
+    fun postAdapter(): PostAdapter
 }

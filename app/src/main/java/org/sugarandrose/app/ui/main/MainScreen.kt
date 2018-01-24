@@ -50,31 +50,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
         activityComponent.inject(this)
         setAndBindContentView(savedInstanceState, R.layout.activity_main)
 
-        setSupportActionBar(binding.toolbar)
-
         MainAdapter.disableShiftMode(binding.bottomNavigationView)
         adapter = MainAdapter(supportFragmentManager, R.id.container, R.id.bnv_new, savedInstanceState).apply {
             setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
             attachTo(binding.bottomNavigationView)
         }
-
-        binding.appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener { //todo: animate toolbartitle out left and in right or something
-            internal var isShowing = false
-            internal var scrollRange = -1
-
-            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.totalScrollRange
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    binding.toolbarTitle.text = string(R.string.name)
-                    isShowing = true
-                } else if (isShowing) {
-                    binding.toolbarTitle.text = ""
-                    isShowing = false
-                }
-            }
-        })
 
         intent.data?.let { viewModel.openArticle(it) }
     }

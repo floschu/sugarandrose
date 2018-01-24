@@ -11,7 +11,9 @@ import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.main.MainActivity
 import dagger.Component
+import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
+import org.sugarandrose.app.util.ShareManager
 import org.sugarandrose.app.util.WebManager
 
 /* Copyright 2016 Patrick Löwenstein
@@ -38,13 +40,19 @@ interface ActivityComponent : ActivityComponentProvides {
 
     fun inject(activity: MainActivity)
     fun inject(activity: PostActivity)
+    fun inject(activity: CategoryDetailActivity)
 
 }
 
 interface ActivityComponentProvides : AppComponentProvides {
-    @ActivityContext fun activityContext(): Context
-    @ActivityFragmentManager fun defaultFragmentManager(): FragmentManager
+    @ActivityContext
+    fun activityContext(): Context
+
+    @ActivityFragmentManager
+    fun defaultFragmentManager(): FragmentManager
+
     fun navigator(): Navigator
     fun snacker(): Snacker
-    fun webManager():WebManager
+    fun webManager(): WebManager
+    fun shareManager(): ShareManager
 }

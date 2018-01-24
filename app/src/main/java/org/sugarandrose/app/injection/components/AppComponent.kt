@@ -3,7 +3,7 @@ package org.sugarandrose.app.injection.components
 import android.content.Context
 import android.content.res.Resources
 import com.squareup.leakcanary.RefWatcher
-import org.sugarandrose.app.data.local.MyRepo
+import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.injection.modules.AppModule
 import org.sugarandrose.app.injection.modules.DataModule
@@ -49,7 +49,7 @@ interface AppComponentProvides {
     fun encryptionKeyManager(): org.sugarandrose.app.data.local.encryption.EncryptionKeyManager
 
     fun realm(): Realm
-    fun myRepo(): MyRepo
+    fun myRepo(): FavoritedRepo
     fun sugarAndRoseApi(): SugarAndRoseApi
 
     fun okHttpClient(): OkHttpClient

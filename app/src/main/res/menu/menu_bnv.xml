@@ -2,21 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bnv_new"
-        android:icon="@drawable/ic_bnv_new"
+        android:icon="@drawable/ic_icon"
         android:title="@string/menu_bnv_new"/>
 
     <item
-        android:id="@+id/bnv_categories"
-        android:icon="@drawable/ic_bnv_categories"
-        android:title="@string/menu_bnv_categories"/>
+        android:id="@+id/bnv_search"
+        android:icon="@drawable/ic_search_black"
+        android:title="@string/menu_bnv_search"/>
 
     <item
-        android:id="@+id/bnv_calendar"
-        android:icon="@drawable/ic_bnv_calendar"
-        android:title="@string/menu_bnv_calendar"/>
+        android:id="@+id/bnv_favorited"
+        android:icon="@drawable/ic_content_paste_black"
+        android:title="@string/menu_bnv_favorited"/>
 
     <item
-        android:id="@+id/bnv_test"
-        android:icon="@drawable/ic_bnv_test"
-        android:title="@string/menu_bnv_test"/>
+        android:id="@+id/bnv_more"
+        android:icon="@drawable/ic_view_headline"
+        android:title="@string/menu_bnv_more"/>
 </menu>

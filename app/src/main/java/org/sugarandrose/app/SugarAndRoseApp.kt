@@ -61,7 +61,6 @@ class SugarAndRoseApp : Application() {
         RxJavaPlugins.setErrorHandler({ Timber.e(it) })
         AndroidThreeTen.init(this)
         setupPicasso()
-
     }
 
     private fun setupPicasso() {
