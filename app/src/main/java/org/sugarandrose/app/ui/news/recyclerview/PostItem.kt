@@ -8,6 +8,7 @@ import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.databinding.ItemPostBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
+import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.BaseFragmentViewHolder
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -37,8 +38,7 @@ interface PostItemMvvm {
     }
 }
 
-class PostItemViewHolder(itemView: View) : BaseFragmentViewHolder<ItemPostBinding, PostItemMvvm.ViewModel>(itemView), PostItemMvvm.View {
-    override val fragmentContainerId get() = R.id.container
+class PostItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemPostBinding, PostItemMvvm.ViewModel>(itemView), PostItemMvvm.View {
 
     init {
         viewHolderComponent.inject(this)

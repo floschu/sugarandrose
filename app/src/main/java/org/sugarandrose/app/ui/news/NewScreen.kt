@@ -35,14 +35,13 @@ interface NewMvvm {
 
     interface ViewModel : MvvmViewModel<View> {
         fun onResume()
+        fun onRefresh()
+        fun loadNextPage()
 
         @get:Bindable
         var refreshing: Boolean
 
-        fun onRefresh()
-
         val adapter: PostAdapter
-        fun loadNextPage()
     }
 }
 
@@ -78,9 +77,10 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
 @PerFragment
 class NewViewModel @Inject
-constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
+constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
+    override val adapter = PostAdapter()
     private var currentPage = 1
     private var maximumNumberOfPages = 100
 

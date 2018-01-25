@@ -21,6 +21,7 @@ import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.news.recyclerview.PostAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
+import org.sugarandrose.app.util.PaginationScrollListener
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -35,8 +36,9 @@ interface TextSearchMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        val adapter: PostAdapter
+        fun loadNextPage()
 
+        val adapter: PostAdapter
         @get:Bindable
         var loading: Boolean
         @get:Bindable
@@ -59,7 +61,12 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.recyclerView.itemAnimator = SlideInUpAnimator()
+        binding.recyclerView.addOnScrollListener(object : PaginationScrollListener() {
+            override fun loadMoreItems() = viewModel.loadNextPage()
+            override fun isLoading() = viewModel.loading
+        })
     }
 
 }
@@ -67,7 +74,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 
 @PerFragment
 class TextSearchViewModel @Inject
-constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
+constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
     override var query: String = ""
         set(value) {
@@ -76,31 +83,41 @@ constructor(private val api: SugarAndRoseApi, override val adapter: PostAdapter)
             notifyPropertyChanged(BR.query)
         }
 
+    override val adapter = PostAdapter()
     private val querySubject = PublishSubject.create<String>()
+    private var currentPage = 1
 
     override fun attachView(view: TextSearchMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
         querySubject.distinctUntilChanged()
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .filter { it.isNotEmpty() }
-                .doOnNext { loading = true }
-                .flatMapSingle(this::getQueriedItems)
-                .doOnNext { loading = false }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+                .doOnNext {
                     adapter.clear()
-                    adapter.add(it)
-                }).let { disposable.add(it) }
+                    currentPage = 1
+                }
+                .flatMapSingle(this::loadPage)
+                .subscribe().let { disposable.add(it) }
     }
 
-    private fun getQueriedItems(searchQuery: String) = api.getPosts(searchQuery)
+    override fun loadNextPage() {
+        if (currentPage >= 10) return
+        currentPage++
+        loadPage(query).subscribe().let { disposable.add(it) }
+    }
+
+    private fun loadPage(searchQuery: String) = api.getPostsForQuery(searchQuery, currentPage)
             .flattenAsFlowable { it }
             .flatMapSingle { post ->
                 if (post.featured_media != 0) api.getMedia(post.featured_media).map { LocalPost(post, it) }
                 else Single.just(LocalPost(post))
             }
             .toList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { loading = true }
+            .doOnSuccess { adapter.add(it.sortedByDescending { it.date }) }
+            .doOnSuccess { loading = false }
             .doOnError(Timber::e)
             .onErrorReturn { emptyList() }
-
 }

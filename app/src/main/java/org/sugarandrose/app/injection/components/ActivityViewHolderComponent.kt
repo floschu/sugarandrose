@@ -5,6 +5,8 @@ import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 
 import dagger.Component
+import org.sugarandrose.app.ui.news.recyclerview.MediaItemViewHolder
+import org.sugarandrose.app.ui.news.recyclerview.PostItemViewHolder
 
 /* Copyright 2017 Tailored Media GmbH
  *
@@ -22,4 +24,6 @@ import dagger.Component
 @PerViewHolder
 @Component(dependencies = arrayOf(ActivityComponent::class), modules = arrayOf(ViewHolderModule::class, ViewModelModule::class))
 interface ActivityViewHolderComponent {
+    fun inject(vh: PostItemViewHolder)
+    fun inject(vh: MediaItemViewHolder)
 }

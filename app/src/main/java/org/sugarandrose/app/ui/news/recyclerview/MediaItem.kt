@@ -8,6 +8,7 @@ import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.databinding.ItemMediaBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
+import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.BaseFragmentViewHolder
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -35,8 +36,7 @@ interface MediaItemMvvm {
     }
 }
 
-class MediaItemViewHolder(itemView: View) : BaseFragmentViewHolder<ItemMediaBinding, MediaItemMvvm.ViewModel>(itemView), MediaItemMvvm.View {
-    override val fragmentContainerId get() = R.id.container
+class MediaItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemMediaBinding, MediaItemMvvm.ViewModel>(itemView), MediaItemMvvm.View {
 
     init {
         viewHolderComponent.inject(this)

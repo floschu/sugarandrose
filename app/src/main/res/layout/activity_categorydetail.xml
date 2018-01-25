@@ -36,9 +36,9 @@
                 android:clipToPadding="false"
                 android:padding="@dimen/card_margin_half"
                 android:scrollbars="vertical"
+                app:adapter="@{vm.adapter}"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_post" />
-            <!--app:adapter="@{vm.adapter}"-->
         </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

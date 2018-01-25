@@ -25,8 +25,6 @@ import org.sugarandrose.app.ui.news.recyclerview.PostItemViewHolder
 @PerViewHolder
 @Component(dependencies = arrayOf(FragmentComponent::class), modules = arrayOf(ViewHolderModule::class, ViewModelModule::class))
 interface FragmentViewHolderComponent {
-    fun inject(vh: PostItemViewHolder)
     fun inject(vh: CategoryItemViewHolder)
     fun inject(vh: MoreItemViewHolder)
-    fun inject(vh: MediaItemViewHolder)
 }

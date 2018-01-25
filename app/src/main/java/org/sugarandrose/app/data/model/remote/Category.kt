@@ -21,4 +21,6 @@ class Category(var id: Int,
         @JvmField
         val CREATOR = PaperParcelCategory.CREATOR
     }
+
+    constructor() : this(0, "", "", "",0)
 }

@@ -16,24 +16,26 @@ interface SugarAndRoseApi {
     @GET("posts/{id}")
     fun getPost(@Path("id") id: Int): Single<Post>
 
-    @GET("posts/?per_page=1&page=1")
-    fun getNumberOfPages(): Single<Result<Void>>
-
-    @GET("posts/?order=desc&?orderby=date_gmt")
-    fun getPosts(@Query("page") page: Int): Single<List<Post>>
-
-    @GET("posts/?order=desc&?orderby=date_gmt")
-    fun getPosts(@Query("search") query: String): Single<List<Post>>
-
-    @GET("posts/?order=desc&?orderby=date_gmt")
-    fun getPostsForDay(@Query("after") after: String, @Query("before") before: String): Single<List<Post>>
-
     @GET("media/{id}")
     fun getMedia(@Path("id") id: Int): Single<Media>
 
+    //Posts
+    @GET("posts/?per_page=1&page=1")
+    fun getNumberOfPages(): Single<Result<Void>>
+    @GET("posts/?order=desc&?orderby=date_gmt")
+    fun getPosts(@Query("page") page: Int = 1): Single<List<Post>>
+
+    //Query
+    @GET("posts/?order=desc&?orderby=date_gmt")
+    fun getPostsForQuery(@Query("search") query: String, @Query("page") page: Int = 1): Single<List<Post>>
+    @GET("posts/?per_page=1&page=1")
+    fun getNumberOfPagesForQuery(@Query("search") query: String): Single<Result<Void>>
+
+    //Categories
     @GET("categories/")
     fun getCategories(): Single<List<Category>>
-
     @GET("posts/?order=desc&?orderby=date_gmt")
-    fun getPostsForCategory(@Query("categories") id: Int): Single<List<Post>>
+    fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int = 1): Single<List<Post>>
+    @GET("posts/?per_page=1&page=1")
+    fun getNumberOfPagesForCategory(@Query("categories") id: Int): Single<Result<Void>>
 }

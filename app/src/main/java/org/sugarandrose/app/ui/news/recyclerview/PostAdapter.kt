@@ -16,14 +16,12 @@ import javax.inject.Inject
  * florian.schuster@tailored-apps.com
  */
 
-@PerFragment
-class PostAdapter @Inject
-constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PostAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_POST = 0
     private val TYPE_MEDIA = 1
 
     private val data = ArrayList<LocalDisplayItem>()
-    val isEmpty:Boolean get()=data.isEmpty()
+    val isEmpty: Boolean get() = data.isEmpty()
 
     fun add(posts: List<LocalDisplayItem>) {
         val oldSize = data.size

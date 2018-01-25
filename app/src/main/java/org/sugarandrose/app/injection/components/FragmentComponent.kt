@@ -43,6 +43,4 @@ interface FragmentComponent : FragmentComponentProvides {
     fun inject(fragment: CategoriesFragment)
 }
 
-interface FragmentComponentProvides : ActivityComponentProvides {
-    fun postAdapter(): PostAdapter
-}
+interface FragmentComponentProvides : ActivityComponentProvides

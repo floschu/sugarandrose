@@ -60,9 +60,10 @@ class FavoritedFragment : BaseFragment<FragmentFavoritedBinding, FavoritedMvvm.V
 
 @PerFragment
 class FavoritedViewModel @Inject
-constructor(override val adapter: PostAdapter, private val favoritedRepo: FavoritedRepo) : BaseViewModel<FavoritedMvvm.View>(), FavoritedMvvm.ViewModel {
-
+constructor(private val favoritedRepo: FavoritedRepo) : BaseViewModel<FavoritedMvvm.View>(), FavoritedMvvm.ViewModel {
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
+
+    override val adapter = PostAdapter()
 
     override fun attachView(view: FavoritedMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
