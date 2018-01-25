@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="name">sugar&amp;rose</string>
-    <string name="cont">Weiterlesen</string>
-
-    <string name="menu_bnv_new">New</string>
+    <string name="menu_bnv_new">Neu</string>
     <string name="menu_bnv_search">Suche</string>
     <string name="menu_bnv_favorited">Merkzettel</string>
     <string name="menu_bnv_more">Mehr</string>
 
+    <string name="cont">Weiterlesen</string>
+    <string name="share_title">Teilen auf…</string>
     <string name="categories_number">%d Posts</string>
-
     <string name="notification_channel_fb_name">Push Nachrichten</string>
-
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
     <string name="search_hint">Suche nach Posts, Medien, …</string>
-
-    <string name="more_facebook">Like me on Facebook</string>
-    <string name="more_instagram">Follow me on Instagram</string>
+    <string name="more_facebook">Like mich auf Facebook</string>
+    <string name="more_instagram">Folge mir auf Instagram</string>
 </resources>

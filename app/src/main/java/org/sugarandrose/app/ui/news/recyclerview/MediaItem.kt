@@ -3,18 +3,17 @@ package org.sugarandrose.app.ui.news.recyclerview
 import android.databinding.Bindable
 import android.view.View
 import org.sugarandrose.app.BR
-import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.databinding.ItemMediaBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseActivityViewHolder
-import org.sugarandrose.app.ui.base.BaseFragmentViewHolder
-import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
+import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.ShareManager
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -33,6 +32,8 @@ interface MediaItemMvvm {
         var media: LocalMedia
         @get:Bindable
         var favorited: Boolean
+        @get:Bindable
+        var loading: Boolean
     }
 }
 
@@ -49,6 +50,7 @@ class MediaItemViewModel @Inject
 constructor(private val favoritedRepo: FavoritedRepo, private val shareManager: ShareManager) : BaseViewModel<MediaItemMvvm.View>(), MediaItemMvvm.ViewModel {
     override lateinit var media: LocalMedia
     override var favorited: Boolean = false
+    override var loading by NotifyPropertyChangedDelegate(false, BR.loading)
 
     override fun update(media: LocalMedia) {
         this.media = media
@@ -63,5 +65,12 @@ constructor(private val favoritedRepo: FavoritedRepo, private val shareManager: 
         notifyPropertyChanged(BR.favorited)
     }
 
-    override fun onShareClick() = shareManager.share(media)
+
+    override fun onShareClick() {
+        shareManager.shareMedia(media)
+                .doOnSubscribe { loading = true }
+                .doOnError(Timber::e)
+                .doOnEvent { loading = false }
+                .subscribe().let { disposable.add(it) }
+    }
 }

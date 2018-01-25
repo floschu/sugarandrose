@@ -52,12 +52,8 @@ interface PostMvvm {
 
 
 class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), PostMvvm.View {
-    @Inject lateinit var navigator: Navigator
-
-    companion object {
-        val EXTRA_TITLE = "org.sugarandrose.app.ui.post.PostActivity.title"
-        val EXTRA_URL = "org.sugarandrose.app.ui.post.PostActivity.url"
-    }
+    @Inject
+    lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,8 +68,7 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.title = intent.getStringExtra(EXTRA_TITLE)
-        viewModel.url = intent.getStringExtra(EXTRA_URL)
+        viewModel.url = intent.getParcelableExtra<LocalPost>(Navigator.EXTRA_ARG).url
 
         initWebView()
     }
@@ -147,7 +142,7 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
 
         override fun onReceivedTitle(view: WebView, title: String) {
             super.onReceivedTitle(view, title)
-            if (viewModel.title == null) viewModel.title = title
+            viewModel.title = title
         }
     }
 }

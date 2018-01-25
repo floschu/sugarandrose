@@ -24,6 +24,7 @@ open class LocalPost(@PrimaryKey var id: Int,
     constructor() : this(0, ZonedDateTime.now().toRealmString(), "", "", null)
     constructor(post: Post, media: Media) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, media.source_url)
     constructor(post: Post) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, null)
+    constructor(uri: String) : this(0, ZonedDateTime.now().toRealmString(), "", uri, null)
 
     companion object {
         @JvmField

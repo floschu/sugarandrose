@@ -27,6 +27,7 @@ import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import javax.inject.Inject
 import android.support.design.widget.AppBarLayout
+import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.post.PostActivity
 
@@ -75,5 +76,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 class MainViewModel @Inject
 constructor(private val navigator: Navigator) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
 
-    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, { it.putExtra(PostActivity.EXTRA_URL, uri.toString()) })
+    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, LocalPost(uri.toString()))
 }

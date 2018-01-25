@@ -6,63 +6,81 @@ import org.sugarandrose.app.data.model.LocalPost
 import javax.inject.Inject
 import android.content.Intent
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import android.graphics.drawable.Drawable
-import com.squareup.picasso.Picasso
 import android.graphics.Bitmap
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import android.support.v4.content.FileProvider
-import com.squareup.picasso.Target
+import io.reactivex.Completable
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerActivity
-
+import org.sugarandrose.app.util.extensions.loadWithPicasso
+import io.reactivex.Single
+import org.sugarandrose.app.R
 
 /**
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
+
 @PerActivity
 class ShareManager @Inject
 constructor(@ActivityContext private val context: Context, private val navigator: Navigator) {
 
-    fun share(item: LocalPost) {
-        Picasso.with(context).load(item.image).into(object : Target {
-            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-            override fun onBitmapFailed(errorDrawable: Drawable?) {}
+    private val cachedName = "shareimage.jpg"
+    private val tempFile: File by lazy { File(context.cacheDir, cachedName) }
 
-            override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom?) {
-                saveImageInternally(bitmap) {
-                    val contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", it)
-                    val share = Intent(Intent.ACTION_SEND).apply {
-                        setDataAndType(contentUri, context.contentResolver.getType(contentUri))
-                        putExtra(Intent.EXTRA_TEXT, "Hey view/download this image")
-                        putExtra(Intent.EXTRA_STREAM, contentUri)
-                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    }
+    fun sharePost(item: LocalPost): Completable =
+            if (item.image != null) context.loadWithPicasso(item.image)
+                    .flatMap(this::cacheBitmapForShare)
+                    .flatMapCompletable { sharePostInternally(item.title, item.url, it) }
+            else sharePostInternally(item.title, item.url)
 
-                    navigator.startActivity(Intent.createChooser(share, "testesetest"))
-                }
-            }
-        })
+    private fun sharePostInternally(title: String, url: String, file: File? = null): Completable = Completable.create {
+        val share = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_SUBJECT, title)
+            putExtra(Intent.EXTRA_TEXT, url)
+        }
+        share.apply {
+            if (file != null) {
+                val contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", file)
+                setDataAndType(contentUri, context.contentResolver.getType(contentUri))
+                putExtra(Intent.EXTRA_STREAM, contentUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            } else type = "text/plain"
+        }
+
+        navigator.startActivity(Intent.createChooser(share, context.getString(R.string.share_title)))
+        it.onComplete()
     }
 
-    fun share(item: LocalMedia) {
+    fun shareMedia(item: LocalMedia): Completable =
+            context.loadWithPicasso(item.image)
+                    .flatMap(this::cacheBitmapForShare)
+                    .flatMapCompletable(this::shareMediaInternally)
 
+    private fun shareMediaInternally(bitmap: File): Completable = Completable.create {
+        val share = Intent(Intent.ACTION_SEND).apply {
+            val contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", bitmap)
+            setDataAndType(contentUri, context.contentResolver.getType(contentUri))
+            putExtra(Intent.EXTRA_STREAM, contentUri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        navigator.startActivity(Intent.createChooser(share, context.getString(R.string.share_title)))
+        it.onComplete()
     }
 
-    private fun saveImageInternally(bitmap: Bitmap, callback: (File) -> Unit) { //todo rx this
+    private fun cacheBitmapForShare(bitmap: Bitmap): Single<File> = Single.create { emitter ->
         try {
-            val cachePath = File(context.cacheDir, "images")
-            cachePath.mkdirs()
-            FileOutputStream(cachePath.toString() + "/image.jpg").use {
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
-                bitmap.recycle()
-                callback.invoke(File(cachePath, "image.jpg"))
+            FileOutputStream(tempFile).use {
+                val success = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                // bitmap.recycle() not needed due to pica
+                if (success) emitter.onSuccess(tempFile)
+                else emitter.onError(IOException())
             }
         } catch (e: IOException) {
-            e.printStackTrace()
+            emitter.onError(e)
         }
     }
 }

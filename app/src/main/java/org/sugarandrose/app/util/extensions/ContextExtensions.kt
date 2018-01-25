@@ -16,7 +16,14 @@ package org.sugarandrose.app.util.extensions
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Build
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
+import io.reactivex.Single
+import io.reactivex.SingleEmitter
+import java.io.FileNotFoundException
 import java.util.*
 
 
@@ -38,4 +45,12 @@ inline fun <reified T> Context.castWithUnwrap(): T? {
         }
     }
     return null
+}
+
+fun Context.loadWithPicasso(url: String?): Single<Bitmap> = Single.create { emitter: SingleEmitter<Bitmap> ->
+    Picasso.with(this).load(url).into(object : Target {
+        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
+        override fun onBitmapFailed(errorDrawable: Drawable?) = emitter.onError(FileNotFoundException())
+        override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom?) = emitter.onSuccess(bitmap)
+    })
 }
