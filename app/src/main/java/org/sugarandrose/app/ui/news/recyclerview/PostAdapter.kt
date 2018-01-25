@@ -23,9 +23,17 @@ class PostAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val data = ArrayList<LocalDisplayItem>()
     val isEmpty: Boolean get() = data.isEmpty()
 
+    init {
+        setHasStableIds(true)
+    }
+
     fun add(posts: List<LocalDisplayItem>) {
+//        val list = data + posts //todo media merge
+//        data.clear()
+//        data.addAll(list.sortedByDescending { it.date })
+//        notifyDataSetChanged()
         val oldSize = data.size
-        data.addAll(posts)
+        data.addAll(posts.sortedByDescending { it.date })
         notifyItemRangeInserted(oldSize, data.size - oldSize)
     }
 
@@ -39,6 +47,8 @@ class PostAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         data.clear()
         notifyDataSetChanged()
     }
+
+    override fun getItemId(position: Int): Long = data[position].id.toLong()
 
     override fun getItemViewType(position: Int): Int = when (data[position]) {
         is LocalPost -> TYPE_POST

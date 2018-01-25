@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="NO CONTENT YET" />
+                android:text="NO CONTENT YET TODO" />
         </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

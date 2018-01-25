@@ -7,4 +7,5 @@ package org.sugarandrose.app.data.model
 
 interface LocalDisplayItem {
     var date: String
+    var id: Int
 }

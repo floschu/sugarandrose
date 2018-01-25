@@ -13,7 +13,7 @@ import paperparcel.PaperParcelable
  */
 
 @PaperParcel
-open class LocalMedia(@PrimaryKey var id: Int, var image: String, override var date: String) : PaperParcelable, RealmObject(), LocalDisplayItem {
+open class LocalMedia(@PrimaryKey override var id: Int, var image: String, override var date: String) : PaperParcelable, RealmObject(), LocalDisplayItem {
     constructor() : this(0, "", "")
     constructor(media: Media) : this(media.id, media.source_url, media.date.toRealmString())
 

@@ -30,7 +30,7 @@
                 android:adjustViewBounds="true"
                 android:src="@{vm.post.image}"
                 app:layout_constraintBottom_toTopOf="@id/tv_title"
-                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

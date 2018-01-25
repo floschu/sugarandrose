@@ -75,7 +75,6 @@ constructor(@ActivityContext private val context: Context, private val navigator
         try {
             FileOutputStream(tempFile).use {
                 val success = bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
-                // bitmap.recycle() not needed due to pica
                 if (success) emitter.onSuccess(tempFile)
                 else emitter.onError(IOException())
             }

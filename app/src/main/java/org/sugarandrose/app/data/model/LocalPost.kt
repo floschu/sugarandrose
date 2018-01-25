@@ -15,7 +15,7 @@ import paperparcel.PaperParcelable
  */
 
 @PaperParcel
-open class LocalPost(@PrimaryKey var id: Int,
+open class LocalPost(@PrimaryKey override var id: Int,
                      override var date: String,
                      var title: String,
                      var url: String,

@@ -13,6 +13,7 @@ const val TOTAL_PAGES_HEADER = "X-WP-TotalPages"
 
 interface SugarAndRoseApi {
 
+    //Single Items
     @GET("posts/{id}")
     fun getPost(@Path("id") id: Int): Single<Post>
 
@@ -20,22 +21,21 @@ interface SugarAndRoseApi {
     fun getMedia(@Path("id") id: Int): Single<Media>
 
     //Posts
-    @GET("posts/?per_page=1&page=1")
-    fun getNumberOfPages(): Single<Result<Void>>
     @GET("posts/?order=desc&?orderby=date_gmt")
-    fun getPosts(@Query("page") page: Int = 1): Single<List<Post>>
+    fun getPostsPage(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 5): Single<Result<List<Post>>>
+
+    //Media
+    @GET("media/?order=desc&?orderby=date_gmt")
+    fun getMediaPage(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 5): Single<Result<List<Media>>>
 
     //Query
     @GET("posts/?order=desc&?orderby=date_gmt")
-    fun getPostsForQuery(@Query("search") query: String, @Query("page") page: Int = 1): Single<List<Post>>
-    @GET("posts/?per_page=1&page=1")
-    fun getNumberOfPagesForQuery(@Query("search") query: String): Single<Result<Void>>
+    fun getPostsForQuery(@Query("search") query: String, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 5): Single<Result<List<Post>>>
 
     //Categories
     @GET("categories/")
     fun getCategories(): Single<List<Category>>
+
     @GET("posts/?order=desc&?orderby=date_gmt")
-    fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int = 1): Single<List<Post>>
-    @GET("posts/?per_page=1&page=1")
-    fun getNumberOfPagesForCategory(@Query("categories") id: Int): Single<Result<Void>>
+    fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 5): Single<Result<List<Post>>>
 }

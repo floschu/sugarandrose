@@ -95,8 +95,8 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<CategoryDetailMvvm
     override var category: Category by NotifyPropertyChangedDelegate(Category(), BR.category)
 
     override val adapter = PostAdapter()
-    private var currentPage = 1
-    private var maximumNumberOfPages = 100
+    private var currentPage = 0
+    private var maximumNumberOfPages = 10
 
     override fun onResume() {
         if (adapter.isEmpty) onRefresh()
@@ -104,12 +104,8 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<CategoryDetailMvvm
 
     override fun onRefresh() {
         adapter.clear()
-        currentPage = 1
-        api.getNumberOfPagesForCategory(category.id)
-                .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfPages = it } }
-                .toCompletable()
-                .andThen(loadPage())
-                .subscribe().let { disposable.add(it) }
+        currentPage = 0
+        loadNextPage()
     }
 
     override fun loadNextPage() {
@@ -119,6 +115,8 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<CategoryDetailMvvm
     }
 
     private fun loadPage() = api.getPostsForCategory(category.id, currentPage)
+            .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfPages = it } }
+            .map { it.response()?.body() }
             .flattenAsFlowable { it }
             .flatMapSingle { post ->
                 if (post.featured_media != 0) api.getMedia(post.featured_media).map { LocalPost(post, it) }

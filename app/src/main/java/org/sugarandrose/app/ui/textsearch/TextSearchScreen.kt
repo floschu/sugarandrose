@@ -1,10 +1,15 @@
 package org.sugarandrose.app.ui.textsearch
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.databinding.Bindable
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -13,6 +18,7 @@ import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
+import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
 import org.sugarandrose.app.databinding.FragmentTextsearchBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
@@ -33,7 +39,9 @@ import javax.inject.Inject
  */
 
 interface TextSearchMvvm {
-    interface View : MvvmView
+    interface View : MvvmView {
+        fun hideKeyboard()
+    }
 
     interface ViewModel : MvvmViewModel<View> {
         fun loadNextPage()
@@ -43,6 +51,8 @@ interface TextSearchMvvm {
         var loading: Boolean
         @get:Bindable
         var query: String
+        @get:Bindable
+        var hasMedia: Boolean
     }
 }
 
@@ -67,8 +77,13 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
             override fun loadMoreItems() = viewModel.loadNextPage()
             override fun isLoading() = viewModel.loading
         })
+        binding.content.setOnTouchListener { _, _ -> hideKeyboard(); false }
     }
 
+    override fun hideKeyboard() {
+        val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (inputMethodManager.isActive) inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+    }
 }
 
 
@@ -76,6 +91,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 class TextSearchViewModel @Inject
 constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
+    override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
     override var query: String = ""
         set(value) {
             field = value
@@ -85,7 +101,8 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
 
     override val adapter = PostAdapter()
     private val querySubject = PublishSubject.create<String>()
-    private var currentPage = 1
+    private var currentPage = 0
+    private var maximumNumberOfPages = 10
 
     override fun attachView(view: TextSearchMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
@@ -102,12 +119,14 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
     }
 
     override fun loadNextPage() {
-        if (currentPage >= 10) return
+        if (currentPage >= maximumNumberOfPages) return
         currentPage++
         loadPage(query).subscribe().let { disposable.add(it) }
     }
 
     private fun loadPage(searchQuery: String) = api.getPostsForQuery(searchQuery, currentPage)
+            .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfPages = it } }
+            .map { it.response()?.body() }
             .flattenAsFlowable { it }
             .flatMapSingle { post ->
                 if (post.featured_media != 0) api.getMedia(post.featured_media).map { LocalPost(post, it) }
@@ -116,8 +135,9 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
             .toList()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { loading = true }
-            .doOnSuccess { adapter.add(it.sortedByDescending { it.date }) }
+            .doOnSuccess { adapter.add(it) }
             .doOnSuccess { loading = false }
             .doOnError(Timber::e)
-            .onErrorReturn { emptyList() }
+            .doOnEvent { _, _ -> hasMedia = !adapter.isEmpty }
+
 }

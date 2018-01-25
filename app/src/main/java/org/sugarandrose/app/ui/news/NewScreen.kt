@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
+import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.remote.Post
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
 import org.sugarandrose.app.databinding.FragmentNewBinding
@@ -81,8 +84,10 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), N
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
     override val adapter = PostAdapter()
-    private var currentPage = 1
-    private var maximumNumberOfPages = 100
+    private var currentPostsPage = 1
+    private var maximumNumberOfPostPages = 10
+    private var currentMediaPage = 1
+    private var maximumNumberOfMediaPages = 10
 
     override fun onResume() {
         if (adapter.isEmpty) onRefresh()
@@ -90,21 +95,27 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), N
 
     override fun onRefresh() {
         adapter.clear()
-        currentPage = 1
-        api.getNumberOfPages()
-                .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfPages = it } }
-                .toCompletable()
-                .andThen(loadPage())
-                .subscribe().let { disposable.add(it) }
+        currentPostsPage = 1
+        currentMediaPage = 1
+        loadNextPage()
     }
 
     override fun loadNextPage() {
-        if (currentPage >= maximumNumberOfPages) return
-        currentPage++
-        loadPage().subscribe().let { disposable.add(it) }
+//        Single.merge(loadPosts(), loadMedia())
+        loadPosts()
+                .doOnSubscribe { refreshing = true }
+                .doOnError(Timber::e)
+                .doOnEvent { _, _ -> refreshing = false }
+                .subscribe().let { disposable.add(it) }
     }
 
-    private fun loadPage() = api.getPosts(currentPage)
+    private fun loadPosts() = Single.just(currentPostsPage >= maximumNumberOfPostPages)
+            .flatMap {
+                if (it) Single.never()
+                else api.getPostsPage(currentPostsPage).doOnSubscribe { currentPostsPage++ }
+            }
+            .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfPostPages = it } }
+            .map { it.response()?.body() }
             .flattenAsFlowable { it }
             .flatMapSingle { post ->
                 if (post.featured_media != 0) api.getMedia(post.featured_media).map { LocalPost(post, it) }
@@ -112,8 +123,21 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), N
             }
             .toList()
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { refreshing = true }
-            .doOnSuccess { adapter.add(it.sortedByDescending { it.date }) }
-            .doOnError(Timber::e)
-            .doOnEvent { _, _ -> refreshing = false }
+            .doOnSuccess { adapter.add(it) }
+            .subscribeOn(AndroidSchedulers.mainThread())
+
+    private fun loadMedia() = Single.just(currentMediaPage >= maximumNumberOfMediaPages)
+            .flatMap {
+                if (it) Single.never()
+                else api.getMediaPage(currentMediaPage).doOnSubscribe { maximumNumberOfMediaPages++ }
+            }
+            .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfMediaPages = it } }
+            .map { it.response()?.body() }
+            .flattenAsFlowable { it }
+            .map { LocalMedia(it) }
+            .toList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess { adapter.add(it) }
+            .subscribeOn(AndroidSchedulers.mainThread())
+
 }
