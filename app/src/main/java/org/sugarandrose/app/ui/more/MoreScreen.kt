@@ -44,27 +44,8 @@ class MoreFragment : BaseFragment<FragmentMoreBinding, MoreMvvm.ViewModel>(), Mo
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.recyclerView.setHasFixedSize(true)
-        binding.appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener { //todo: animate toolbartitle out left and in right or something
-            internal var isShowing = false
-            internal var scrollRange = -1
-
-            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.totalScrollRange
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    binding.toolbarTitle.text = string(R.string.name)
-                    isShowing = true
-                } else if (isShowing) {
-                    binding.toolbarTitle.text = ""
-                    isShowing = false
-                }
-            }
-        })
     }
-
 }
 
 

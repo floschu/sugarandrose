@@ -1,6 +1,5 @@
 package org.sugarandrose.app.data.model
 
-import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 
 /**
@@ -8,4 +7,4 @@ import android.support.annotation.StringRes
  * florian.schuster@tailored-apps.com
  */
 
-class LocalMoreItem(@DrawableRes val icon: Int, @StringRes text: Int, val action: () -> Unit) : LocalMore(text)
+class LocalMoreHeader(@StringRes text: Int) : LocalMore(text)
