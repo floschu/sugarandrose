@@ -29,7 +29,6 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@{vm.post.image}"
-                app:layout_constraintBottom_toTopOf="@id/tv_title"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,8 +40,8 @@
                 style="@style/Title.Accent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding"
-                android:text="@{vm.post.title}"
+                android:layout_margin="@dimen/margin"
+                app:htmlText="@{vm.post.title}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_fav"
                 app:layout_constraintStart_toStartOf="parent"
@@ -64,10 +63,9 @@
                 app:layout_constraintTop_toBottomOf="@id/iv"
                 app:layout_constraintWidth_default="wrap" />
 
-
             <ImageView
                 android:id="@+id/btn_fav"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/margin"
                 android:background="?attr/selectableItemBackgroundBorderless"

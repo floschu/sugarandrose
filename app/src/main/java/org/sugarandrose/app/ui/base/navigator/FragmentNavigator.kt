@@ -19,9 +19,8 @@ import android.support.v4.app.Fragment
  * limitations under the License. */
 interface FragmentNavigator : Navigator {
 
-    fun replaceChildFragment(@IdRes containerId: Int, fragment: Fragment, args: Bundle)
-    fun replaceChildFragment(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String, args: Bundle)
-    fun replaceChildFragmentAndAddToBackStack(@IdRes containerId: Int, fragment: Fragment, args: Bundle, backstackTag: String)
-    fun replaceChildFragmentAndAddToBackStack(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String, args: Bundle, backstackTag: String)
+    fun replaceChildFragment(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String? = null)
+    fun replaceChildFragmentAndAddToBackStack(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String?, backstackTag: String?)
+    fun popChildFragmentBackstackImmediate()
 
 }

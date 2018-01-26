@@ -75,5 +75,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 class MainViewModel @Inject
 constructor(private val navigator: Navigator) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
 
-    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, uri.toString())
+    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.toString()) })
 }

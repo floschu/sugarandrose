@@ -20,6 +20,7 @@ import android.widget.Toast
 
 interface Toaster {
 
+    fun show(title: String)
     fun show(title: String, duration: Int = Toast.LENGTH_LONG)
     fun show(@StringRes titleRes: Int, duration: Int = Toast.LENGTH_LONG)
 

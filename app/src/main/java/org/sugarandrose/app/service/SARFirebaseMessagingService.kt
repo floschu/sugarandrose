@@ -18,10 +18,10 @@ import timber.log.Timber
 class SARFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Timber.d("Firebase Message received: " + remoteMessage.data)
+        Timber.d("Firebase Message received: ${remoteMessage.data}")
         remoteMessage.notification?.body?.let {
             SugarAndRoseApp.appComponent.notificationManager().pushRemote(
-                    Intent(SugarAndRoseApp.instance, MainActivity::class.java).apply { flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP },
+                    Intent(SugarAndRoseApp.instance, MainActivity::class.java),
                     remoteMessage.notification?.title ?: getString(R.string.app_name),
                     it
 

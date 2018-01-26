@@ -87,4 +87,11 @@ object BindingAdapters {
     fun setColorScheme(view: SwipeRefreshLayout, enable: Boolean) {
         if (enable) view.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorAccent, R.color.colorPrimary)
     }
+
+    @BindingAdapter("htmlText")
+    @JvmStatic
+    fun setHtmlText(view: TextView, text: String) {
+        @Suppress("DEPRECATION")
+        view.text = Html.fromHtml(text)
+    }
 }

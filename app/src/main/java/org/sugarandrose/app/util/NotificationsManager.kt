@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
@@ -25,23 +26,12 @@ class NotificationsManager @Inject
 constructor(@AppContext private val context: Context) {
 
     companion object {
+        const val REMOTE_PUSH_ID = 381636
         const val REMOTE_PUSH_CHANNEL_ID = "org.sugarandrose.app.util.channel.firebase_push"
     }
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-            notificationManager.createNotificationChannel(
-                    NotificationChannel(
-                            REMOTE_PUSH_CHANNEL_ID,
-                            context.getString(R.string.notification_channel_fb_name),
-                            NotificationManager.IMPORTANCE_DEFAULT
-                    ).apply {
-                        lightColor = Color.MAGENTA
-                    }
-            )
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) initChannels()
     }
 
     fun pushRemote(intent: Intent, title: String, message: String, subText: String? = null) {
@@ -60,7 +50,23 @@ constructor(@AppContext private val context: Context) {
                 .setShowWhen(true)
                 .setAutoCancel(true)
         if (subText != null) notification.setSubText(subText)
-        NotificationManagerCompat.from(context).notify(System.currentTimeMillis().toInt(), notification.build())
+        NotificationManagerCompat.from(context).notify(REMOTE_PUSH_ID, notification.build())
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun initChannels() {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val pushChannel = NotificationChannel(
+                REMOTE_PUSH_CHANNEL_ID,
+                context.getString(R.string.notification_channel_fb_name),
+                NotificationManager.IMPORTANCE_DEFAULT
+        )
+        pushChannel.apply {
+            lightColor = Color.MAGENTA
+            enableVibration(true)
+            enableLights(true)
+        }
+        notificationManager.createNotificationChannel(pushChannel)
+    }
 }

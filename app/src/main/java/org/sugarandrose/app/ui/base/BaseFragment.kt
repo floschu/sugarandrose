@@ -5,7 +5,6 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.*
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +58,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
     @Inject protected lateinit var refWatcher: RefWatcher
 
 
-    internal val fragmentComponent : FragmentComponent by lazy {
+    internal val fragmentComponent: FragmentComponent by lazy {
         DaggerFragmentComponent.builder()
                 .fragmentModule(FragmentModule(this))
                 .activityComponent((activity as BaseActivity<*, *>).activityComponent)
@@ -67,7 +66,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
     }
 
     @CallSuper
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         viewModel.saveInstanceState(outState)
     }
@@ -97,8 +96,4 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
         return binding.root
     }
 
-    fun dimen(@DimenRes resId: Int): Int = resources.getDimension(resId).toInt()
-    fun color(@ColorRes resId: Int): Int = ContextCompat.getColor(context, resId)
-    fun integer(@IntegerRes resId: Int): Int = resources.getInteger(resId)
-    fun string(@StringRes resId: Int): String = resources.getString(resId)
 }

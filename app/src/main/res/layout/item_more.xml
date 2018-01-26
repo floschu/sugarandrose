@@ -33,7 +33,8 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/SubTitle.Accent"
+            style="@style/SubTitle"
+            android:textColor="@color/textBlackSecondary"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
@@ -49,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:src="@drawable/ic_chevron_right"
-            android:tint="@color/colorPrimary"
+            android:tint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_title"

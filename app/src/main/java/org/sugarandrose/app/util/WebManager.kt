@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 @PerActivity
 class WebManager @Inject
-constructor(@ActivityContext private val context: Context,private val navigator: Navigator) {
+constructor(@ActivityContext private val context: Context, private val navigator: Navigator) {
     init {
         CustomTabsClient.connectAndInitialize(context, "com.android.chrome")
     }
@@ -86,12 +86,12 @@ constructor(@ActivityContext private val context: Context,private val navigator:
         }
     }
 
-    fun openTwitter(id: String) {
+    fun openTwitter(name: String, id: String) {
         val uri = try {
             context.applicationContext.packageManager.getPackageInfo("com.twitter.android", 0)
             Uri.parse("twitter://user?user_id=$id")
         } catch (e: Exception) {
-            Uri.parse("https://twitter.com/$id")
+            Uri.parse("https://twitter.com/$name")
         }
         navigator.startActivity(Intent(Intent.ACTION_VIEW, uri))
     }

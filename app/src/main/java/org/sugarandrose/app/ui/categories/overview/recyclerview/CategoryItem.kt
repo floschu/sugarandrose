@@ -48,6 +48,6 @@ constructor(private val navigator: Navigator) : BaseViewModel<CategoryItemMvvm.V
         notifyChange()
     }
 
-    override fun onClick() = navigator.startActivity(CategoryDetailActivity::class.java, category)
+    override fun onClick() = navigator.startActivity(CategoryDetailActivity::class.java, { putExtra(Navigator.EXTRA_ARG, category) })
 
 }

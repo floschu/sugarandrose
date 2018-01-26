@@ -64,12 +64,12 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
         fragmentComponent.inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_textsearch)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerView.itemAnimator = SlideInUpAnimator()
@@ -81,7 +81,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
     }
 
     override fun hideKeyboard() {
-        val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager = context!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         if (inputMethodManager.isActive) inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
     }
 }

@@ -46,7 +46,7 @@ constructor(@ActivityContext context: Context, webManager: WebManager, favorited
             webManager.openPinterest(BuildConfig.PINTEREST_NAME)
         })))
         data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_twitter, R.string.more_twitter, {
-            webManager.openTwitter(BuildConfig.TWITTER_ID)
+            webManager.openTwitter(BuildConfig.TWITTER_NAME, BuildConfig.TWITTER_ID)
         })))
         data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
             webManager.open("https://sugarandrose.org/kontakt/")

@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.*
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.squareup.leakcanary.RefWatcher
 import org.sugarandrose.app.BR
@@ -12,9 +11,11 @@ import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.injection.components.ActivityComponent
 import org.sugarandrose.app.injection.components.DaggerActivityComponent
 import org.sugarandrose.app.injection.modules.ActivityModule
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.extensions.attachViewOrThrowRuntimeException
+import io.reactivex.disposables.CompositeDisposable
 import io.realm.Realm
 import javax.inject.Inject
 
@@ -64,10 +65,13 @@ abstract class BaseActivity<B : ViewDataBinding, VM : MvvmViewModel<*>> : AppCom
     @Inject
     protected lateinit var refWatcher: RefWatcher
 
+    @field:[Inject ActivityDisposable]
+    internal lateinit var disposable: CompositeDisposable
+
     internal val activityComponent: ActivityComponent by lazy {
         DaggerActivityComponent.builder()
                 .activityModule(ActivityModule(this))
-                .appComponent(org.sugarandrose.app.SugarAndRoseApp.appComponent)
+                .appComponent(SugarAndRoseApp.appComponent)
                 .build()
     }
 
@@ -80,6 +84,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : MvvmViewModel<*>> : AppCom
     @CallSuper
     override fun onDestroy() {
         super.onDestroy()
+        disposable.clear()
         viewModel.detachView()
         refWatcher.watch(activityComponent)
         refWatcher.watch(viewModel)
@@ -93,8 +98,4 @@ abstract class BaseActivity<B : ViewDataBinding, VM : MvvmViewModel<*>> : AppCom
         viewModel.attachViewOrThrowRuntimeException(this, savedInstanceState)
     }
 
-    fun dimen(@DimenRes resId: Int): Int = resources.getDimension(resId).toInt()
-    fun color(@ColorRes resId: Int): Int = ContextCompat.getColor(this, resId)
-    fun integer(@IntegerRes resId: Int): Int = resources.getInteger(resId)
-    fun string(@StringRes resId: Int): String = resources.getString(resId)
 }

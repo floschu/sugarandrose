@@ -19,9 +19,9 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.support.annotation.CallSuper
 
-import org.sugarandrose.app.ui.base.MvvmViewNotAttachedException
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.util.extensions.getParcelable
+import io.reactivex.disposables.CompositeDisposable
 
 import javax.inject.Inject
 
@@ -47,6 +47,8 @@ abstract class BaseStateViewModel<V : MvvmView, S : Parcelable> : BaseObservable
 
     @Inject protected lateinit var state: S
 
+    protected val disposable = CompositeDisposable()
+
     @CallSuper
     override fun attachView(view: V, savedInstanceState: Bundle?) {
         this.view = view
@@ -56,6 +58,7 @@ abstract class BaseStateViewModel<V : MvvmView, S : Parcelable> : BaseObservable
     @CallSuper
     override fun detachView() {
         view = null
+        disposable.clear()
     }
 
     @CallSuper
@@ -70,11 +73,5 @@ abstract class BaseStateViewModel<V : MvvmView, S : Parcelable> : BaseObservable
         }
     }
 
-    val isViewAttached: Boolean
-        get() = view != null
-
-    fun checkViewAttached() {
-        if (!isViewAttached) throw MvvmViewNotAttachedException()
-    }
 }
 

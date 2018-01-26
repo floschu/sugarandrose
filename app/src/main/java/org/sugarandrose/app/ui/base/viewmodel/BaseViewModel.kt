@@ -3,10 +3,9 @@ package org.sugarandrose.app.ui.base.viewmodel
 import android.databinding.BaseObservable
 import android.os.Bundle
 import android.support.annotation.CallSuper
-import io.reactivex.disposables.CompositeDisposable
 
-import org.sugarandrose.app.ui.base.MvvmViewNotAttachedException
 import org.sugarandrose.app.ui.base.view.MvvmView
+import io.reactivex.disposables.CompositeDisposable
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -48,18 +47,12 @@ abstract class BaseViewModel<V : MvvmView> : BaseObservable(), MvvmViewModel<V> 
 
     @CallSuper
     override fun detachView() {
-        disposable.clear()
         view = null
+        disposable.clear()
     }
 
     protected open fun restoreInstanceState(savedInstanceState: Bundle) { }
 
     override fun saveInstanceState(outState: Bundle?) { }
 
-    val isViewAttached: Boolean
-        get() = view != null
-
-    fun checkViewAttached() {
-        if (!isViewAttached) throw MvvmViewNotAttachedException()
-    }
 }

@@ -11,6 +11,8 @@ import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.main.MainActivity
 import dagger.Component
+import io.reactivex.disposables.CompositeDisposable
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.util.ShareManager
@@ -47,6 +49,9 @@ interface ActivityComponent : ActivityComponentProvides {
 interface ActivityComponentProvides : AppComponentProvides {
     @ActivityContext
     fun activityContext(): Context
+
+    @ActivityDisposable
+    fun activityDisposable(): CompositeDisposable
 
     @ActivityFragmentManager
     fun defaultFragmentManager(): FragmentManager

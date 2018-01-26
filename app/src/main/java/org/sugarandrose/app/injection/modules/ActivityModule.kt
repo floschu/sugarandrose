@@ -14,6 +14,8 @@ import org.sugarandrose.app.ui.base.navigator.Navigator
 
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -35,6 +37,11 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @PerActivity
     @ActivityContext
     internal fun provideActivityContext(): Context = activity
+
+    @Provides
+    @PerActivity
+    @ActivityDisposable
+    internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
 
     @Provides
     @PerActivity

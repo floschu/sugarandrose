@@ -16,11 +16,16 @@ package org.sugarandrose.app.ui.base.feedback
 
 import android.content.Context
 import android.support.annotation.StringRes
+import android.support.v4.app.FragmentActivity
 import android.widget.Toast
 
 open class ApplicationToaster(val context: Context) : Toaster {
 
     private var toast: Toast? = null
+
+    override fun show(title: String) {
+        showInternal(title, Toast.LENGTH_LONG)
+    }
 
     override fun show(title: String, duration: Int) {
         showInternal(title, duration)

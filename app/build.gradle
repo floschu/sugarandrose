@@ -9,8 +9,8 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     signingConfigs {
         if (keystorePropertiesFile.exists()) {
             keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
@@ -26,7 +26,7 @@ android {
     defaultConfig {
         applicationId "org.sugarandrose.app"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -37,6 +37,7 @@ android {
         buildConfigField "String", "FB_NAME", "\"sugarandrose\""
         buildConfigField "String", "FB_ID", "\"1789118054658269\""
         buildConfigField "String", "INSTAGRAM_NAME", "\"sugarandrosen\""
+        buildConfigField "String", "TWITTER_NAME", "\"sugarandrose\""
         buildConfigField "String", "TWITTER_ID", "\"199252121\""
         buildConfigField "String", "PINTEREST_NAME", "\"sugarandrosem\""
 
