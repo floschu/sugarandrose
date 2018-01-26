@@ -72,8 +72,9 @@ fun Context.openNotificationSettings() {
     startActivity(intent)
 }
 
-fun Context.areYouSureDialog(callback: () -> Unit) = AlertDialog.Builder(this).apply {
-    setTitle(getString(R.string.dialog_are_you_sure))
+fun Context.areYouSureDialog(callback: () -> Unit) = AlertDialog.Builder(this, R.style.DialogTheme).apply {
+    setTitle(getString(R.string.dialog_are_you_sure_title))
+    setMessage(getString(R.string.dialog_are_you_sure_text))
     setPositiveButton(android.R.string.yes, { _, _ -> callback.invoke() })
     setNegativeButton(android.R.string.no, null)
     setCancelable(true)

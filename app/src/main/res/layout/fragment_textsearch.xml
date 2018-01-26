@@ -15,12 +15,14 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             app:elevation="0dp">
 
             <android.support.v7.widget.CardView
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_margin="@dimen/card_margin"
@@ -49,7 +51,6 @@
             </android.support.v7.widget.CardView>
         </android.support.design.widget.AppBarLayout>
 
-
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
@@ -60,7 +61,6 @@
             app:setColorScheme="@{true}">
 
             <FrameLayout
-                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -75,14 +75,23 @@
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_post" />
 
-                <TextView
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="NO CONTENT TODO"
-                    android:visibility="@{!vm.hasMedia}"
-                    tools:visibility="gone" />
+                    android:visibility="@{vm.tryIt}"
+                    tools:visibility="gone">
+
+                    <include layout="@layout/fragment_textsearch_try_it" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{!vm.tryIt ? !vm.hasMedia : false}"
+                    tools:visibility="gone">
+
+                    <include layout="@layout/fragment_textsearch_no_content" />
+                </FrameLayout>
             </FrameLayout>
         </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>

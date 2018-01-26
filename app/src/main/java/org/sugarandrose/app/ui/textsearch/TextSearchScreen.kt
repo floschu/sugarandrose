@@ -1,12 +1,9 @@
 package org.sugarandrose.app.ui.textsearch
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.databinding.Bindable
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -31,6 +28,8 @@ import org.sugarandrose.app.util.PaginationScrollListener
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CoordinatorLayout
 
 
 /**
@@ -41,6 +40,7 @@ import javax.inject.Inject
 interface TextSearchMvvm {
     interface View : MvvmView {
         fun hideKeyboard()
+        fun toggleToolbarScrolling(enable: Boolean)
     }
 
     interface ViewModel : MvvmViewModel<View> {
@@ -53,6 +53,8 @@ interface TextSearchMvvm {
         var query: String
         @get:Bindable
         var hasMedia: Boolean
+        @get:Bindable
+        var tryIt: Boolean
     }
 }
 
@@ -77,12 +79,27 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
             override fun loadMoreItems() = viewModel.loadNextPage()
             override fun isLoading() = viewModel.loading
         })
-        binding.content.setOnTouchListener { _, _ -> hideKeyboard(); false }
+        binding.recyclerView.setOnTouchListener { _, _ -> hideKeyboard(); false }
+        toggleToolbarScrolling(false)
     }
 
     override fun hideKeyboard() {
         val inputMethodManager = context!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         if (inputMethodManager.isActive) inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+    }
+
+    override fun toggleToolbarScrolling(enable: Boolean) {
+        val toolbarLayoutParams = binding.toolbar.layoutParams as AppBarLayout.LayoutParams
+        binding.toolbar.layoutParams = toolbarLayoutParams.apply {
+            scrollFlags = if (!enable) 0
+            else AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
+        }
+
+        val appBarLayoutParams = binding.appbar.layoutParams as CoordinatorLayout.LayoutParams
+        binding.appbar.layoutParams = appBarLayoutParams.apply {
+            behavior = if (!enable) null
+            else AppBarLayout.Behavior()
+        }
     }
 }
 
@@ -92,6 +109,7 @@ class TextSearchViewModel @Inject
 constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
+    override var tryIt: Boolean by NotifyPropertyChangedDelegate(true, BR.tryIt)
     override var query: String = ""
         set(value) {
             field = value
@@ -111,6 +129,7 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
                 .filter { it.isNotEmpty() }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
+                    tryIt = false
                     adapter.clear()
                     currentPage = 1
                 }
@@ -138,6 +157,9 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
             .doOnSuccess { adapter.add(it) }
             .doOnSuccess { loading = false }
             .doOnError(Timber::e)
-            .doOnEvent { _, _ -> hasMedia = !adapter.isEmpty }
+            .doOnEvent { _, _ ->
+                hasMedia = !adapter.isEmpty
+                view?.toggleToolbarScrolling(hasMedia)
+            }
 
 }

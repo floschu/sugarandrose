@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="name">sugar&amp;rose</string>
-    <string name="menu_bnv_new">Neu</string>
+    <string name="menu_bnv_new">Home</string>
     <string name="menu_bnv_search">Suche</string>
     <string name="menu_bnv_favorited">Merkzettel</string>
     <string name="menu_bnv_more">Mehr</string>
@@ -13,6 +13,9 @@
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
     <string name="search_hint">Suche nach Titeln, Inhalten …</string>
+    <string name="textsearch_no_content">Mit diesem Suchbegriff wurde leider nichts gefunden</string>
+    <string name="textsearch_try_it">Gib hier deinen Suchbegriff ein</string>
+    <string name="favorited_no_content">Es wurde noch nichts ge-</string>
 
     <string name="more_about">Über</string>
     <string name="more_contact">Kontakt</string>
@@ -31,5 +34,6 @@
     <string name="more_notifications">Benachrichtigungen bearbeiten</string>
     <string name="more_delete_data">Lokale Daten löschen</string>
 
-    <string name="dialog_are_you_sure">Sind Sie sich sicher?</string>
+    <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
+    <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>
 </resources>

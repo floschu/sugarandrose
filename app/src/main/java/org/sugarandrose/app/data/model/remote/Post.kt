@@ -10,7 +10,6 @@ import org.threeten.bp.ZonedDateTime
 class Post(val id: Long,
            val date: ZonedDateTime,
            val title: DisplayText,
-           val content: DisplayText,
            val link: String,
            val featured_media: Long,
            val tags: List<Long>,
