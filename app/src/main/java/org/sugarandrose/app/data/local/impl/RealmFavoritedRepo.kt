@@ -56,7 +56,8 @@ constructor(private val provider: Provider<Realm>) : FavoritedRepo {
         }
     }
 
+    override fun clearData() = provider.use { it.executeTransaction { it.deleteAll() } }
+
     private inline fun <reified T : RealmObject> getChangedObservable(realm: Realm): Flowable<out List<T>> =
             realm.where(T::class.java).findAll().asFlowable().filter { it.isLoaded }
-
 }

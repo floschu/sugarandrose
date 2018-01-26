@@ -129,7 +129,7 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
             .map { it.response()?.body() }
             .flattenAsFlowable { it }
             .flatMapSingle { post ->
-                if (post.featured_media != 0) api.getMedia(post.featured_media).map { LocalPost(post, it) }
+                if (post.featured_media != 0L) api.getMedia(post.featured_media).map { LocalPost(post, it) }
                 else Single.just(LocalPost(post))
             }
             .toList()

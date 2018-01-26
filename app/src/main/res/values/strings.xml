@@ -12,7 +12,7 @@
     <string name="notification_channel_fb_name">Push Nachrichten</string>
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
-    <string name="search_hint">Suche nach Posts, Medien, …</string>
+    <string name="search_hint">Suche nach Titeln, Inhalten …</string>
 
     <string name="more_about">Über</string>
     <string name="more_contact">Kontakt</string>
@@ -20,14 +20,16 @@
     <string name="more_instagram">Folge mir auf Instagram</string>
     <string name="more_pinterest">Folge mir auf Pinterest</string>
     <string name="more_twitter">Folge mir auf Twitter</string>
-    <string name="more_privacy">Datenschutz</string>
+    <string name="more_privacy">Impressum &amp; Datenschutz</string>
     <string name="more_explore">Entdecken</string>
     <string name="more_rose_index">Rosenindex</string>
-    <string name="more_recepies">Rezeptideen</string>
+    <string name="more_recepe_index">Rezeptindex</string>
     <string name="more_glossar">Glossar</string>
     <string name="more_books_blog">Bücherblog</string>
     <string name="more_books_graphics">Buchgrafik</string>
     <string name="more_settings">Einstellungen</string>
     <string name="more_notifications">Benachrichtigungen bearbeiten</string>
     <string name="more_delete_data">Lokale Daten löschen</string>
+
+    <string name="dialog_are_you_sure">Sind Sie sich sicher?</string>
 </resources>

@@ -30,6 +30,7 @@ import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import android.webkit.WebView
 import android.widget.CalendarView
+import org.sugarandrose.app.R
 import org.sugarandrose.app.util.extensions.fromRealmString
 import org.threeten.bp.LocalDate
 
@@ -75,9 +76,15 @@ object BindingAdapters {
         view.loadUrl(url)
     }
 
-    @BindingAdapter("onDateSelect")
+    @BindingAdapter("loadWebContent")
     @JvmStatic
-    fun onDateSelect(view: CalendarView, callback: (LocalDate) -> Unit) {
-        view.setOnDateChangeListener { _, year, month, dayOfMonth -> callback.invoke(LocalDate.of(year, month + 1, dayOfMonth)) }
+    fun loadWebContent(view: WebView, content: String) {
+        view.loadData(content, "text/html", "UTF-8")
+    }
+
+    @BindingAdapter("setColorScheme")
+    @JvmStatic
+    fun setColorScheme(view: SwipeRefreshLayout, enable: Boolean) {
+        if (enable) view.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorAccent, R.color.colorPrimary)
     }
 }

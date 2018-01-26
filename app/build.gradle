@@ -32,6 +32,14 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         setProperty("archivesBaseName", "SugarAndRose-v$versionName-b$versionCode")
+
+        buildConfigField "String", "BASE_URL", "\"https://sugarandrose.org/wp-json/wp/v2/\""
+        buildConfigField "String", "FB_NAME", "\"sugarandrose\""
+        buildConfigField "String", "FB_ID", "\"1789118054658269\""
+        buildConfigField "String", "INSTAGRAM_NAME", "\"sugarandrosen\""
+        buildConfigField "String", "TWITTER_ID", "\"199252121\""
+        buildConfigField "String", "PINTEREST_NAME", "\"sugarandrosem\""
+
     }
     buildTypes {
         release {
@@ -49,18 +57,10 @@ android {
             signingConfig signingConfigs.debug
             applicationIdSuffix ".dev"
             resValue "string", "app_name", "sugar&rose DEV"
-            buildConfigField "String", "BASE_URL", "\"https://sugarandrose.org/wp-json/wp/v2/\""
-            buildConfigField "String", "FB_NAME", "\"sugarandrose\""
-            buildConfigField "String", "FB_ID", "\"1789118054658269\""
-            buildConfigField "String", "INSTA_NAME", "\"sugarandrosen\""
             dimension "backend"
         }
         prod {
             resValue "string", "app_name", "sugar&rose"
-            buildConfigField "String", "BASE_URL", "\"https://sugarandrose.org/wp-json/wp/v2/\""
-            buildConfigField "String", "FB_NAME", "\"sugarandrose\""
-            buildConfigField "String", "FB_ID", "\"1789118054658269\""
-            buildConfigField "String", "INSTA_NAME", "\"sugarandrosen\""
             dimension "backend"
         }
     }

@@ -14,6 +14,7 @@
 
 package org.sugarandrose.app.util.extensions
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Bitmap
@@ -25,6 +26,8 @@ import io.reactivex.Single
 import io.reactivex.SingleEmitter
 import java.io.FileNotFoundException
 import java.util.*
+import android.content.Intent
+import org.sugarandrose.app.R
 
 
 fun Context.getCurrentLocale(): Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -53,4 +56,26 @@ fun Context.loadWithPicasso(url: String?): Single<Bitmap> = Single.create { emit
         override fun onBitmapFailed(errorDrawable: Drawable?) = emitter.onError(FileNotFoundException())
         override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom?) = emitter.onSuccess(bitmap)
     })
+}
+
+fun Context.openNotificationSettings() {
+    val intent = Intent().apply {
+        action = "android.settings.APP_NOTIFICATION_SETTINGS"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            putExtra("android.provider.extra.APP_PACKAGE", packageName)
+        } else {
+            putExtra("app_package", packageName)
+            putExtra("app_uid", applicationInfo.uid)
+        }
+    }
+    startActivity(intent)
+}
+
+fun Context.areYouSureDialog(callback: () -> Unit) = AlertDialog.Builder(this).apply {
+    setTitle(getString(R.string.dialog_are_you_sure))
+    setPositiveButton(android.R.string.yes, { _, _ -> callback.invoke() })
+    setNegativeButton(android.R.string.no, null)
+    setCancelable(true)
+    show()
 }

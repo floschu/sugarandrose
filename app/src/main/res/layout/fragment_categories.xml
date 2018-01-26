@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:onRefresh="@{vm::onRefresh}"
-            app:refreshing="@{vm.refreshing}">
+            app:refreshing="@{vm.refreshing}"
+            app:setColorScheme="@{true}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"

@@ -10,4 +10,6 @@ interface FavoritedRepo {
 
     fun addItem(item: LocalDisplayItem)
     fun deleteItem(item: LocalDisplayItem)
+
+    fun clearData()
 }

@@ -44,9 +44,9 @@ interface PostMvvm {
         fun onRefresh()
 
         @get:Bindable
-        var title: String?
+        var title: String
         @get:Bindable
-        var url: String?
+        var url: String
     }
 }
 
@@ -68,14 +68,14 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.url = intent.getParcelableExtra<LocalPost>(Navigator.EXTRA_ARG).url
+        viewModel.url = intent.getStringExtra(Navigator.EXTRA_ARG)
 
         initWebView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> onBackPressed()
+            android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -152,8 +152,8 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
 class PostViewModel @Inject
 constructor() : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(true, BR.refreshing)
-    override var title: String? by NotifyPropertyChangedDelegate(null, BR.title)
-    override var url: String? by NotifyPropertyChangedDelegate(null, BR.url)
+    override var title: String by NotifyPropertyChangedDelegate("", BR.title)
+    override var url: String by NotifyPropertyChangedDelegate("", BR.url)
 
     override fun onRefresh() {
         refreshing = true

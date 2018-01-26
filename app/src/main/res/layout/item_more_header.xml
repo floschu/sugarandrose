@@ -14,27 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <View
-            android:id="@+id/divider"
-            style="@style/Divider"
-            android:layout_marginBottom="@dimen/card_vertical_margin"
-            app:layout_constraintBottom_toTopOf="@id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/tv_title"
-            style="@style/Text"
-            android:padding="@dimen/padding"
+            style="@style/SubTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/card_horizontal_margin"
+            android:layout_marginTop="@dimen/vertical_margin"
+            android:padding="@dimen/padding"
             android:textColor="@color/textBlackSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
     </android.support.constraint.ConstraintLayout>
 </layout>

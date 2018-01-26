@@ -61,7 +61,7 @@ constructor(private val navigator: Navigator, private val favoritedRepo: Favorit
         notifyChange()
     }
 
-    override fun onClick() = navigator.startActivity(PostActivity::class.java, post)
+    override fun onClick() = navigator.startActivity(PostActivity::class.java, post.url)
 
     override fun onFavoriteClick() {
         if (favorited) favoritedRepo.deleteItem(post)

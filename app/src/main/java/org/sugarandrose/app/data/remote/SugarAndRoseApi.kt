@@ -9,16 +9,14 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-const val TOTAL_PAGES_HEADER = "X-WP-TotalPages"
-
 interface SugarAndRoseApi {
 
     //Single Items
     @GET("posts/{id}")
-    fun getPost(@Path("id") id: Int): Single<Post>
+    fun getPost(@Path("id") id: Long): Single<Post>
 
     @GET("media/{id}")
-    fun getMedia(@Path("id") id: Int): Single<Media>
+    fun getMedia(@Path("id") id: Long): Single<Media>
 
     //Posts
     @GET("posts/?order=desc&?orderby=date_gmt")
@@ -39,3 +37,8 @@ interface SugarAndRoseApi {
     @GET("posts/?order=desc&?orderby=date_gmt")
     fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 5): Single<Result<List<Post>>>
 }
+
+const val TOTAL_PAGES_HEADER = "X-WP-TotalPages"
+const val TOTAL_PAGES_DEFAULT = 10
+fun <T> parseMaxPages(result: Result<T>?): Int =
+        result?.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt() ?: TOTAL_PAGES_DEFAULT

@@ -19,21 +19,21 @@
 
         <ImageView
             android:id="@+id/iv"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@{vm.item.icon}"
+            android:tint="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toStartOf="@id/tv_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/header" />
+            tools:src="@drawable/ic_facebook" />
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/Title.Black"
+            style="@style/SubTitle.Accent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
@@ -48,7 +48,8 @@
             android:id="@+id/iv_chevron"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:src="@drawable/ic_chevron_right_accent"
+            android:src="@drawable/ic_chevron_right"
+            android:tint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_title"

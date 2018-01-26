@@ -7,9 +7,12 @@ import org.threeten.bp.ZonedDateTime
  * florian.schuster@tailored-apps.com
  */
 
-class Post(var id: Int,
-           var date: ZonedDateTime,
-           var title: DisplayText,
-           var link: String,
-           val featured_media: Int
+class Post(val id: Long,
+           val date: ZonedDateTime,
+           val title: DisplayText,
+           val content: DisplayText,
+           val link: String,
+           val featured_media: Long,
+           val tags: List<Long>,
+           val categories: List<Long>
 )

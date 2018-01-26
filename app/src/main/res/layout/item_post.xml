@@ -16,7 +16,6 @@
         android:layout_margin="@dimen/card_margin_half"
         app:cardCornerRadius="6dp">
 
-
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,6 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:src="@{vm.post.image}"
                 app:layout_constraintBottom_toTopOf="@id/tv_title"
                 app:layout_constraintDimensionRatio="16:9"

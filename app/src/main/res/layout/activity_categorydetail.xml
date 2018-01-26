@@ -27,7 +27,8 @@
             android:foreground="?android:windowContentOverlay"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:onRefresh="@{vm::onRefresh}"
-            app:refreshing="@{vm.refreshing}">
+            app:refreshing="@{vm.refreshing}"
+            app:setColorScheme="@{true}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
