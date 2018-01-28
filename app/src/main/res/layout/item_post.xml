@@ -18,15 +18,15 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:onClick="@{vm::onClick}">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{vm::onClick}"
                 android:scaleType="centerCrop"
                 android:src="@{vm.post.image}"
                 app:layout_constraintDimensionRatio="16:9"
@@ -41,6 +41,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{vm::onClick}"
                 app:htmlText="@{vm.post.title}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_fav"
@@ -71,13 +73,14 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{vm::onFavoriteClick}"
                 android:padding="@dimen/padding"
-                android:src="@{vm.favorited ? @drawable/ic_favorite : @drawable/ic_favorite_border}"
+                android:src="@{vm.favorited ? @drawable/ic_bookmark : @drawable/ic_bookmark_border}"
+                android:tint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_share"
                 app:layout_constraintHeight_default="wrap"
                 app:layout_constraintTop_toBottomOf="@id/iv"
                 app:layout_constraintWidth_default="wrap"
-                tools:src="@drawable/ic_favorite_border" />
+                tools:src="@drawable/ic_bookmark_border" />
 
             <ProgressBar
                 android:layout_width="0dp"

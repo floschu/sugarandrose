@@ -2,6 +2,7 @@ package org.sugarandrose.app
 
 import android.app.Application
 import android.content.res.Resources
+import com.google.firebase.messaging.FirebaseMessaging
 import com.jakewharton.picasso.OkHttp3Downloader
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.leakcanary.LeakCanary
@@ -61,6 +62,8 @@ class SugarAndRoseApp : Application() {
         RxJavaPlugins.setErrorHandler({ Timber.e(it) })
         AndroidThreeTen.init(this)
         setupPicasso()
+
+        FirebaseMessaging.getInstance().subscribeToTopic("sugar_and_rose_notifications")
     }
 
     private fun setupPicasso() {

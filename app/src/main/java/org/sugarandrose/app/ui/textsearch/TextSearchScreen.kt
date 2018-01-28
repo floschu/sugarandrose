@@ -46,6 +46,8 @@ interface TextSearchMvvm {
     interface ViewModel : MvvmViewModel<View> {
         fun loadNextPage()
 
+        fun onDeleteClick()
+
         val adapter: PostAdapter
         @get:Bindable
         var loading: Boolean
@@ -162,4 +164,8 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
                 view?.toggleToolbarScrolling(hasMedia)
             }
 
+    override fun onDeleteClick() {
+        query = ""
+        view?.hideKeyboard()
+    }
 }

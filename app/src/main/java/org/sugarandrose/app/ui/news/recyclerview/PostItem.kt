@@ -1,11 +1,15 @@
 package org.sugarandrose.app.ui.news.recyclerview
 
+import android.content.Context
 import android.databinding.Bindable
+import android.os.Bundle
 import android.view.View
+import com.google.firebase.analytics.FirebaseAnalytics
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.databinding.ItemPostBinding
+import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.navigator.Navigator
@@ -13,6 +17,7 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.post.PostActivity
+import org.sugarandrose.app.util.EventLogManager
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.ShareManager
 import timber.log.Timber
@@ -50,7 +55,11 @@ class PostItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemPostBindin
 
 @PerViewHolder
 class PostItemViewModel @Inject
-constructor(private val navigator: Navigator, private val favoritedRepo: FavoritedRepo, private val shareManager: ShareManager) : BaseViewModel<PostItemMvvm.View>(), PostItemMvvm.ViewModel {
+constructor(private val navigator: Navigator,
+            private val favoritedRepo: FavoritedRepo,
+            private val shareManager: ShareManager,
+            private val eventLogManager: EventLogManager
+) : BaseViewModel<PostItemMvvm.View>(), PostItemMvvm.ViewModel {
     override lateinit var post: LocalPost
     override var favorited: Boolean = false
     override var loading by NotifyPropertyChangedDelegate(false, BR.loading)
@@ -61,13 +70,18 @@ constructor(private val navigator: Navigator, private val favoritedRepo: Favorit
         notifyChange()
     }
 
-    override fun onClick() = navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, post.url) })
+    override fun onClick() {
+        eventLogManager.logOpen(post)
+        navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, post.url) })
+    }
 
     override fun onFavoriteClick() {
         if (favorited) favoritedRepo.deleteItem(post)
         else favoritedRepo.addItem(post)
         favorited = !favorited
         notifyPropertyChanged(BR.favorited)
+
+        if (favorited) eventLogManager.logFavorite(post)
     }
 
     override fun onShareClick() {

@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/bnv_favorited"
-        android:icon="@drawable/ic_favorite_border"
+        android:icon="@drawable/ic_bookmark_border"
         android:title="@string/menu_bnv_favorited"/>
 
     <item

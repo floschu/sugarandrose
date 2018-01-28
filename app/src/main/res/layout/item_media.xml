@@ -57,13 +57,13 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{vm::onFavoriteClick}"
                 android:padding="@dimen/padding"
-                android:src="@{vm.favorited ? @drawable/ic_favorite : @drawable/ic_favorite_border}"
+                android:src="@{vm.favorited ? @drawable/ic_bookmark : @drawable/ic_bookmark_border}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_share"
                 app:layout_constraintHeight_default="wrap"
                 app:layout_constraintTop_toBottomOf="@id/iv"
                 app:layout_constraintWidth_default="wrap"
-                tools:src="@drawable/ic_favorite_border" />
+                tools:src="@drawable/ic_bookmark_border" />
 
             <ProgressBar
                 android:layout_width="0dp"

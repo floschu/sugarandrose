@@ -7,11 +7,13 @@ import javax.inject.Inject
 import android.content.Intent
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import android.graphics.Bitmap
+import android.os.Bundle
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import android.support.v4.content.FileProvider
 import android.text.Html
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.Completable
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.injection.qualifier.ActivityContext
@@ -27,22 +29,24 @@ import org.sugarandrose.app.R
 
 @PerActivity
 class ShareManager @Inject
-constructor(@ActivityContext private val context: Context, private val navigator: Navigator) {
+constructor(@ActivityContext private val context: Context, private val navigator: Navigator, private val eventLogManager: EventLogManager) {
 
     private val cachedName = "shareimage.jpg"
     private val tempFile: File by lazy { File(context.cacheDir, cachedName) }
 
-    fun sharePost(item: LocalPost): Completable =
-            if (item.image != null) context.loadWithPicasso(item.image)
-                    .flatMap(this::cacheBitmapForShare)
-                    .flatMapCompletable { sharePostInternally(item.title, item.url, it) }
-            else sharePostInternally(item.title, item.url)
+    fun sharePost(item: LocalPost): Completable {
+        eventLogManager.logShare(item)
+        return if (item.image != null) context.loadWithPicasso(item.image)
+                .flatMap(this::cacheBitmapForShare)
+                .flatMapCompletable { sharePostInternally(item.title, item.url, it) }
+        else sharePostInternally(item.title, item.url)
+    }
 
     private fun sharePostInternally(title: String, url: String, file: File? = null): Completable = Completable.create {
         @Suppress("DEPRECATION")
         val share = Intent(Intent.ACTION_SEND).apply {
             putExtra(Intent.EXTRA_SUBJECT, title)
-            putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text, url) )
+            putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text, url))
         }
         share.apply {
             if (file != null) {
@@ -57,10 +61,12 @@ constructor(@ActivityContext private val context: Context, private val navigator
         it.onComplete()
     }
 
-    fun shareMedia(item: LocalMedia): Completable =
-            context.loadWithPicasso(item.image)
-                    .flatMap(this::cacheBitmapForShare)
-                    .flatMapCompletable(this::shareMediaInternally)
+    fun shareMedia(item: LocalMedia): Completable {
+        eventLogManager.logShare(item)
+        return context.loadWithPicasso(item.image)
+                .flatMap(this::cacheBitmapForShare)
+                .flatMapCompletable(this::shareMediaInternally)
+    }
 
     private fun shareMediaInternally(bitmap: File): Completable = Completable.create {
         val share = Intent(Intent.ACTION_SEND).apply {

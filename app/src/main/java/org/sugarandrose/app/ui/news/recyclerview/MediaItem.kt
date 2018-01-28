@@ -11,6 +11,7 @@ import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
+import org.sugarandrose.app.util.EventLogManager
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.ShareManager
 import timber.log.Timber
@@ -47,7 +48,10 @@ class MediaItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemMediaBind
 
 @PerViewHolder
 class MediaItemViewModel @Inject
-constructor(private val favoritedRepo: FavoritedRepo, private val shareManager: ShareManager) : BaseViewModel<MediaItemMvvm.View>(), MediaItemMvvm.ViewModel {
+constructor(private val favoritedRepo: FavoritedRepo,
+            private val shareManager: ShareManager,
+            private val eventLogManager: EventLogManager
+) : BaseViewModel<MediaItemMvvm.View>(), MediaItemMvvm.ViewModel {
     override lateinit var media: LocalMedia
     override var favorited: Boolean = false
     override var loading by NotifyPropertyChangedDelegate(false, BR.loading)
@@ -63,6 +67,8 @@ constructor(private val favoritedRepo: FavoritedRepo, private val shareManager: 
         else favoritedRepo.addItem(media)
         favorited = !favorited
         notifyPropertyChanged(BR.favorited)
+
+        if (favorited) eventLogManager.logFavorite(media)
     }
 
 

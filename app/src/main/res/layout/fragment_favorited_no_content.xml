@@ -23,7 +23,7 @@
         android:id="@+id/iv_fav"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/ic_favorite"
+        android:src="@drawable/ic_bookmark"
         app:layout_constraintBottom_toBottomOf="@id/tv_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="wrap"

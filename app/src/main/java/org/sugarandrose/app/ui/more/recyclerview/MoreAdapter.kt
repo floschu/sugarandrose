@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @PerFragment
 class MoreAdapter @Inject
-constructor(@ActivityContext context: Context, webManager: WebManager, favoritedRepo: FavoritedRepo) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+constructor(@ActivityContext context: Context, webManager: WebManager, favoritedRepo: FavoritedRepo, navigator: Navigator) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TYPE_HEADER = 0
     private val TYPE_ITEM = 1
 
@@ -49,17 +49,17 @@ constructor(@ActivityContext context: Context, webManager: WebManager, favorited
             webManager.openTwitter(BuildConfig.TWITTER_NAME, BuildConfig.TWITTER_ID)
         })))
         data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
-            webManager.open("https://sugarandrose.org/kontakt/")
+            navigator.startActivity(Utils.mail("sugarandrosen@gmail.com"))
         })))
         data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_privacy, {
             webManager.open("https://sugarandrose.org/kontakt/impressum/")
         })))
 
         data.add(Pair(TYPE_HEADER, LocalMoreHeader(R.string.more_explore)))
-        data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_format_list_numbered, R.string.more_rose_index, {
+        data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_format_align_left, R.string.more_rose_index, {
             webManager.open("https://sugarandrose.org/rosenindex/")
         })))
-        data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_format_list_numbered, R.string.more_recepe_index, {
+        data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_format_align_left, R.string.more_recepe_index, {
             webManager.open("https://sugarandrose.org/rezeptindex/")
         })))
         data.add(Pair(TYPE_ITEM, LocalMoreItem(R.drawable.ic_format_align_left, R.string.more_glossar, {
