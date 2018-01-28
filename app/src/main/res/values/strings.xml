@@ -8,6 +8,7 @@
 
     <string name="cont">Weiterlesen</string>
     <string name="share_title">Teilen mit…</string>
+    <string name="share_text">Hey, schau dir diesen sugar&amp;rose Post an: %s</string>
     <string name="categories_number">%d Posts</string>
     <string name="notification_channel_fb_name">Push Nachrichten</string>
     <string name="search_text_title">Suche</string>

@@ -11,6 +11,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import android.support.v4.content.FileProvider
+import android.text.Html
 import io.reactivex.Completable
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.injection.qualifier.ActivityContext
@@ -38,9 +39,10 @@ constructor(@ActivityContext private val context: Context, private val navigator
             else sharePostInternally(item.title, item.url)
 
     private fun sharePostInternally(title: String, url: String, file: File? = null): Completable = Completable.create {
+        @Suppress("DEPRECATION")
         val share = Intent(Intent.ACTION_SEND).apply {
             putExtra(Intent.EXTRA_SUBJECT, title)
-            putExtra(Intent.EXTRA_TEXT, url)
+            putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text, url) )
         }
         share.apply {
             if (file != null) {

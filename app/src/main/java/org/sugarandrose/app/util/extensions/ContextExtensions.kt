@@ -27,7 +27,9 @@ import io.reactivex.SingleEmitter
 import java.io.FileNotFoundException
 import java.util.*
 import android.content.Intent
+import io.reactivex.schedulers.Schedulers
 import org.sugarandrose.app.R
+import java.io.IOException
 
 
 fun Context.getCurrentLocale(): Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -51,12 +53,13 @@ inline fun <reified T> Context.castWithUnwrap(): T? {
 }
 
 fun Context.loadWithPicasso(url: String?): Single<Bitmap> = Single.create { emitter: SingleEmitter<Bitmap> ->
-    Picasso.with(this).load(url).into(object : Target {
-        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-        override fun onBitmapFailed(errorDrawable: Drawable?) = emitter.onError(FileNotFoundException())
-        override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom?) = emitter.onSuccess(bitmap)
-    })
-}
+    try {
+        val bitmap = Picasso.with(this).load(url).get()
+        emitter.onSuccess(bitmap)
+    } catch (e: IOException) {
+        emitter.onError(e)
+    }
+}.subscribeOn(Schedulers.io())
 
 fun Context.openNotificationSettings() {
     val intent = Intent().apply {
