@@ -30,7 +30,9 @@ import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import android.webkit.WebView
 import android.widget.CalendarView
+import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
+import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.util.extensions.fromRealmString
 import org.threeten.bp.LocalDate
 
@@ -85,7 +87,7 @@ object BindingAdapters {
     @BindingAdapter("setColorScheme")
     @JvmStatic
     fun setColorScheme(view: SwipeRefreshLayout, enable: Boolean) {
-        if (enable) view.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorAccent, R.color.colorPrimary)
+        if (enable) view.setColorSchemeResources(R.color.colorPrimaryDark, R.color.colorAccentRipple, R.color.colorAccent)
     }
 
     @BindingAdapter("htmlText")
@@ -93,5 +95,11 @@ object BindingAdapters {
     fun setHtmlText(view: TextView, text: String) {
         @Suppress("DEPRECATION")
         view.text = Html.fromHtml(text)
+    }
+
+    @BindingAdapter("logoClick")
+    @JvmStatic
+    fun setLogoClick(view: View, enable: Boolean) {
+        view.setOnClickListener { SugarAndRoseApp.appComponent.webManager().open(BuildConfig.WEB_PAGE) }
     }
 }

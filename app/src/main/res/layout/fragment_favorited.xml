@@ -14,24 +14,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:padding="@dimen/card_margin_half"
-            android:scrollbars="vertical"
-            app:adapter="@{vm.adapter}"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_post" />
+        <include
+            android:id="@+id/include_toolbar"
+            layout="@layout/toolbar_custom_title"
+            app:title="@{@string/name}" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{!vm.hasMedia}"
-            tools:visibility="gone">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <include layout="@layout/fragment_favorited_no_content" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:padding="@dimen/card_margin_half"
+                android:scrollbars="vertical"
+                app:adapter="@{vm.adapter}"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_post" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="@{!vm.hasMedia}"
+                tools:visibility="gone">
+
+                <include layout="@layout/fragment_favorited_no_content" />
+            </FrameLayout>
         </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -90,6 +90,11 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), N
     private var currentMediaPage = 1
     private var maximumNumberOfMediaPages = TOTAL_PAGES_DEFAULT
 
+    override fun attachView(view: NewMvvm.View, savedInstanceState: Bundle?) {
+        super.attachView(view, savedInstanceState)
+
+    }
+
     override fun onResume() {
         if (adapter.isEmpty) onRefresh()
     }

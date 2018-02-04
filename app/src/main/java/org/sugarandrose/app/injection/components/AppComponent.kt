@@ -16,6 +16,7 @@ import io.realm.Realm
 import okhttp3.OkHttpClient
 import org.sugarandrose.app.util.EventLogManager
 import org.sugarandrose.app.util.NotificationsManager
+import org.sugarandrose.app.util.WebManager
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -59,4 +60,5 @@ interface AppComponentProvides {
 
     fun notificationManager(): NotificationsManager
     fun eventLogManager(): EventLogManager
+    fun webManager(): WebManager
 }

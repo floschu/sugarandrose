@@ -16,6 +16,7 @@ import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.util.ShareManager
+import org.sugarandrose.app.util.SocialMediaManager
 import org.sugarandrose.app.util.WebManager
 
 /* Copyright 2016 Patrick Löwenstein
@@ -58,6 +59,6 @@ interface ActivityComponentProvides : AppComponentProvides {
 
     fun navigator(): Navigator
     fun snacker(): Snacker
-    fun webManager(): WebManager
     fun shareManager(): ShareManager
+    fun socialMediaManager(): SocialMediaManager
 }

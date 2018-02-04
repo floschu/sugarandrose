@@ -16,9 +16,12 @@
     <string name="search_hint">Suche nach Titeln, Inhalten …</string>
     <string name="textsearch_no_content">Mit diesem Suchbegriff wurde leider nichts gefunden</string>
     <string name="textsearch_try_it">Gib hier deinen Suchbegriff ein</string>
-    <string name="favorited_no_content">Es wurde noch nichts ge-</string>
+    <string name="favorited_no_content_1">Du kannst dir Beiträge merken, indem du</string>
+    <string name="favorited_no_content_2">drückst.</string>
+    <string name="home_new_title">Neues</string>
+    <string name="home_roses_title">Rosenindex</string>
 
-    <string name="more_about">Über</string>
+    <string name="more_about">Social Media und Kontakt</string>
     <string name="more_contact">Kontakt</string>
     <string name="more_facebook">Like mich auf Facebook</string>
     <string name="more_instagram">Folge mir auf Instagram</string>

@@ -18,6 +18,8 @@ import org.sugarandrose.app.ui.categories.overview.CategoriesMvvm
 import org.sugarandrose.app.ui.categories.overview.CategoriesViewModel
 import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemMvvm
 import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemViewModel
+import org.sugarandrose.app.ui.home.HomeMvvm
+import org.sugarandrose.app.ui.home.HomeViewModel
 import org.sugarandrose.app.ui.news.recyclerview.PostItemMvvm
 import org.sugarandrose.app.ui.news.recyclerview.PostItemViewModel
 import org.sugarandrose.app.ui.news.NewMvvm
@@ -26,6 +28,8 @@ import org.sugarandrose.app.ui.news.recyclerview.MediaItemMvvm
 import org.sugarandrose.app.ui.news.recyclerview.MediaItemViewModel
 import org.sugarandrose.app.ui.post.PostMvvm
 import org.sugarandrose.app.ui.post.PostViewModel
+import org.sugarandrose.app.ui.roses.RosesMvvm
+import org.sugarandrose.app.ui.roses.RosesViewModel
 import org.sugarandrose.app.ui.search.SearchMvvm
 import org.sugarandrose.app.ui.search.SearchViewModel
 import org.sugarandrose.app.ui.textsearch.TextSearchMvvm
@@ -85,5 +89,11 @@ abstract class ViewModelModule {
 
     @Binds
     internal abstract fun bindCategoryDetailViewModel(viewModel: CategoryDetailViewModel): CategoryDetailMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindHomeViewModel(viewModel: HomeViewModel): HomeMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindRosesViewModel(viewModel: RosesViewModel): RosesMvvm.ViewModel
 
 }

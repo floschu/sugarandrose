@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d667a0</color>
+    <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#7f3d60</color>
     <color name="colorAccent">#a5254c</color>
     <color name="colorAccentRipple">#a33657</color>
 
-
     <color name="transparent">#00ffffff</color>
-    <color name="background">@color/md_grey_100</color>
+    <color name="background">@color/md_white_1000</color>
     <color name="divider">@color/md_grey_300</color>
     <color name="blackTransparent">#63000000</color>
 
