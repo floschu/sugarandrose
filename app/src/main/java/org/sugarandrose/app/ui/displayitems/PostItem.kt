@@ -1,15 +1,11 @@
-package org.sugarandrose.app.ui.news.recyclerview
+package org.sugarandrose.app.ui.displayitems
 
-import android.content.Context
 import android.databinding.Bindable
-import android.os.Bundle
 import android.view.View
-import com.google.firebase.analytics.FirebaseAnalytics
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.databinding.ItemPostBinding
-import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.navigator.Navigator

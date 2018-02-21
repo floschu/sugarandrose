@@ -13,7 +13,11 @@ import paperparcel.PaperParcelable
  */
 
 @PaperParcel
-open class LocalMedia(@PrimaryKey override var id: Long, var image: String, override var date: String) : PaperParcelable, RealmObject(), LocalDisplayItem {
+open class LocalMedia(@PrimaryKey override var id: Long,
+                      var image: String,
+                      override var date: String,
+                      override var ANALYTICS_CATEGORY: String = "Media"
+) : PaperParcelable, RealmObject(), LocalDisplayItem {
     constructor() : this(0, "", "")
     constructor(media: Media) : this(media.id, media.source_url, media.date.toRealmString())
 
@@ -21,5 +25,4 @@ open class LocalMedia(@PrimaryKey override var id: Long, var image: String, over
         @JvmField
         val CREATOR = PaperParcelLocalMedia.CREATOR
     }
-
 }

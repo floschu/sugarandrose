@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,13 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:foreground="?android:windowContentOverlay"
-            android:scrollbars="vertical"
             app:adapter="@{vm.adapter}"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+            app:fastScrollAutoHide="true"
+            app:fastScrollAutoHideDelay="1500"
+            app:fastScrollPopupBgColor="@color/colorAccent"
+            app:fastScrollPopupPosition="adjacent"
+            app:fastScrollPopupTextColor="@color/textWhitePrimary"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_rose" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

@@ -8,6 +8,7 @@ import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalDisplayItem
 import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.util.extensions.findAll
 import org.sugarandrose.app.util.extensions.fromRealmString
@@ -25,10 +26,12 @@ constructor(private val provider: Provider<Realm>) : FavoritedRepo {
             Flowables.combineLatest(
                     getChangedObservable<LocalMedia>(it),
                     getChangedObservable<LocalPost>(it),
-                    { media, posts ->
-                        ArrayList<LocalDisplayItem>(media.size + posts.size).apply {
+                    getChangedObservable<LocalRose>(it),
+                    { media, posts, roses ->
+                        ArrayList<LocalDisplayItem>(media.size + posts.size + roses.size).apply {
                             addAll(it.copyFromRealm(media))
                             addAll(it.copyFromRealm(posts))
+                            addAll(it.copyFromRealm(roses))
                         }.sortedByDescending { it.date.fromRealmString() }
                     }
             )
@@ -38,6 +41,7 @@ constructor(private val provider: Provider<Realm>) : FavoritedRepo {
         when (item) {
             is LocalMedia -> it.where(LocalMedia::class.java).equalTo("id", item.id).findFirst() != null
             is LocalPost -> it.where(LocalPost::class.java).equalTo("id", item.id).findFirst() != null
+            is LocalRose -> it.where(LocalRose::class.java).equalTo("id", item.id).findFirst() != null
             else -> false
         }
     }
@@ -46,6 +50,7 @@ constructor(private val provider: Provider<Realm>) : FavoritedRepo {
         when (item) {
             is LocalMedia -> it.executeTransaction { it.copyToRealm(item) }
             is LocalPost -> it.executeTransaction { it.copyToRealm(item) }
+            is LocalRose -> it.executeTransaction { it.copyToRealm(item) }
         }
     }
 
@@ -53,6 +58,7 @@ constructor(private val provider: Provider<Realm>) : FavoritedRepo {
         when (item) {
             is LocalMedia -> it.executeTransaction { it.where(LocalMedia::class.java).equalTo("id", item.id).findFirst()?.deleteFromRealm() }
             is LocalPost -> it.executeTransaction { it.where(LocalPost::class.java).equalTo("id", item.id).findFirst()?.deleteFromRealm() }
+            is LocalRose -> it.executeTransaction { it.where(LocalRose::class.java).equalTo("id", item.id).findFirst()?.deleteFromRealm() }
         }
     }
 

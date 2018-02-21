@@ -1,4 +1,4 @@
-package org.sugarandrose.app.ui.news.recyclerview
+package org.sugarandrose.app.ui.displayitems
 
 import android.databinding.Bindable
 import android.view.View

@@ -15,8 +15,7 @@ import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.more.recyclerview.MoreAdapter
-import org.sugarandrose.app.ui.news.recyclerview.PostAdapter
+import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
 import javax.inject.Inject
@@ -30,7 +29,7 @@ interface FavoritedMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        val adapter: PostAdapter
+        val adapter: DisplayItemAdapter
         @get:Bindable
         var hasMedia: Boolean
     }
@@ -63,16 +62,18 @@ class FavoritedViewModel @Inject
 constructor(private val favoritedRepo: FavoritedRepo) : BaseViewModel<FavoritedMvvm.View>(), FavoritedMvvm.ViewModel {
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
 
-    override val adapter = PostAdapter()
+    override val adapter = DisplayItemAdapter()
 
     override fun attachView(view: FavoritedMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
 
-        favoritedRepo.allDisplayItems.subscribe({
-            adapter.clear()
-            adapter.add(it)
-            hasMedia = it.isNotEmpty()
-        }, Timber::e).let { disposable.add(it) }
+        favoritedRepo.allDisplayItems
+                .map { it.sortedBy { it.date } }
+                .subscribe({
+                    adapter.clear()
+                    adapter.add(it)
+                    hasMedia = it.isNotEmpty()
+                }, Timber::e).let { disposable.add(it) }
     }
 
 }

@@ -1,14 +1,10 @@
-package org.sugarandrose.app.ui.news.recyclerview
+package org.sugarandrose.app.ui.displayitems
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalDisplayItem
-import org.sugarandrose.app.data.model.LocalMedia
-import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.injection.scopes.PerFragment
+import org.sugarandrose.app.data.model.*
 import org.sugarandrose.app.util.Utils
-import javax.inject.Inject
 
 
 /**
@@ -16,24 +12,26 @@ import javax.inject.Inject
  * florian.schuster@tailored-apps.com
  */
 
-class PostAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val TYPE_POST = 0
-    private val TYPE_MEDIA = 1
+open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val TYPE_HEADER = 0
+    private val TYPE_POST = 1
+    private val TYPE_MEDIA = 2
+    private val TYPE_ROSE = 3
 
-    private val data = ArrayList<LocalDisplayItem>()
+    protected val data = ArrayList<LocalDisplayItem>()
     val isEmpty: Boolean get() = data.isEmpty()
 
     init {
-        setHasStableIds(true)
+        this.setHasStableIds(true)
     }
 
-    fun add(posts: List<LocalDisplayItem>) {
+    fun add(items: List<LocalDisplayItem>) {
 //        val list = data + posts //todo media merge
 //        data.clear()
 //        data.addAll(list.sortedByDescending { it.date })
 //        notifyDataSetChanged()
         val oldSize = data.size
-        data.addAll(posts.sortedByDescending { it.date })
+        data.addAll(items)
         notifyItemRangeInserted(oldSize, data.size - oldSize)
     }
 
@@ -48,16 +46,20 @@ class PostAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun getItemId(position: Int): Long = data[position].id.toLong()
+    override fun getItemId(position: Int): Long = data[position].id
 
     override fun getItemViewType(position: Int): Int = when (data[position]) {
         is LocalPost -> TYPE_POST
+        is LocalRose -> TYPE_ROSE
+        is LocalDisplayHeader -> TYPE_HEADER
         else -> TYPE_MEDIA
     }
 
     override fun getItemCount() = data.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         TYPE_POST -> Utils.createViewHolder(parent, R.layout.item_post, ::PostItemViewHolder)
+        TYPE_ROSE -> Utils.createViewHolder(parent, R.layout.item_rose, ::RoseItemViewHolder)
+        TYPE_HEADER -> Utils.createViewHolder(parent, R.layout.item_display_header, ::LocalDisplayHeaderViewHolder)
         else -> Utils.createViewHolder(parent, R.layout.item_media, ::MediaItemViewHolder)
     }
 
@@ -65,6 +67,8 @@ class PostAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (viewHolder) {
             is PostItemViewHolder -> viewHolder.viewModel.update(data[position] as LocalPost)
             is MediaItemViewHolder -> viewHolder.viewModel.update(data[position] as LocalMedia)
+            is RoseItemViewHolder -> viewHolder.viewModel.update(data[position] as LocalRose)
+            is LocalDisplayHeaderViewHolder -> viewHolder.update(data[position] as LocalDisplayHeader)
         }
     }
 }

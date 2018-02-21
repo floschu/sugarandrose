@@ -14,27 +14,28 @@
 
 package org.sugarandrose.app.util.bindingadapters
 
+import android.app.Activity
+import android.content.Intent
 import android.databinding.BindingAdapter
 import android.databinding.BindingMethod
 import android.databinding.BindingMethods
+import android.os.Build
 import android.support.annotation.DrawableRes
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.text.Html
 import android.view.View
-import android.webkit.WebChromeClient
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import android.webkit.WebView
-import android.widget.CalendarView
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.SugarAndRoseApp
+import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.util.extensions.fromRealmString
-import org.threeten.bp.LocalDate
 
 
 @BindingMethods(BindingMethod(type = SwipeRefreshLayout::class, attribute = "onRefresh", method = "setOnRefreshListener"))
@@ -101,5 +102,22 @@ object BindingAdapters {
     @JvmStatic
     fun setLogoClick(view: View, enable: Boolean) {
         view.setOnClickListener { SugarAndRoseApp.appComponent.webManager().open(BuildConfig.WEB_PAGE) }
+    }
+
+    @BindingAdapter("openPhotoDetail")
+    @JvmStatic
+    fun setOpenPhotoDetail(view: ImageView, path: String?) {
+        if (path == null) return
+        view.setOnClickListener {
+            val intent = Intent(view.context, PhotoDetailActivity::class.java)
+            intent.putExtra(PhotoDetailActivity.EXTRA_IMG_URL_AND_TRANSITION_NAME, path)
+            if (view.context is Activity) {
+                ActivityCompat.startActivity(view.context, intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        view.context as Activity,
+                        view,
+                        path
+                ).toBundle())
+            } else view.context.startActivity(intent)
+        }
     }
 }

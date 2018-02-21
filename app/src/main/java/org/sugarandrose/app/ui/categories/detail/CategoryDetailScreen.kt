@@ -19,7 +19,7 @@ import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.news.recyclerview.PostAdapter
+import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
 import timber.log.Timber
@@ -42,7 +42,7 @@ interface CategoryDetailMvvm {
         fun onRefresh()
         fun loadNextPage()
 
-        val adapter: PostAdapter
+        val adapter: DisplayItemAdapter
 
         @get:Bindable
         var category: Category
@@ -94,7 +94,7 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<CategoryDetailMvvm
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
     override var category: Category by NotifyPropertyChangedDelegate(Category(), BR.category)
 
-    override val adapter = PostAdapter()
+    override val adapter = DisplayItemAdapter()
     private var currentPage = 0
     private var maximumNumberOfPages = 10
 
@@ -123,9 +123,10 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<CategoryDetailMvvm
                 else Single.just(LocalPost(post))
             }
             .toList()
+            .map { it.sortedBy { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { refreshing = true }
-            .doOnSuccess { adapter.add(it.sortedByDescending { it.date }) }
+            .doOnSuccess(adapter::add)
             .doOnError(Timber::e)
             .doOnEvent { _, _ -> refreshing = false }
 }

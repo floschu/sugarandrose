@@ -19,7 +19,8 @@ open class LocalPost(@PrimaryKey override var id: Long,
                      override var date: String,
                      var title: String,
                      var url: String,
-                     var image: String?
+                     var image: String?,
+                     override var ANALYTICS_CATEGORY: String = "Post"
 ) : PaperParcelable, RealmObject(), LocalDisplayItem {
     constructor() : this(0, ZonedDateTime.now().toRealmString(), "", "", null)
     constructor(post: Post, media: Media) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, media.source_url)

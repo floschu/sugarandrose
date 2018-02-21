@@ -29,6 +29,7 @@ import javax.inject.Inject
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.post.PostActivity
+import org.sugarandrose.app.ui.roses.RosesCacheManager
 
 
 interface MainMvvm {
@@ -43,6 +44,7 @@ interface MainMvvm {
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), MainMvvm.View {
     private lateinit var adapter: MainAdapter
+    @Inject lateinit var rosesCacheManager: RosesCacheManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +59,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
         }
 
         intent.data?.let { viewModel.openArticle(it) }
+
+        rosesCacheManager.checkReloadData(disposable)
     }
 
     override fun onNewIntent(intent: Intent?) {

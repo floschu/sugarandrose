@@ -20,16 +20,18 @@ import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemMvvm
 import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemViewModel
 import org.sugarandrose.app.ui.home.HomeMvvm
 import org.sugarandrose.app.ui.home.HomeViewModel
-import org.sugarandrose.app.ui.news.recyclerview.PostItemMvvm
-import org.sugarandrose.app.ui.news.recyclerview.PostItemViewModel
+import org.sugarandrose.app.ui.displayitems.PostItemMvvm
+import org.sugarandrose.app.ui.displayitems.PostItemViewModel
 import org.sugarandrose.app.ui.news.NewMvvm
 import org.sugarandrose.app.ui.news.NewViewModel
-import org.sugarandrose.app.ui.news.recyclerview.MediaItemMvvm
-import org.sugarandrose.app.ui.news.recyclerview.MediaItemViewModel
+import org.sugarandrose.app.ui.displayitems.MediaItemMvvm
+import org.sugarandrose.app.ui.displayitems.MediaItemViewModel
 import org.sugarandrose.app.ui.post.PostMvvm
 import org.sugarandrose.app.ui.post.PostViewModel
 import org.sugarandrose.app.ui.roses.RosesMvvm
 import org.sugarandrose.app.ui.roses.RosesViewModel
+import org.sugarandrose.app.ui.displayitems.RoseItemMvvm
+import org.sugarandrose.app.ui.displayitems.RoseItemViewModel
 import org.sugarandrose.app.ui.search.SearchMvvm
 import org.sugarandrose.app.ui.search.SearchViewModel
 import org.sugarandrose.app.ui.textsearch.TextSearchMvvm
@@ -95,5 +97,8 @@ abstract class ViewModelModule {
 
     @Binds
     internal abstract fun bindRosesViewModel(viewModel: RosesViewModel): RosesMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindRoseItemViewModel(viewModel: RoseItemViewModel): RoseItemMvvm.ViewModel
 
 }

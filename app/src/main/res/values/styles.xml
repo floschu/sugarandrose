@@ -10,9 +10,16 @@
     </style>
 
     <style name="AppBarTheme" parent="AppTheme">
-        <item name="actionMenuTextColor">@color/textWhitePrimary</item>
-        <item name="android:textColorPrimary">@color/textWhitePrimary</item>
-        <item name="android:textColorSecondary">@color/textWhitePrimary</item>
+        <item name="actionMenuTextColor">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="TransparentAppBarTheme" parent="AppTheme">
+        <item name="actionMenuTextColor">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <item name="android:background">@color/transparent</item>
     </style>
 
     <!-- Dialog -->

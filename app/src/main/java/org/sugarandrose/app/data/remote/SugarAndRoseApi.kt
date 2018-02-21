@@ -4,6 +4,7 @@ import io.reactivex.Single
 import org.sugarandrose.app.data.model.remote.Category
 import org.sugarandrose.app.data.model.remote.Media
 import org.sugarandrose.app.data.model.remote.Post
+import org.sugarandrose.app.data.model.remote.Roses
 import retrofit2.adapter.rxjava2.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -36,6 +37,11 @@ interface SugarAndRoseApi {
 
     @GET("posts/?fields=id,title,date,link,featured_media&?order=desc&?orderby=date_gmt")
     fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 10): Single<Result<List<Post>>>
+
+    //Roses
+    @GET(" pages/6667/?fields=id,content,excerpt")
+    fun getRoses(): Single<Roses>
+
 }
 
 const val TOTAL_PAGES_HEADER = "X-WP-TotalPages"

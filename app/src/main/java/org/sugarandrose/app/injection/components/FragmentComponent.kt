@@ -10,7 +10,6 @@ import org.sugarandrose.app.ui.more.MoreFragment
 import org.sugarandrose.app.ui.categories.overview.CategoriesFragment
 import org.sugarandrose.app.ui.home.HomeFragment
 import org.sugarandrose.app.ui.news.NewFragment
-import org.sugarandrose.app.ui.news.recyclerview.PostAdapter
 import org.sugarandrose.app.ui.roses.RosesFragment
 import org.sugarandrose.app.ui.search.SearchFragment
 import org.sugarandrose.app.ui.textsearch.TextSearchFragment

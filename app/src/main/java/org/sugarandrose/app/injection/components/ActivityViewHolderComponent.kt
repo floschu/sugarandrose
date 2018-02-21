@@ -5,8 +5,10 @@ import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 
 import dagger.Component
-import org.sugarandrose.app.ui.news.recyclerview.MediaItemViewHolder
-import org.sugarandrose.app.ui.news.recyclerview.PostItemViewHolder
+import org.sugarandrose.app.ui.displayitems.LocalDisplayHeaderViewHolder
+import org.sugarandrose.app.ui.displayitems.MediaItemViewHolder
+import org.sugarandrose.app.ui.displayitems.PostItemViewHolder
+import org.sugarandrose.app.ui.displayitems.RoseItemViewHolder
 
 /* Copyright 2017 Tailored Media GmbH
  *
@@ -26,4 +28,6 @@ import org.sugarandrose.app.ui.news.recyclerview.PostItemViewHolder
 interface ActivityViewHolderComponent {
     fun inject(vh: PostItemViewHolder)
     fun inject(vh: MediaItemViewHolder)
+    fun inject(vh: RoseItemViewHolder)
+    fun inject(vh: LocalDisplayHeaderViewHolder)
 }

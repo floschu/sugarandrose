@@ -7,13 +7,10 @@ import javax.inject.Inject
 import android.content.Intent
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import android.graphics.Bitmap
-import android.os.Bundle
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import android.support.v4.content.FileProvider
-import android.text.Html
-import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.Completable
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.injection.qualifier.ActivityContext
@@ -21,6 +18,7 @@ import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.util.extensions.loadWithPicasso
 import io.reactivex.Single
 import org.sugarandrose.app.R
+import org.sugarandrose.app.data.model.LocalRose
 
 /**
  * Created by Florian Schuster
@@ -46,7 +44,7 @@ constructor(@ActivityContext private val context: Context, private val navigator
         @Suppress("DEPRECATION")
         val share = Intent(Intent.ACTION_SEND).apply {
             putExtra(Intent.EXTRA_SUBJECT, title)
-            putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text, url))
+            putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text_post, url))
         }
         share.apply {
             if (file != null) {
@@ -72,12 +70,34 @@ constructor(@ActivityContext private val context: Context, private val navigator
         val share = Intent(Intent.ACTION_SEND).apply {
             val contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", bitmap)
             setDataAndType(contentUri, context.contentResolver.getType(contentUri))
+            putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text_media))
             putExtra(Intent.EXTRA_STREAM, contentUri)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         navigator.startActivity(Intent.createChooser(share, context.getString(R.string.share_title)))
         it.onComplete()
     }
+
+    fun shareRose(item: LocalRose): Completable {
+        eventLogManager.logShare(item)
+        return context.loadWithPicasso(item.image)
+                .flatMap(this::cacheBitmapForShare)
+                .flatMapCompletable(this::shareRoseInternally)
+    }
+
+    private fun shareRoseInternally(bitmap: File): Completable = Completable.create {
+        val share = Intent(Intent.ACTION_SEND).apply {
+            val contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", bitmap)
+            setDataAndType(contentUri, context.contentResolver.getType(contentUri))
+            putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text_rose))
+            putExtra(Intent.EXTRA_STREAM, contentUri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        navigator.startActivity(Intent.createChooser(share, context.getString(R.string.share_title)))
+        it.onComplete()
+    }
+
+
 
     private fun cacheBitmapForShare(bitmap: Bitmap): Single<File> = Single.create { emitter ->
         try {

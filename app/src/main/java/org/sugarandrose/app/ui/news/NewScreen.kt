@@ -14,7 +14,6 @@ import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_DEFAULT
-import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
 import org.sugarandrose.app.data.remote.parseMaxPages
 import org.sugarandrose.app.databinding.FragmentNewBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -22,10 +21,9 @@ import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.news.recyclerview.PostAdapter
+import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
-import retrofit2.adapter.rxjava2.Result
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -45,7 +43,7 @@ interface NewMvvm {
         @get:Bindable
         var refreshing: Boolean
 
-        val adapter: PostAdapter
+        val adapter: DisplayItemAdapter
     }
 }
 
@@ -84,16 +82,11 @@ class NewViewModel @Inject
 constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
-    override val adapter = PostAdapter()
+    override val adapter = DisplayItemAdapter()
     private var currentPostsPage = 1
     private var maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
     private var currentMediaPage = 1
     private var maximumNumberOfMediaPages = TOTAL_PAGES_DEFAULT
-
-    override fun attachView(view: NewMvvm.View, savedInstanceState: Bundle?) {
-        super.attachView(view, savedInstanceState)
-
-    }
 
     override fun onResume() {
         if (adapter.isEmpty) onRefresh()
@@ -128,8 +121,9 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), N
                 else Single.just(LocalPost(post))
             }
             .toList()
+            .map { it.sortedBy { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess { adapter.add(it) }
+            .doOnSuccess(adapter::add)
             .subscribeOn(AndroidSchedulers.mainThread())
 
     private fun loadMedia() = Single.just(currentMediaPage >= maximumNumberOfMediaPages)
@@ -142,8 +136,9 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), N
             .flattenAsFlowable { it }
             .map { LocalMedia(it) }
             .toList()
+            .map { it.sortedBy { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess { adapter.add(it) }
+            .doOnSuccess(adapter::add)
             .subscribeOn(AndroidSchedulers.mainThread())
 
 }

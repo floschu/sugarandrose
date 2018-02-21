@@ -14,6 +14,7 @@ import dagger.Component
 import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
+import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.util.ShareManager
 import org.sugarandrose.app.util.SocialMediaManager
@@ -44,6 +45,7 @@ interface ActivityComponent : ActivityComponentProvides {
     fun inject(activity: MainActivity)
     fun inject(activity: PostActivity)
     fun inject(activity: CategoryDetailActivity)
+    fun inject(activity: PhotoDetailActivity)
 
 }
 

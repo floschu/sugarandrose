@@ -22,7 +22,7 @@ import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.news.recyclerview.PostAdapter
+import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
 import timber.log.Timber
@@ -48,7 +48,7 @@ interface TextSearchMvvm {
 
         fun onDeleteClick()
 
-        val adapter: PostAdapter
+        val adapter: DisplayItemAdapter
         @get:Bindable
         var loading: Boolean
         @get:Bindable
@@ -119,7 +119,7 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
             notifyPropertyChanged(BR.query)
         }
 
-    override val adapter = PostAdapter()
+    override val adapter = DisplayItemAdapter()
     private val querySubject = PublishSubject.create<String>()
     private var currentPage = 0
     private var maximumNumberOfPages = 10
@@ -154,9 +154,10 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
                 else Single.just(LocalPost(post))
             }
             .toList()
+            .map { it.sortedBy { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { loading = true }
-            .doOnSuccess { adapter.add(it) }
+            .doOnSuccess(adapter::add)
             .doOnSuccess { loading = false }
             .doOnError(Timber::e)
             .doOnEvent { _, _ ->
