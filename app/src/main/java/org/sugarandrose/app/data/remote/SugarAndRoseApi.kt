@@ -1,10 +1,7 @@
 package org.sugarandrose.app.data.remote
 
 import io.reactivex.Single
-import org.sugarandrose.app.data.model.remote.Category
-import org.sugarandrose.app.data.model.remote.Media
-import org.sugarandrose.app.data.model.remote.Post
-import org.sugarandrose.app.data.model.remote.Roses
+import org.sugarandrose.app.data.model.remote.*
 import retrofit2.adapter.rxjava2.Result
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -39,8 +36,12 @@ interface SugarAndRoseApi {
     fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 10): Single<Result<List<Post>>>
 
     //Roses
-    @GET(" pages/6667/?fields=id,content,excerpt")
+    @GET("pages/6667/?fields=id,content,excerpt")
     fun getRoses(): Single<Roses>
+
+    //More
+    @GET("pages/{id}?fields=id,link,featured_media,title")
+    fun getMore(@Path("id") id: Long): Single<More>
 
 }
 

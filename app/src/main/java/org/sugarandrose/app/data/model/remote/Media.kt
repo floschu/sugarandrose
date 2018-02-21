@@ -8,4 +8,4 @@ import org.threeten.bp.ZonedDateTime
  * florian.schuster@tailored-apps.com
  */
 
-class Media(val id: Long, val source_url: String, var date: ZonedDateTime)
+data class Media(val id: Long, val source_url: String, var date: ZonedDateTime)

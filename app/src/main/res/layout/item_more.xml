@@ -16,7 +16,7 @@
         android:background="?attr/selectableItemBackground"
         android:minHeight="?listPreferredItemHeight"
         android:onClick="@{vm::onClick}"
-        android:padding="@dimen/padding">
+        android:padding="@dimen/card_margin_half">
 
         <ImageView
             android:id="@+id/iv"

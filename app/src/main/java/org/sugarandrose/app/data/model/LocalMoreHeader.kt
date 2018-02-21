@@ -7,4 +7,4 @@ import android.support.annotation.StringRes
  * florian.schuster@tailored-apps.com
  */
 
-class LocalMoreHeader(@StringRes text: Int) : LocalMore(text)
+class LocalMoreHeader(@StringRes val text: Int) : LocalMore

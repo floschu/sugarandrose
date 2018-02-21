@@ -32,6 +32,8 @@ import org.sugarandrose.app.ui.roses.RosesMvvm
 import org.sugarandrose.app.ui.roses.RosesViewModel
 import org.sugarandrose.app.ui.displayitems.RoseItemMvvm
 import org.sugarandrose.app.ui.displayitems.RoseItemViewModel
+import org.sugarandrose.app.ui.more.recyclerview.MorePageItemMvvm
+import org.sugarandrose.app.ui.more.recyclerview.MorePageItemViewModel
 import org.sugarandrose.app.ui.search.SearchMvvm
 import org.sugarandrose.app.ui.search.SearchViewModel
 import org.sugarandrose.app.ui.textsearch.TextSearchMvvm
@@ -100,5 +102,8 @@ abstract class ViewModelModule {
 
     @Binds
     internal abstract fun bindRoseItemViewModel(viewModel: RoseItemViewModel): RoseItemMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindMorePageItemViewModel(viewModel: MorePageItemViewModel): MorePageItemMvvm.ViewModel
 
 }

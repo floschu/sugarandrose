@@ -21,7 +21,7 @@
     <string name="favorited_no_content_1">Du kannst dir Beiträge merken, indem du</string>
     <string name="favorited_no_content_2">drückst.</string>
     <string name="home_new_title">Neues</string>
-    <string name="home_roses_title">Rosenindex</string>
+    <string name="home_roses_title">Rosenporträts A-Z</string>
 
     <string name="more_about">Social Media und Kontakt</string>
     <string name="more_contact">Kontakt</string>
@@ -31,14 +31,14 @@
     <string name="more_twitter">Folge mir auf Twitter</string>
     <string name="more_privacy">Impressum &amp; Datenschutz</string>
     <string name="more_explore">Entdecken</string>
-    <string name="more_rose_index">Rosenindex</string>
     <string name="more_recepe_index">Rezeptindex</string>
     <string name="more_glossar">Glossar</string>
-    <string name="more_books_blog">Bücherblog</string>
-    <string name="more_books_graphics">Buchgrafik</string>
+    <string name="more_rose_index">RosenIndex</string>
+    <string name="more_diy">Do It Yourself</string>
     <string name="more_settings">Einstellungen</string>
     <string name="more_notifications">Benachrichtigungen bearbeiten</string>
     <string name="more_delete_data">Lokale Daten löschen</string>
+    <string name="more_version">Version %1$s-b%2$d</string>
 
     <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
     <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>

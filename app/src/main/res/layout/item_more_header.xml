@@ -19,7 +19,7 @@
             style="@style/SubTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/vertical_margin"
+            android:layout_marginTop="@dimen/card_margin_half"
             android:padding="@dimen/padding"
             android:textColor="@color/textBlackDisabled"
             app:layout_constraintBottom_toBottomOf="parent"

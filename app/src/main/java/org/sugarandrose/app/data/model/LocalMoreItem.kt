@@ -8,4 +8,4 @@ import android.support.annotation.StringRes
  * florian.schuster@tailored-apps.com
  */
 
-class LocalMoreItem(@DrawableRes val icon: Int, @StringRes text: Int, val action: () -> Unit) : LocalMore(text)
+class LocalMoreItem(@DrawableRes val icon: Int, @StringRes val text: Int, val action: () -> Unit) : LocalMore
