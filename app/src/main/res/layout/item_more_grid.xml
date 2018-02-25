@@ -35,6 +35,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/header" />
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.item.text.empty}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_title"
                 style="@style/Title.Accent"
@@ -44,7 +53,7 @@
                 android:gravity="center"
                 android:lines="1"
                 android:maxLines="1"
-                android:text="@{vm.item.text}"
+                android:text="@{vm.item.text.empty ? @string/loading : vm.item.text}"
                 android:textSize="@dimen/text_size_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

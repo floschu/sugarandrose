@@ -10,4 +10,5 @@ import org.sugarandrose.app.data.model.remote.More
 class LocalMorePage(val image: String, val text: String, val link: String) : LocalMore {
     constructor(more: More) : this("", more.title.rendered, more.link)
     constructor(more: More, media: Media) : this(media.source_url, more.title.rendered, more.link)
+    constructor() : this("", "", "")
 }

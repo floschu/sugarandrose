@@ -21,9 +21,11 @@ import javax.inject.Inject
 @PerFragment
 class MoreAdapter @Inject
 constructor() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-     val TYPE_HEADER = 0
-     val TYPE_ITEM = 1
-     val TYPE_ITEM_GRID = 2
+    companion object {
+        val TYPE_HEADER = 0
+        val TYPE_ITEM = 1
+        val TYPE_ITEM_GRID = 2
+    }
 
     var data by NotifyDatasetChangedDelegate(emptyList<Pair<Int, LocalMore>>())
 

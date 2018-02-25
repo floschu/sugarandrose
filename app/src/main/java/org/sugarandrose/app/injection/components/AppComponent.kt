@@ -14,6 +14,7 @@ import org.sugarandrose.app.ui.base.feedback.Toaster
 import dagger.Component
 import io.realm.Realm
 import okhttp3.OkHttpClient
+import org.sugarandrose.app.ui.more.MoreCacheManager
 import org.sugarandrose.app.ui.roses.RosesCacheManager
 import org.sugarandrose.app.util.EventLogManager
 import org.sugarandrose.app.util.NotificationsManager
@@ -62,5 +63,6 @@ interface AppComponentProvides {
     fun notificationManager(): NotificationsManager
     fun eventLogManager(): EventLogManager
     fun webManager(): WebManager
-    fun rosesCacheManager():RosesCacheManager
+    fun rosesCacheManager(): RosesCacheManager
+    fun moreCacheManager(): MoreCacheManager
 }

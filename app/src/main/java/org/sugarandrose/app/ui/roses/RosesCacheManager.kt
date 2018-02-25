@@ -18,6 +18,7 @@ import javax.inject.Inject
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
+
 @PerApplication
 class RosesCacheManager @Inject
 constructor(private val api: SugarAndRoseApi) {

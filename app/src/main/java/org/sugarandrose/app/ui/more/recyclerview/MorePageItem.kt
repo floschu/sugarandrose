@@ -47,6 +47,7 @@ constructor(private val webManager: WebManager) : BaseViewModel<MorePageItemMvvm
         notifyChange()
     }
 
-    override fun onClick() = webManager.open(item.link)
-
+    override fun onClick() {
+        if (item.link.isNotEmpty()) webManager.open(item.link)
+    }
 }
