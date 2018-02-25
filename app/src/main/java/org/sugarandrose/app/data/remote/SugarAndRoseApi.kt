@@ -29,7 +29,7 @@ interface SugarAndRoseApi {
     fun getPostsForQuery(@Query("search") query: String, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 10): Single<Result<List<Post>>>
 
     //Categories
-    @GET("categories/?fields=id,name,description,link,count&?order=desc&?orderby=name")
+    @GET("categories/?fields=id,name,description,link,count,parent&?order=desc&?orderby=name&per_page=100")
     fun getCategories(): Single<List<Category>>
 
     @GET("posts/?fields=id,title,date,link,featured_media&?order=desc&?orderby=date_gmt")

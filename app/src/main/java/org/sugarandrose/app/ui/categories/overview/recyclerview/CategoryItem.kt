@@ -2,6 +2,7 @@ package org.sugarandrose.app.ui.categories.overview.recyclerview
 
 import android.view.View
 import org.sugarandrose.app.R
+import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.remote.Category
 import org.sugarandrose.app.databinding.ItemCategoryBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
@@ -22,10 +23,10 @@ interface CategoryItemMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        fun update(category: Category)
+        fun update(category: LocalCategory)
         fun onClick()
 
-        var category: Category
+        var category: LocalCategory
     }
 }
 
@@ -41,9 +42,9 @@ class CategoryItemViewHolder(itemView: View) : BaseFragmentViewHolder<ItemCatego
 @PerViewHolder
 class CategoryItemViewModel @Inject
 constructor(private val navigator: Navigator) : BaseViewModel<CategoryItemMvvm.View>(), CategoryItemMvvm.ViewModel {
-    override lateinit var category: Category
+    override lateinit var category: LocalCategory
 
-    override fun update(category: Category) {
+    override fun update(category: LocalCategory) {
         this.category = category
         notifyChange()
     }

@@ -10,6 +10,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
+import org.sugarandrose.app.data.model.LocalCategory
+import org.sugarandrose.app.data.model.remote.Category
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -21,6 +23,7 @@ import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoriesAdapte
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
 import javax.inject.Inject
+
 
 /**
  * Created by Florian Schuster
@@ -78,9 +81,26 @@ constructor(private val api: SugarAndRoseApi, override val adapter: CategoriesAd
 
     override fun onRefresh() {
         api.getCategories().observeOn(AndroidSchedulers.mainThread())
+                .map(this::mapParents)
                 .doOnSubscribe { refreshing = true }
                 .doOnEvent { _, _ -> refreshing = false }
-                .subscribe({ adapter.data = it.sortedBy { it.name } }, Timber::e)
+                .subscribe({ adapter.data = it }, Timber::e)
                 .let { disposable.add(it) }
+    }
+
+    private fun mapParents(cats: List<Category>): List<LocalCategory> =
+            cats.filter { it.parent == 0 }
+                    .map { LocalCategory(it, emptyList()) }
+                    .sortedBy { it.name }
+                    .also { it.forEach { mapChildren(it, cats) } }
+
+    private fun mapChildren(parent: LocalCategory, cats: List<Category>) {
+        parent.children = cats
+                .filter { it.parent == parent.id }
+                .map {
+                    LocalCategory(it, emptyList())
+                            .apply { mapChildren(this, cats) }
+                }
+                .sortedBy { it.name }
     }
 }

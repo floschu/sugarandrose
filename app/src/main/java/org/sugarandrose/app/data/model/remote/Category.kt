@@ -15,12 +15,13 @@ class Category(var id: Int,
                @SerializedName("description")
                var image: String,
                var link: String,
-               var count: Int
+               var count: Int,
+               var parent: Int
 ) : PaperParcelable {
     companion object {
         @JvmField
         val CREATOR = PaperParcelCategory.CREATOR
     }
 
-    constructor() : this(0, "", "", "",0)
+    constructor() : this(0, "", "", "", 0, 0)
 }
