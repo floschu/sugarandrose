@@ -45,7 +45,8 @@ interface MainMvvm {
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), MainMvvm.View {
     private lateinit var adapter: MainAdapter
-    @Inject lateinit var rosesCacheManager: RosesCacheManager
+    @Inject
+    lateinit var rosesCacheManager: RosesCacheManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,5 +81,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 class MainViewModel @Inject
 constructor(private val navigator: Navigator) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
 
-    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.toString()) })
+    override fun openArticle(uri: Uri) = navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, -1L) })
 }

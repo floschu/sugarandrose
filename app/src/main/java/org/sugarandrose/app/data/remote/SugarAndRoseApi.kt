@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface SugarAndRoseApi {
 
     //Single Items
-    @GET("posts/{id}?fields=id,title,date,link,featured_media")
+    @GET("posts/{id}?fields=id,title,date,link,content,featured_media")
     fun getPost(@Path("id") id: Long): Single<Post>
 
     @GET("media/{id}?fields=id,source_url,date")

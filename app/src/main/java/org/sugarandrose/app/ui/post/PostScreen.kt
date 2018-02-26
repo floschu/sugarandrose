@@ -25,6 +25,9 @@ import android.webkit.WebResourceRequest
 import android.os.Build
 import android.annotation.TargetApi
 import android.webkit.WebViewClient
+import io.reactivex.rxkotlin.addTo
+import org.sugarandrose.app.data.remote.SugarAndRoseApi
+import org.sugarandrose.app.util.WebManager
 import timber.log.Timber
 
 
@@ -38,15 +41,17 @@ interface PostMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
+        fun init(id: Long)
+
+        var css: String
+
         @get:Bindable
         var refreshing: Boolean
+        @get:Bindable
+        var post: LocalPost
 
         fun onRefresh()
-
-        @get:Bindable
-        var title: String
-        @get:Bindable
-        var url: String
+        fun onMoreClick()
     }
 }
 
@@ -54,6 +59,8 @@ interface PostMvvm {
 class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), PostMvvm.View {
     @Inject
     lateinit var navigator: Navigator
+    @Inject
+    lateinit var webManager: WebManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,9 +75,11 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        viewModel.url = intent.getStringExtra(Navigator.EXTRA_ARG)
-
         initWebView()
+
+        val id = intent.getLongExtra(Navigator.EXTRA_ARG, -1)
+        if (id < 0) finish()
+        else viewModel.init(id)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -98,7 +107,6 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         binding.webview.webViewClient = AppWebViewClient()
-        binding.webview.webChromeClient = AppWebChromeClient()
         binding.webview.settings.javaScriptEnabled = true
     }
 
@@ -106,30 +114,21 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
 
         @Suppress("OverridingDeprecatedMember")
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            val uri = Uri.parse(url)
-            val handled = handleUri(uri)
-            if (!handled) view.loadUrl(url)
+            handleUri(Uri.parse(url))
             return true
         }
 
         @TargetApi(Build.VERSION_CODES.N)
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-            val uri = request.url
-            val handled = handleUri(uri)
-            if (!handled) view.loadUrl(uri.toString())
+            handleUri(request.url)
             return true
         }
 
-        private fun handleUri(uri: Uri): Boolean = when (uri.scheme) {
-            "mailto" -> {
-                navigator.startActivity(Intent.ACTION_SENDTO, uri)
-                true
-            }
-            "tel" -> {
-                navigator.startActivity(Intent.ACTION_DIAL, uri)
-                true
-            }
-            else -> false
+        private fun handleUri(uri: Uri) = when (uri.scheme) {
+            "mailto" -> navigator.startActivity(Intent.ACTION_SENDTO, uri)
+            "tel" -> navigator.startActivity(Intent.ACTION_DIAL, uri)
+            else -> webManager.open(uri)
+
         }
 
         override fun onPageFinished(view: WebView, url: String) {
@@ -137,26 +136,33 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
             super.onPageFinished(view, url)
         }
     }
-
-    private inner class AppWebChromeClient : WebChromeClient() {
-
-        override fun onReceivedTitle(view: WebView, title: String) {
-            super.onReceivedTitle(view, title)
-            viewModel.title = title
-        }
-    }
 }
 
 
 @PerActivity
 class PostViewModel @Inject
-constructor() : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
-    override var refreshing: Boolean by NotifyPropertyChangedDelegate(true, BR.refreshing)
-    override var title: String by NotifyPropertyChangedDelegate("", BR.title)
-    override var url: String by NotifyPropertyChangedDelegate("", BR.url)
+constructor(private val api: SugarAndRoseApi, private val webManager: WebManager) : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
+    override var post: LocalPost by NotifyPropertyChangedDelegate(LocalPost(), BR.post)
+    override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
-    override fun onRefresh() {
-        refreshing = true
-        notifyPropertyChanged(BR.url)
+    override var css = "<style>" +
+            "img {" +
+            "display: inline; " +
+            "height: auto;max-width: 100%; " +
+            "}" +
+            "</style>"
+
+    override fun init(id: Long) {
+        if (refreshing) return
+        api.getPost(id)
+                .doOnSubscribe { refreshing = true }
+                .map { LocalPost(it) }
+                .doOnSuccess { it.content += "<br><br>" }
+                .subscribe({ post = it }, Timber::e)
+                .addTo(disposable)
     }
+
+    override fun onRefresh() = init(post.id)
+
+    override fun onMoreClick() = webManager.open(post.url)
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,7 +18,7 @@
         <include
             android:id="@+id/include_toolbar"
             layout="@layout/toolbar_custom_title"
-            app:title="@{vm.title}" />
+            app:title="@{vm.post.title}" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
@@ -38,8 +39,34 @@
                     android:id="@+id/webview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:loadUrl="@{vm.url}" />
+                    app:css="@{vm.css}"
+                    app:loadWebContent="@{vm.post.content}"
+                    tools:ignore="WebViewLayout" />
             </android.support.v4.widget.NestedScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/card_margin"
+            android:padding="@dimen/card_padding"
+            app:cardCornerRadius="6dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{vm::onMoreClick}">
+
+                <TextView
+                    style="@style/Text.Accent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/padding"
+                    android:text="@string/click_for_more" />
+            </FrameLayout>
+        </android.support.v7.widget.CardView>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

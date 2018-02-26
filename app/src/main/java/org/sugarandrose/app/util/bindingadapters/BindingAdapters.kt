@@ -79,10 +79,13 @@ object BindingAdapters {
         view.loadUrl(url)
     }
 
-    @BindingAdapter("loadWebContent")
+    @BindingAdapter("loadWebContent", "css")
     @JvmStatic
-    fun loadWebContent(view: WebView, content: String) {
-        view.loadData(content, "text/html", "UTF-8")
+    fun loadWebContent(view: WebView, content: String, css: String? = null) {
+        var html = "<html>"
+        if (css != null) html += "<head>$css</head>"
+        html += "$content</html>"
+        view.loadData(html, "text/html; charset=UTF-8", null)
     }
 
     @BindingAdapter("setColorScheme")

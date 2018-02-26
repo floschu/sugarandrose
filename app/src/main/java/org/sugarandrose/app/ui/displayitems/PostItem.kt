@@ -68,7 +68,7 @@ constructor(private val navigator: Navigator,
 
     override fun onClick() {
         eventLogManager.logOpen(post)
-        navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, post.url) })
+        navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, post.id) })
     }
 
     override fun onFavoriteClick() {
