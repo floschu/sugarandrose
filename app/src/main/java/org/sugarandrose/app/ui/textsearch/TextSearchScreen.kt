@@ -119,7 +119,8 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.Vie
             notifyPropertyChanged(BR.query)
         }
 
-    override val adapter = DisplayItemAdapter()
+    override val adapter: DisplayItemAdapter = DisplayItemAdapter()
+
     private val querySubject = PublishSubject.create<String>()
     private var currentPage = 0
     private var maximumNumberOfPages = 10

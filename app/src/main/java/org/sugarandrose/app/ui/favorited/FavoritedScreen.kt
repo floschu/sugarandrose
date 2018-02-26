@@ -62,7 +62,7 @@ class FavoritedViewModel @Inject
 constructor(private val favoritedRepo: FavoritedRepo) : BaseViewModel<FavoritedMvvm.View>(), FavoritedMvvm.ViewModel {
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
 
-    override val adapter = DisplayItemAdapter()
+    override val adapter: DisplayItemAdapter = DisplayItemAdapter()
 
     override fun attachView(view: FavoritedMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)

@@ -8,6 +8,8 @@ import dagger.Binds
 import dagger.Module
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailMvvm
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailViewModel
+import org.sugarandrose.app.ui.categories.detail.SubCategoryMvvm
+import org.sugarandrose.app.ui.categories.detail.SubCategoryViewModel
 import org.sugarandrose.app.ui.favorited.FavoritedMvvm
 import org.sugarandrose.app.ui.favorited.FavoritedViewModel
 import org.sugarandrose.app.ui.more.MoreMvvm
@@ -16,8 +18,8 @@ import org.sugarandrose.app.ui.more.recyclerview.MoreItemMvvm
 import org.sugarandrose.app.ui.more.recyclerview.MoreItemViewModel
 import org.sugarandrose.app.ui.categories.overview.CategoriesMvvm
 import org.sugarandrose.app.ui.categories.overview.CategoriesViewModel
-import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemMvvm
-import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemViewModel
+import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemMvvm
+import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewModel
 import org.sugarandrose.app.ui.home.HomeMvvm
 import org.sugarandrose.app.ui.home.HomeViewModel
 import org.sugarandrose.app.ui.displayitems.PostItemMvvm
@@ -105,5 +107,8 @@ abstract class ViewModelModule {
 
     @Binds
     internal abstract fun bindMorePageItemViewModel(viewModel: MorePageItemViewModel): MorePageItemMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindSubCategoryViewModel(viewModel: SubCategoryViewModel): SubCategoryMvvm.ViewModel
 
 }

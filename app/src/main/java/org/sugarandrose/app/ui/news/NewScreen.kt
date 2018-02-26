@@ -81,7 +81,8 @@ class NewViewModel @Inject
 constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
-    override val adapter = DisplayItemAdapter()
+    override val adapter: DisplayItemAdapter = DisplayItemAdapter()
+
     private var currentPostsPage = 1
     private var maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
     private var currentMediaPage = 1

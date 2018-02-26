@@ -5,6 +5,7 @@ import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 
 import dagger.Component
+import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewHolder
 import org.sugarandrose.app.ui.displayitems.LocalDisplayHeaderViewHolder
 import org.sugarandrose.app.ui.displayitems.MediaItemViewHolder
 import org.sugarandrose.app.ui.displayitems.PostItemViewHolder
@@ -30,4 +31,5 @@ interface ActivityViewHolderComponent {
     fun inject(vh: MediaItemViewHolder)
     fun inject(vh: RoseItemViewHolder)
     fun inject(vh: LocalDisplayHeaderViewHolder)
+    fun inject(vh: CategoryItemViewHolder)
 }

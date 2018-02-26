@@ -5,7 +5,6 @@ import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import dagger.Component
 import org.sugarandrose.app.ui.more.recyclerview.MoreItemViewHolder
-import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoryItemViewHolder
 import org.sugarandrose.app.ui.more.recyclerview.MoreHeaderItemViewHolder
 import org.sugarandrose.app.ui.more.recyclerview.MorePageItemViewHolder
 
@@ -25,7 +24,6 @@ import org.sugarandrose.app.ui.more.recyclerview.MorePageItemViewHolder
 @PerViewHolder
 @Component(dependencies = arrayOf(FragmentComponent::class), modules = arrayOf(ViewHolderModule::class, ViewModelModule::class))
 interface FragmentViewHolderComponent {
-    fun inject(vh: CategoryItemViewHolder)
     fun inject(vh: MoreItemViewHolder)
     fun inject(vh: MoreHeaderItemViewHolder)
     fun inject(vh: MorePageItemViewHolder)

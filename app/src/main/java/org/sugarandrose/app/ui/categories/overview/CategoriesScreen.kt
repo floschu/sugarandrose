@@ -5,7 +5,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.reactivex.rxkotlin.addTo
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
@@ -15,7 +14,7 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.categories.CategoriesCacheManager
-import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoriesAdapter
+import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,9 +55,9 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvv
 
 @PerFragment
 class CategoriesViewModel @Inject
-constructor(private val categoriesCacheManager: CategoriesCacheManager,
-            override val adapter: CategoriesAdapter
-) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
+constructor(private val categoriesCacheManager: CategoriesCacheManager) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
+
+    override val adapter: CategoriesAdapter = CategoriesAdapter()
 
     override fun attachView(view: CategoriesMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)

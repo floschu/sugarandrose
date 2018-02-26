@@ -40,6 +40,8 @@
 
         <activity android:name=".ui.photo.PhotoDetailActivity" />
 
+        <activity android:name=".ui.categories.detail.SubCategoryActivity" />
+
         <!-- Provider -->
         <provider
             android:name="android.support.v4.content.FileProvider"

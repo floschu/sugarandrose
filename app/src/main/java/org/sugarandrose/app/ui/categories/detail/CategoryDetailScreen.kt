@@ -84,7 +84,6 @@ class CategoryDetailActivity : BaseActivity<ActivityCategorydetailBinding, Categ
         super.onResume()
         if (viewModel.adapter.isEmpty) viewModel.onRefresh()
     }
-
 }
 
 
@@ -94,7 +93,8 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<CategoryDetailMvvm
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
     override var category: LocalCategory by NotifyPropertyChangedDelegate(LocalCategory(), BR.category)
 
-    override val adapter = DisplayItemAdapter()
+    override val adapter: DisplayItemAdapter = DisplayItemAdapter()
+
     private var currentPage = 0
     private var maximumNumberOfPages = 10
 
