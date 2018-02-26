@@ -1,8 +1,10 @@
 package org.sugarandrose.app.ui.more
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import org.sugarandrose.app.data.model.LocalMorePage
@@ -35,17 +37,15 @@ constructor(private val api: SugarAndRoseApi) {
     var reloading = false
     val dataSubject: BehaviorSubject<List<LocalMorePage>> = BehaviorSubject.createDefault(data)
 
-    fun reloadData(disposable: CompositeDisposable) {
-        if (data.isEmpty()) Single.concat(MORE_PAGES)
-                .flatMapSingle { more ->
-                    if (more.featured_media != 0L) api.getMedia(more.featured_media).map { LocalMorePage(more, it) }
-                    else Single.just(LocalMorePage(more))
-                }
-                .toList()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe { reloading = true }
-                .doOnEvent { _, _ -> reloading = false }
-                .subscribe({ data = it }, Timber::e)
-                .addTo(disposable)
-    }
+    fun reloadData(): Disposable = if (data.isEmpty()) Single.concat(MORE_PAGES)
+             .flatMapSingle { more ->
+                 if (more.featured_media != 0L) api.getMedia(more.featured_media).map { LocalMorePage(more, it) }
+                 else Single.just(LocalMorePage(more))
+             }
+             .toList()
+             .observeOn(AndroidSchedulers.mainThread())
+             .doOnSubscribe { reloading = true }
+             .doOnEvent { _, _ -> reloading = false }
+             .subscribe({ data = it }, Timber::e)
+     else Completable.fromAction { dataSubject.onNext(data) }.subscribe()
 }

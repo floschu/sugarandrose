@@ -18,6 +18,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
+import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.ActivityMainBinding
 import org.sugarandrose.app.injection.scopes.PerActivity
@@ -60,7 +61,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 
         intent.data?.let { viewModel.openArticle(it) }
 
-        rosesCacheManager.checkReloadData(disposable)
+        rosesCacheManager.checkReloadData().addTo(disposable)
     }
 
     override fun onNewIntent(intent: Intent?) {

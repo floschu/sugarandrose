@@ -8,6 +8,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
+import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.model.remote.Category
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
@@ -38,14 +39,13 @@ interface CategoryDetailMvvm {
         @get:Bindable
         var refreshing: Boolean
 
-        fun onResume()
         fun onRefresh()
         fun loadNextPage()
 
         val adapter: DisplayItemAdapter
 
         @get:Bindable
-        var category: Category
+        var category: LocalCategory
     }
 }
 
@@ -82,7 +82,7 @@ class CategoryDetailActivity : BaseActivity<ActivityCategorydetailBinding, Categ
 
     override fun onResume() {
         super.onResume()
-        viewModel.onResume()
+        if (viewModel.adapter.isEmpty) viewModel.onRefresh()
     }
 
 }
@@ -92,15 +92,11 @@ class CategoryDetailActivity : BaseActivity<ActivityCategorydetailBinding, Categ
 class CategoryDetailViewModel @Inject
 constructor(private val api: SugarAndRoseApi) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
-    override var category: Category by NotifyPropertyChangedDelegate(Category(), BR.category)
+    override var category: LocalCategory by NotifyPropertyChangedDelegate(LocalCategory(), BR.category)
 
     override val adapter = DisplayItemAdapter()
     private var currentPage = 0
     private var maximumNumberOfPages = 10
-
-    override fun onResume() {
-        if (adapter.isEmpty) onRefresh()
-    }
 
     override fun onRefresh() {
         adapter.clear()

@@ -36,7 +36,6 @@ interface NewMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        fun onResume()
         fun onRefresh()
         fun loadNextPage()
 
@@ -72,7 +71,7 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
     override fun onResume() {
         super.onResume()
-        viewModel.onResume()
+        if (viewModel.adapter.isEmpty) viewModel.onRefresh()
     }
 }
 
@@ -87,10 +86,6 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), N
     private var maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
     private var currentMediaPage = 1
     private var maximumNumberOfMediaPages = TOTAL_PAGES_DEFAULT
-
-    override fun onResume() {
-        if (adapter.isEmpty) onRefresh()
-    }
 
     override fun onRefresh() {
         adapter.clear()

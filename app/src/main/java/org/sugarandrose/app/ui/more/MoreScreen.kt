@@ -90,8 +90,10 @@ constructor(override val adapter: MoreAdapter,
 
     override fun attachView(view: MoreMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
-        moreCacheManager.dataSubject.subscribe(this::fillAdapter, Timber::e).addTo(disposable)
-        moreCacheManager.reloadData(disposable)
+        disposable.addAll(
+                moreCacheManager.dataSubject.subscribe(this::fillAdapter, Timber::e),
+                moreCacheManager.reloadData()
+        )
     }
 
     private fun fillAdapter(morePages: List<LocalMorePage>) {

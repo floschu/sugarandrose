@@ -1,7 +1,9 @@
 package org.sugarandrose.app.ui.roses
 
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import org.jsoup.Jsoup
@@ -31,16 +33,14 @@ constructor(private val api: SugarAndRoseApi) {
     var reloading = false
     val dataSubject: BehaviorSubject<List<LocalDisplayItem>> = BehaviorSubject.createDefault(data)
 
-    fun checkReloadData(disposable: CompositeDisposable) {
-        if (data.isEmpty()) api.getRoses()
-                .map(this::mapToLocalRoses)
-                .map(this::addHeaders)
-                .doOnSubscribe { reloading = true }
-                .doOnEvent { _, _ -> reloading = false }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data = it }, Timber::e)
-                .addTo(disposable)
-    }
+    fun checkReloadData(): Disposable = if (data.isEmpty()) api.getRoses()
+            .map(this::mapToLocalRoses)
+            .map(this::addHeaders)
+            .doOnSubscribe { reloading = true }
+            .doOnEvent { _, _ -> reloading = false }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ data = it }, Timber::e)
+    else Completable.fromAction { dataSubject.onNext(data) }.subscribe()
 
     private fun mapToLocalRoses(roses: Roses): List<LocalRose> = Jsoup
             .parse(roses.content.rendered)

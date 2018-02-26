@@ -1,26 +1,21 @@
 package org.sugarandrose.app.ui.categories.overview
 
-import android.databinding.Bindable
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
-import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalCategory
-import org.sugarandrose.app.data.model.remote.Category
-import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
+import org.sugarandrose.app.ui.categories.CategoriesCacheManager
 import org.sugarandrose.app.ui.categories.overview.recyclerview.CategoriesAdapter
-import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -35,12 +30,6 @@ interface CategoriesMvvm {
 
     interface ViewModel : MvvmViewModel<View> {
         val adapter: CategoriesAdapter
-
-        @get:Bindable
-        var refreshing: Boolean
-
-        fun onRefresh()
-        fun onResume()
     }
 }
 
@@ -62,45 +51,21 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvv
         binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
         binding.recyclerView.itemAnimator = SlideInUpAnimator()
     }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.onResume()
-    }
 }
 
 
 @PerFragment
 class CategoriesViewModel @Inject
-constructor(private val api: SugarAndRoseApi, override val adapter: CategoriesAdapter) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
-    override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
+constructor(private val categoriesCacheManager: CategoriesCacheManager,
+            override val adapter: CategoriesAdapter
+) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
 
-    override fun onResume() {
-        if (adapter.data.isEmpty()) onRefresh()
-    }
+    override fun attachView(view: CategoriesMvvm.View, savedInstanceState: Bundle?) {
+        super.attachView(view, savedInstanceState)
 
-    override fun onRefresh() {
-        api.getCategories().observeOn(AndroidSchedulers.mainThread())
-                .map(this::mapParents)
-                .doOnSubscribe { refreshing = true }
-                .doOnEvent { _, _ -> refreshing = false }
-                .subscribe({ adapter.data = it }, Timber::e)
-                .let { disposable.add(it) }
-    }
-
-    private fun mapParents(cats: List<Category>): List<LocalCategory> =
-            cats.filter { it.parent == 0 }
-                    .map { LocalCategory(it, emptyList()) }
-                    .sortedBy { it.name }
-                    .also { it.forEach { mapChildren(it, cats) } }
-
-    private fun mapChildren(parent: LocalCategory, cats: List<Category>) {
-        parent.children = cats
-                .filter { it.parent == parent.id }
-                .map {
-                    LocalCategory(it, emptyList())
-                            .apply { mapChildren(this, cats) }
-                }
-                .sortedBy { it.name }
+        disposable.addAll(
+                categoriesCacheManager.dataSubject.subscribe({ adapter.data = it }, Timber::e),
+                categoriesCacheManager.reloadData()
+        )
     }
 }
