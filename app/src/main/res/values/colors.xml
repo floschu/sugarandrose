@@ -5,6 +5,8 @@
     <color name="colorAccent">#a5254c</color>
     <color name="colorAccentRipple">#a33657</color>
 
+    <color name="pink">#fdcfdf</color>
+
     <color name="transparent">#00ffffff</color>
     <color name="background">@color/md_white_1000</color>
     <color name="divider">@color/md_grey_300</color>

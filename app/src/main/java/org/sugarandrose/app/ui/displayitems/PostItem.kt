@@ -13,9 +13,9 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.post.PostActivity
-import org.sugarandrose.app.util.EventLogManager
+import org.sugarandrose.app.util.manager.EventLogManager
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.ShareManager
+import org.sugarandrose.app.util.manager.ShareManager
 import timber.log.Timber
 import javax.inject.Inject
 

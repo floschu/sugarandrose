@@ -9,7 +9,7 @@ import org.sugarandrose.app.ui.base.BaseFragmentViewHolder
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.util.WebManager
+import org.sugarandrose.app.util.manager.WebManager
 import javax.inject.Inject
 
 /**

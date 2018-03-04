@@ -1,4 +1,4 @@
-package org.sugarandrose.app.util
+package org.sugarandrose.app.util.manager
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

@@ -34,13 +34,7 @@ import timber.log.Timber
 
 @ProcessorConfig(
         adapters = arrayOf(
-                Adapter(RealmListPaperParcelTypeConverter::class),
-                Adapter(ObservableFieldPaperParcelTypeConverter::class),
-                Adapter(ObservableBooleanPaperParcelTypeConverter::class),
-                Adapter(ObservableDoublePaperParcelTypeConverter::class),
-                Adapter(ObservableFloatPaperParcelTypeConverter::class),
-                Adapter(ObservableIntPaperParcelTypeConverter::class),
-                Adapter(ObservableLongPaperParcelTypeConverter::class)
+                Adapter(RealmListPaperParcelTypeConverter::class)
         )
 )
 class SugarAndRoseApp : Application() {

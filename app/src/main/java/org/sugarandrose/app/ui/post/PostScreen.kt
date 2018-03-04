@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.databinding.Bindable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.MenuItem
 import android.webkit.*
 import org.sugarandrose.app.BR
@@ -24,10 +23,13 @@ import android.content.Intent
 import android.webkit.WebResourceRequest
 import android.os.Build
 import android.annotation.TargetApi
+import android.content.res.Resources
+import android.net.http.SslError
+import android.view.View
 import android.webkit.WebViewClient
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
-import org.sugarandrose.app.util.WebManager
+import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
 
 
@@ -43,15 +45,14 @@ interface PostMvvm {
     interface ViewModel : MvvmViewModel<View> {
         fun init(id: Long)
 
-        var css: String
-
         @get:Bindable
-        var refreshing: Boolean
+        var loading: Boolean
         @get:Bindable
         var post: LocalPost
 
-        fun onRefresh()
         fun onMoreClick()
+
+        fun onWebViewError()
     }
 }
 
@@ -106,8 +107,11 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
+        binding.webview.webChromeClient = WebChromeClient()
         binding.webview.webViewClient = AppWebViewClient()
         binding.webview.settings.javaScriptEnabled = true
+        binding.webview.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
+        binding.webview.setLayerType(View.LAYER_TYPE_HARDWARE, null)
     }
 
     private inner class AppWebViewClient : WebViewClient() {
@@ -132,8 +136,23 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         }
 
         override fun onPageFinished(view: WebView, url: String) {
-            viewModel.refreshing = false
+            viewModel.loading = false
             super.onPageFinished(view, url)
+        }
+
+        override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+            Timber.e(error.toString())
+            viewModel.onWebViewError()
+        }
+
+        override fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?) {
+            Timber.e(errorResponse.toString())
+            viewModel.onWebViewError()
+        }
+
+        override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+            Timber.e(error.toString())
+            viewModel.onWebViewError()
         }
     }
 }
@@ -141,28 +160,49 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
 
 @PerActivity
 class PostViewModel @Inject
-constructor(private val api: SugarAndRoseApi, private val webManager: WebManager) : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
+constructor(private val api: SugarAndRoseApi,
+            private val webManager: WebManager,
+            private val navigator: Navigator,
+            resources: Resources
+) : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
     override var post: LocalPost by NotifyPropertyChangedDelegate(LocalPost(), BR.post)
-    override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
+    override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
 
-    override var css = "<style>" +
+    private var css = "<style>" +
             "img {" +
-            "display: inline; " +
-            "height: auto;max-width: 100%; " +
+            "display: inline;" +
+            "width: auto;" +
+            "height: auto;" +
+            "max-width: 100%;" +
+            "border-radius: 5px 5px 5px 5px;" +
+            "margin-bottom: 5px;" +
+            "}" +
+            "p {" +
+            "color: ${String.format("#%06X", (0xFFFFFF and resources.getColor(R.color.textBlackPrimary)))};" +
+            "}" +
+            "h2 {" +
+            "color: ${String.format("#%06X", (0xFFFFFF and resources.getColor(R.color.textBlackSecondary)))};" +
             "}" +
             "</style>"
 
     override fun init(id: Long) {
-        if (refreshing) return
         api.getPost(id)
-                .doOnSubscribe { refreshing = true }
+                .doOnSubscribe { loading = true }
                 .map { LocalPost(it) }
-                .doOnSuccess { it.content += "<br><br>" }
-                .subscribe({ post = it }, Timber::e)
+                .subscribe(this::onPostSuccess, Timber::e)
                 .addTo(disposable)
     }
 
-    override fun onRefresh() = init(post.id)
+    private fun onPostSuccess(post: LocalPost) {
+        this.post = post.apply {
+            content = "<html><head>$css</head>$content<br></html>"
+        }
+    }
 
     override fun onMoreClick() = webManager.open(post.url)
+
+    override fun onWebViewError() {
+        webManager.open(post.url)
+        navigator.finishActivity()
+    }
 }

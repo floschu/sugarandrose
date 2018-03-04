@@ -1,4 +1,4 @@
-package org.sugarandrose.app.util
+package org.sugarandrose.app.util.manager
 
 import android.content.Context
 import android.content.Intent

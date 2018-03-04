@@ -2,16 +2,10 @@ package org.sugarandrose.app.ui.more
 
 import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.Flowables
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.toObservable
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.FavoritedRepo
@@ -19,8 +13,6 @@ import org.sugarandrose.app.data.model.LocalMore
 import org.sugarandrose.app.data.model.LocalMoreHeader
 import org.sugarandrose.app.data.model.LocalMoreItem
 import org.sugarandrose.app.data.model.LocalMorePage
-import org.sugarandrose.app.data.model.remote.More
-import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.FragmentMoreBinding
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -30,9 +22,9 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.more.recyclerview.MoreAdapter
-import org.sugarandrose.app.util.SocialMediaManager
+import org.sugarandrose.app.util.manager.SocialMediaManager
 import org.sugarandrose.app.util.Utils
-import org.sugarandrose.app.util.WebManager
+import org.sugarandrose.app.util.manager.WebManager
 import org.sugarandrose.app.util.extensions.areYouSureDialog
 import org.sugarandrose.app.util.extensions.openNotificationSettings
 import timber.log.Timber

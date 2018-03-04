@@ -1,7 +1,6 @@
-package org.sugarandrose.app.util
+package org.sugarandrose.app.util.manager
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -9,13 +8,10 @@ import android.support.annotation.DrawableRes
 import android.support.customtabs.CustomTabsClient
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.ContextCompat
-import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
-import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.qualifier.AppContext
-import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.injection.scopes.PerApplication
-import org.sugarandrose.app.ui.base.navigator.Navigator
+import org.sugarandrose.app.util.Utils
 import timber.log.Timber
 import javax.inject.Inject
 

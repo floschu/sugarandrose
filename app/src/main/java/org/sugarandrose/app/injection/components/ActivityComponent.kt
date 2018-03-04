@@ -17,8 +17,8 @@ import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
 import org.sugarandrose.app.ui.categories.detail.SubCategoryActivity
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
-import org.sugarandrose.app.util.ShareManager
-import org.sugarandrose.app.util.SocialMediaManager
+import org.sugarandrose.app.util.manager.ShareManager
+import org.sugarandrose.app.util.manager.SocialMediaManager
 
 /* Copyright 2016 Patrick Löwenstein
  *

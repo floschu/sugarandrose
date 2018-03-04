@@ -1,10 +1,9 @@
-package org.sugarandrose.app.util
+package org.sugarandrose.app.util.manager
 
 import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.sugarandrose.app.data.model.LocalDisplayItem
-import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.injection.qualifier.AppContext
