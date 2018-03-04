@@ -82,7 +82,7 @@ object BindingAdapters {
     @BindingAdapter("loadWebContent")
     @JvmStatic
     fun loadWebContent(view: WebView, content: String) {
-        view.loadData(content, "text/html; charset=UTF-8", null)
+        view.loadDataWithBaseURL("file:///android_asset/", content, "text/html; charset=UTF-8", null, null)
     }
 
     @BindingAdapter("setColorScheme")

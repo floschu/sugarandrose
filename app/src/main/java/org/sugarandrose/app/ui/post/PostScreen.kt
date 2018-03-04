@@ -29,6 +29,7 @@ import android.view.View
 import android.webkit.WebViewClient
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
+import org.sugarandrose.app.util.extensions.getColorHex
 import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
 
@@ -112,6 +113,7 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         binding.webview.settings.javaScriptEnabled = true
         binding.webview.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
         binding.webview.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        binding.webview.settings.defaultFontSize = resources.getDimension(R.dimen.text_size_regular).toInt()
     }
 
     private inner class AppWebViewClient : WebViewClient() {
@@ -168,7 +170,33 @@ constructor(private val api: SugarAndRoseApi,
     override var post: LocalPost by NotifyPropertyChangedDelegate(LocalPost(), BR.post)
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
 
-    private var css = "<style>" +
+    private var css = "<style type=\"text/css\">" +
+            "@font-face {" +
+            "font-family: Oswald;" +
+            "src: url(\"oswald.ttf\")" +
+            "}" +
+            "body {" +
+            "padding-bottom: 50px;" +
+            "}" +
+            "h1 {" +
+            "font-family: Oswald;" +
+            "}" +
+            "h2 {" +
+            "color: ${resources.getColorHex(R.color.textBlackSecondary)};" +
+            "font-family: Oswald;" +
+            "}" +
+            "h3 {" +
+            "color: ${resources.getColorHex(R.color.textBlackSecondary)};" +
+            "font-family: Oswald;" +
+            "}" +
+            "p {" +
+            "color: ${resources.getColorHex(R.color.textBlackPrimary)};" +
+            "}" +
+            "a {" +
+            "color: ${resources.getColorHex(R.color.colorAccent)};" +
+            "font-weight: bold;" +
+            "text-decoration: none;" +
+            "}" +
             "img {" +
             "display: inline;" +
             "width: auto;" +
@@ -176,12 +204,6 @@ constructor(private val api: SugarAndRoseApi,
             "max-width: 100%;" +
             "border-radius: 5px 5px 5px 5px;" +
             "margin-bottom: 5px;" +
-            "}" +
-            "p {" +
-            "color: ${String.format("#%06X", (0xFFFFFF and resources.getColor(R.color.textBlackPrimary)))};" +
-            "}" +
-            "h2 {" +
-            "color: ${String.format("#%06X", (0xFFFFFF and resources.getColor(R.color.textBlackSecondary)))};" +
             "}" +
             "</style>"
 
@@ -195,7 +217,7 @@ constructor(private val api: SugarAndRoseApi,
 
     private fun onPostSuccess(post: LocalPost) {
         this.post = post.apply {
-            content = "<html><head>$css</head>$content<br></html>"
+            content = "<html><head>$css</head><body>$content</body></html>"
         }
     }
 

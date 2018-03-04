@@ -38,7 +38,7 @@ import timber.log.Timber
         )
 )
 class SugarAndRoseApp : Application() {
-    private val CACHE_SIZE = (20 * 1024 * 1024).toLong() // 20 MB
+    private val CACHE_SIZE = (30 * 1024 * 1024).toLong() // 30 MB
 
     override fun onCreate() {
         super.onCreate()
