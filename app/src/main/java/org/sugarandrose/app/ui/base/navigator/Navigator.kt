@@ -44,10 +44,10 @@ interface Navigator {
 
     fun startActivityForResult(activityClass: Class<out Activity>, requestCode: Int, adaptIntentFun: (Intent.() -> Unit)? = null)
 
+    fun <T : DialogFragment> showDialogFragment(dialog: T, fragmentTag: String = dialog.javaClass.name)
+
     fun replaceFragment(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String? = null)
     fun replaceFragmentAndAddToBackStack(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String? = null, backstackTag: String? = null)
     fun popFragmentBackStackImmediate()
-
-    fun <T : DialogFragment> showDialogFragment(dialog: T, fragmentTag: String = dialog.javaClass.name)
 
 }

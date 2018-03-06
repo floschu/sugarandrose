@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.view.MenuItem
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.data.model.remote.Category
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
 import org.sugarandrose.app.databinding.ActivityCategorydetailBinding
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
 import org.sugarandrose.app.ui.base.navigator.Navigator
@@ -54,8 +55,6 @@ class CategoryDetailActivity : BaseActivity<ActivityCategorydetailBinding, Categ
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activityComponent.inject(this)
         setAndBindContentView(savedInstanceState, R.layout.activity_categorydetail)
 
         setSupportActionBar(binding.includeToolbar?.toolbar)
@@ -89,7 +88,9 @@ class CategoryDetailActivity : BaseActivity<ActivityCategorydetailBinding, Categ
 
 @PerActivity
 class CategoryDetailViewModel @Inject
-constructor(private val api: SugarAndRoseApi) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
+constructor(@ActivityDisposable private val disposable: CompositeDisposable,
+            private val api: SugarAndRoseApi
+) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
     override var category: LocalCategory by NotifyPropertyChangedDelegate(LocalCategory(), BR.category)
 

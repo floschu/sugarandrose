@@ -13,6 +13,7 @@ import org.sugarandrose.app.injection.components.FragmentViewHolderComponent
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.base.viewmodel.NoOpViewModel
+import org.sugarandrose.app.util.extensions.attachViewOrThrowRuntimeException
 import org.sugarandrose.app.util.extensions.castWithUnwrap
 import javax.inject.Inject
 
@@ -43,17 +44,18 @@ abstract class BaseFragmentViewHolder<B : ViewDataBinding, VM : MvvmViewModel<*>
                 .build()
     }
 
+    init {
+        try {
+            FragmentViewHolderComponent::class.java.getDeclaredMethod("inject", this::class.java).invoke(viewHolderComponent, this)
+        } catch(e: NoSuchMethodException) {
+            throw RtfmException("You forgot to add \"fun inject(viewHolder: ${this::class.java.simpleName})\" in FragmentViewHolderComponent")
+        }
+    }
+
     protected fun bindContentView(view: View) {
         binding = DataBindingUtil.bind(view)
         binding.setVariable(BR.vm, viewModel)
-
-        try {
-            (viewModel as MvvmViewModel<MvvmView>).attachView(this, null)
-        } catch (e: ClassCastException) {
-            if (viewModel !is NoOpViewModel<*>) {
-                throw RuntimeException(javaClass.simpleName + " must implement MvvmView subclass as declared in " + viewModel.javaClass.simpleName)
-            }
-        }
+        viewModel.attachViewOrThrowRuntimeException(this, null)
     }
 
     private inline fun <reified T : Fragment> Context.getFragment(containerId: Int) =

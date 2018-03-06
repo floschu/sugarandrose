@@ -1,11 +1,8 @@
 package org.sugarandrose.app.ui.photo
 
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import com.davemorrissey.labs.subscaleview.ImageSource
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.R
@@ -30,8 +27,6 @@ class PhotoDetailActivity : BaseActivity<ActivityPhotodetailBinding, NoOpViewMod
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activityComponent.inject(this)
         setAndBindContentView(savedInstanceState, R.layout.activity_photodetail)
 
         postponeEnterTransition()

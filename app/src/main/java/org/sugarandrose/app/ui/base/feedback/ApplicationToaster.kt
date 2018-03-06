@@ -23,10 +23,6 @@ open class ApplicationToaster(val context: Context) : Toaster {
 
     private var toast: Toast? = null
 
-    override fun show(title: String) {
-        showInternal(title, Toast.LENGTH_LONG)
-    }
-
     override fun show(title: String, duration: Int) {
         showInternal(title, duration)
     }

@@ -58,6 +58,14 @@ abstract class BaseActivityViewHolder<B : ViewDataBinding, VM : MvvmViewModel<*>
                 .build()
     }
 
+    init {
+        try {
+            ActivityViewHolderComponent::class.java.getDeclaredMethod("inject", this::class.java).invoke(viewHolderComponent, this)
+        } catch(e: NoSuchMethodException) {
+            throw RtfmException("You forgot to add \"fun inject(viewHolder: ${this::class.java.simpleName})\" in ActivityViewHolderComponent")
+        }
+    }
+
     protected fun bindContentView(view: View) {
         binding = DataBindingUtil.bind(view)
         binding.setVariable(BR.vm, viewModel)

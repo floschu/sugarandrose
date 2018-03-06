@@ -41,7 +41,7 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     @ActivityDisposable
-    internal fun provideCompositeDisposable(): CompositeDisposable = CompositeDisposable()
+    internal fun provideActivityCompositeDisposable(): CompositeDisposable = CompositeDisposable()
 
     @Provides
     @PerActivity

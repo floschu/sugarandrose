@@ -47,8 +47,6 @@ abstract class BaseStateViewModel<V : MvvmView, S : Parcelable> : BaseObservable
 
     @Inject protected lateinit var state: S
 
-    protected val disposable = CompositeDisposable()
-
     @CallSuper
     override fun attachView(view: V, savedInstanceState: Bundle?) {
         this.view = view
@@ -58,7 +56,6 @@ abstract class BaseStateViewModel<V : MvvmView, S : Parcelable> : BaseObservable
     @CallSuper
     override fun detachView() {
         view = null
-        disposable.clear()
     }
 
     @CallSuper

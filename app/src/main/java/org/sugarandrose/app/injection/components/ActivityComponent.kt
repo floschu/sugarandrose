@@ -38,7 +38,7 @@ import org.sugarandrose.app.util.manager.SocialMediaManager
  *
  * FILE MODIFIED 2017 Tailored Media GmbH */
 @PerActivity
-@Component(dependencies = arrayOf(AppComponent::class), modules = arrayOf(ActivityModule::class, ViewModelModule::class))
+@Component(dependencies = [(AppComponent::class)], modules = [(ActivityModule::class), (ViewModelModule::class)])
 interface ActivityComponent : ActivityComponentProvides {
     // create inject methods for your Activities here
 

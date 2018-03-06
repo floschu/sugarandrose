@@ -13,8 +13,6 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.home.viewpager.HomePagerAdapter
-import org.sugarandrose.app.ui.main.MainMvvm
-import org.sugarandrose.app.util.Utils
 import javax.inject.Inject
 
 /**
@@ -32,11 +30,6 @@ interface HomeMvvm {
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeMvvm.ViewModel>(), HomeMvvm.View {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentComponent.inject(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)

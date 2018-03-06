@@ -31,10 +31,13 @@ open class ActivitySnacker(val activity: FragmentActivity) : Snacker {
     override fun show(title: CharSequence, actionText: CharSequence, action: () -> Unit) = showInternal(title, action, actionText)
     override fun show(titleRes: Int, actionTextRes: Int, action: () -> Unit) = showInternal(activity.getString(titleRes), action, activity.getString(actionTextRes))
 
-    open fun showInternal(title: CharSequence, action: (() -> Unit)?, actionText: CharSequence?) {
+
+    private fun showInternal(title: CharSequence, action: (() -> Unit)?, actionText: CharSequence?) {
         hideSnack()
+
         val coordinator = activity.findViewById<ViewGroup>(android.R.id.content).getChildAt(0)
-        val attachView = if (coordinator != null && coordinator is CoordinatorLayout) coordinator else activity.findViewById(android.R.id.content)
+        val attachView = if (coordinator != null && coordinator is CoordinatorLayout) coordinator else activity.findViewById<ViewGroup>(android.R.id.content)
+
         if (action != null && actionText != null) {
             actionSnackbar = Snackbar.make(attachView, title, Snackbar.LENGTH_INDEFINITE)
                     .setAction(actionText) { action() }

@@ -15,10 +15,8 @@
 package org.sugarandrose.app.ui.main
 
 import android.content.Intent
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
-import android.os.PersistableBundle
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.ActivityMainBinding
@@ -28,7 +26,6 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import javax.inject.Inject
-import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.ui.roses.RosesCacheManager
@@ -51,8 +48,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activityComponent.inject(this)
         setAndBindContentView(savedInstanceState, R.layout.activity_main)
 
         MainAdapter.disableShiftMode(binding.bottomNavigationView)

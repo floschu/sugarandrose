@@ -30,11 +30,6 @@ interface SearchMvvm {
 
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchMvvm.ViewModel>(), SearchMvvm.View {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentComponent.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_search)

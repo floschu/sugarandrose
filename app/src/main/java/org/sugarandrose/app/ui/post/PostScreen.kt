@@ -25,12 +25,13 @@ import android.os.Build
 import android.annotation.TargetApi
 import android.content.res.Resources
 import android.net.http.SslError
-import android.support.design.widget.Snackbar
 import android.view.View
 import android.webkit.WebViewClient
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.util.extensions.getColorHex
 import org.sugarandrose.app.util.manager.ErrorManager
@@ -72,8 +73,6 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activityComponent.inject(this)
         WebView.enableSlowWholeDocumentDraw()
         setAndBindContentView(savedInstanceState, R.layout.activity_post)
 
@@ -169,7 +168,8 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
 
 @PerActivity
 class PostViewModel @Inject
-constructor(private val api: SugarAndRoseApi,
+constructor(@ActivityDisposable private val disposable: CompositeDisposable,
+            private val api: SugarAndRoseApi,
             private val webManager: WebManager,
             private val navigator: Navigator,
             private val errorManager: ErrorManager,

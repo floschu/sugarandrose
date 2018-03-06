@@ -10,6 +10,8 @@ import org.sugarandrose.app.ui.base.navigator.FragmentNavigator
 
 import dagger.Module
 import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -39,5 +41,10 @@ class FragmentModule(private val fragment: Fragment) {
     internal fun provideFragmentNavigator(): FragmentNavigator {
         return ChildFragmentNavigator(fragment)
     }
+
+    @Provides
+    @PerFragment
+    @FragmentDisposable
+    internal fun provideFragmentCompositeDisposable(): CompositeDisposable = CompositeDisposable()
 
 }

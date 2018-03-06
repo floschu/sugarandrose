@@ -12,15 +12,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.*/
 
-package org.sugarandrose.app.ui.base.feedback
+package org.sugarandrose.app.ui.base
 
-import android.support.annotation.StringRes
-import android.widget.Toast
-
-
-interface Toaster {
-
-    fun show(title: String, duration: Int = Toast.LENGTH_LONG)
-    fun show(@StringRes titleRes: Int, duration: Int = Toast.LENGTH_LONG)
-
-}
+/*
+ * Well ... next time please read the manual/readme before doing stuff ;)
+ * https://github.com/tailoredmedia/AndroidTemplate
+ */
+class RtfmException(message: String) : NoSuchMethodException(message)

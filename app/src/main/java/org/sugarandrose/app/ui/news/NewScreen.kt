@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
@@ -16,6 +17,7 @@ import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_DEFAULT
 import org.sugarandrose.app.data.remote.parseMaxPages
 import org.sugarandrose.app.databinding.FragmentNewBinding
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -49,11 +51,6 @@ interface NewMvvm {
 
 class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMvvm.View {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentComponent.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_new)
@@ -78,7 +75,9 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
 @PerFragment
 class NewViewModel @Inject
-constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable,
+            private val api: SugarAndRoseApi
+) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
     override val adapter: DisplayItemAdapter = DisplayItemAdapter()

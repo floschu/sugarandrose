@@ -30,6 +30,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
+import io.reactivex.disposables.CompositeDisposable
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 
 
 /**
@@ -62,11 +64,6 @@ interface TextSearchMvvm {
 
 
 class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvvm.ViewModel>(), TextSearchMvvm.View {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentComponent.inject(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
@@ -108,7 +105,9 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 
 @PerFragment
 class TextSearchViewModel @Inject
-constructor(private val api: SugarAndRoseApi) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable,
+            private val api: SugarAndRoseApi
+) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
     override var tryIt: Boolean by NotifyPropertyChangedDelegate(true, BR.tryIt)

@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.disposables.CompositeDisposable
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.databinding.FragmentFavoritedBinding
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -38,11 +40,6 @@ interface FavoritedMvvm {
 
 class FavoritedFragment : BaseFragment<FragmentFavoritedBinding, FavoritedMvvm.ViewModel>(), FavoritedMvvm.View {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentComponent.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_favorited)
@@ -59,7 +56,9 @@ class FavoritedFragment : BaseFragment<FragmentFavoritedBinding, FavoritedMvvm.V
 
 @PerFragment
 class FavoritedViewModel @Inject
-constructor(private val favoritedRepo: FavoritedRepo) : BaseViewModel<FavoritedMvvm.View>(), FavoritedMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable,
+            private val favoritedRepo: FavoritedRepo
+) : BaseViewModel<FavoritedMvvm.View>(), FavoritedMvvm.ViewModel {
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
 
     override val adapter: DisplayItemAdapter = DisplayItemAdapter()

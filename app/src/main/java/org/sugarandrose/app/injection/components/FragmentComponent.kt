@@ -5,6 +5,8 @@ import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerFragment
 
 import dagger.Component
+import io.reactivex.disposables.CompositeDisposable
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.ui.favorited.FavoritedFragment
 import org.sugarandrose.app.ui.more.MoreFragment
 import org.sugarandrose.app.ui.categories.overview.CategoriesFragment
@@ -32,7 +34,7 @@ import org.sugarandrose.app.ui.textsearch.TextSearchFragment
  *
  * FILE MODIFIED 2017 Tailored Media GmbH */
 @PerFragment
-@Component(dependencies = arrayOf(ActivityComponent::class), modules = arrayOf(FragmentModule::class, ViewModelModule::class))
+@Component(dependencies = [(ActivityComponent::class)], modules = [(FragmentModule::class), (ViewModelModule::class)])
 interface FragmentComponent : FragmentComponentProvides {
     // create inject methods for your Fragments here
 
@@ -46,4 +48,7 @@ interface FragmentComponent : FragmentComponentProvides {
     fun inject(fragment: RosesFragment)
 }
 
-interface FragmentComponentProvides : ActivityComponentProvides
+interface FragmentComponentProvides : ActivityComponentProvides {
+    @FragmentDisposable
+    fun fragmentDisposable(): CompositeDisposable
+}

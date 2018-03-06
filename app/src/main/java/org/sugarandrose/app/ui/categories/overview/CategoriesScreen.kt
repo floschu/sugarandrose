@@ -5,9 +5,11 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import io.reactivex.disposables.CompositeDisposable
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -35,11 +37,6 @@ interface CategoriesMvvm {
 
 class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvvm.ViewModel>(), CategoriesMvvm.View {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentComponent.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_categories)
@@ -55,7 +52,9 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvv
 
 @PerFragment
 class CategoriesViewModel @Inject
-constructor(private val categoriesCacheManager: CategoriesCacheManager) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable,
+            private val categoriesCacheManager: CategoriesCacheManager
+) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
 
     override val adapter: CategoriesAdapter = CategoriesAdapter()
 

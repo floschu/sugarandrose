@@ -2,10 +2,12 @@ package org.sugarandrose.app.ui.displayitems
 
 import android.databinding.Bindable
 import android.view.View
+import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.databinding.ItemPostBinding
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.navigator.Navigator
@@ -51,7 +53,8 @@ class PostItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemPostBindin
 
 @PerViewHolder
 class PostItemViewModel @Inject
-constructor(private val navigator: Navigator,
+constructor(@ActivityDisposable private val disposable: CompositeDisposable,
+            private val navigator: Navigator,
             private val favoritedRepo: FavoritedRepo,
             private val shareManager: ShareManager,
             private val eventLogManager: EventLogManager

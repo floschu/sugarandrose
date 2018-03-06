@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.toObservable
@@ -24,6 +25,7 @@ import org.sugarandrose.app.data.model.LocalDisplayHeader
 import org.sugarandrose.app.data.model.LocalDisplayItem
 import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.data.model.remote.Roses
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import timber.log.Timber
 
 
@@ -43,11 +45,6 @@ interface RosesMvvm {
 
 class RosesFragment : BaseFragment<FragmentRosesBinding, RosesMvvm.ViewModel>(), RosesMvvm.View {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentComponent.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_roses)
@@ -62,7 +59,9 @@ class RosesFragment : BaseFragment<FragmentRosesBinding, RosesMvvm.ViewModel>(),
 
 @PerFragment
 class RosesViewModel @Inject
-constructor(private val rosesCacheManager: RosesCacheManager) : BaseViewModel<RosesMvvm.View>(), RosesMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable,
+            private val rosesCacheManager: RosesCacheManager
+) : BaseViewModel<RosesMvvm.View>(), RosesMvvm.ViewModel {
     override val adapter = RosesAdapter()
 
     override fun attachView(view: RosesMvvm.View, savedInstanceState: Bundle?) {

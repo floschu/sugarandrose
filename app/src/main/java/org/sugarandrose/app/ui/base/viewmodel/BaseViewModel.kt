@@ -37,8 +37,6 @@ abstract class BaseViewModel<V : MvvmView> : BaseObservable(), MvvmViewModel<V> 
     var view: V? = null
         private set
 
-    protected val disposable = CompositeDisposable()
-
     @CallSuper
     override fun attachView(view: V, savedInstanceState: Bundle?) {
         this.view = view
@@ -48,7 +46,6 @@ abstract class BaseViewModel<V : MvvmView> : BaseObservable(), MvvmViewModel<V> 
     @CallSuper
     override fun detachView() {
         view = null
-        disposable.clear()
     }
 
     protected open fun restoreInstanceState(savedInstanceState: Bundle) { }

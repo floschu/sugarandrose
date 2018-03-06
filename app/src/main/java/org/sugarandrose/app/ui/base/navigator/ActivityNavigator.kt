@@ -92,12 +92,11 @@ open class ActivityNavigator(protected val activity: FragmentActivity) : Navigat
         }
     }
 
-    override fun popFragmentBackStackImmediate() {
-        activity.supportFragmentManager.popBackStackImmediate()
-    }
-
     override fun <T : DialogFragment> showDialogFragment(dialog: T, fragmentTag: String) {
         dialog.show(activity.fragmentManager, fragmentTag)
     }
 
+    override fun popFragmentBackStackImmediate() {
+        activity.supportFragmentManager.popBackStackImmediate()
+    }
 }

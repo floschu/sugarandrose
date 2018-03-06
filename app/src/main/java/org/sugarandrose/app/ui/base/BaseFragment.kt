@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.leakcanary.RefWatcher
+import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.injection.components.DaggerFragmentComponent
 import org.sugarandrose.app.injection.components.FragmentComponent
 import org.sugarandrose.app.injection.modules.FragmentModule
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
@@ -57,8 +59,10 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
     @Inject protected lateinit var viewModel: VM
     @Inject protected lateinit var refWatcher: RefWatcher
 
+    @field:[Inject FragmentDisposable]
+    internal lateinit var disposable: CompositeDisposable
 
-    internal val fragmentComponent: FragmentComponent by lazy {
+    internal val fragmentComponent : FragmentComponent by lazy {
         DaggerFragmentComponent.builder()
                 .fragmentModule(FragmentModule(this))
                 .activityComponent((activity as BaseActivity<*, *>).activityComponent)
@@ -72,8 +76,20 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
     }
 
     @CallSuper
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        try {
+            FragmentComponent::class.java.getDeclaredMethod("inject", this::class.java).invoke(fragmentComponent, this)
+        } catch(e: NoSuchMethodException) {
+            throw RtfmException("You forgot to add \"fun inject(fragment: ${this::class.java.simpleName})\" in FragmentComponent")
+        }
+    }
+
+    @CallSuper
     override fun onDestroyView() {
         super.onDestroyView()
+        disposable.clear()
         viewModel.detachView()
         if (!viewModel.javaClass.isAnnotationPresent(PerFragment::class.java)) {
             refWatcher.watch(viewModel)

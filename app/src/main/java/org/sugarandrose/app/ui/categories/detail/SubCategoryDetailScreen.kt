@@ -36,8 +36,6 @@ class SubCategoryActivity : BaseActivity<ActivitySubcategoryBinding, SubCategory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        activityComponent.inject(this)
         setAndBindContentView(savedInstanceState, R.layout.activity_subcategory)
 
         setSupportActionBar(binding.includeToolbar?.toolbar)

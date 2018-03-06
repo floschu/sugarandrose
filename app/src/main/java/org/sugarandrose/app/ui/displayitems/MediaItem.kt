@@ -2,10 +2,12 @@ package org.sugarandrose.app.ui.displayitems
 
 import android.databinding.Bindable
 import android.view.View
+import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.databinding.ItemMediaBinding
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -48,7 +50,8 @@ class MediaItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemMediaBind
 
 @PerViewHolder
 class MediaItemViewModel @Inject
-constructor(private val favoritedRepo: FavoritedRepo,
+constructor(@ActivityDisposable private val disposable: CompositeDisposable,
+            private val favoritedRepo: FavoritedRepo,
             private val shareManager: ShareManager,
             private val eventLogManager: EventLogManager
 ) : BaseViewModel<MediaItemMvvm.View>(), MediaItemMvvm.ViewModel {

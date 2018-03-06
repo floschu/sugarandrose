@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.mikepenz.aboutlibraries.Libs
 import com.mikepenz.aboutlibraries.LibsBuilder
+import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.FavoritedRepo
@@ -17,6 +18,7 @@ import org.sugarandrose.app.data.model.LocalMoreItem
 import org.sugarandrose.app.data.model.LocalMorePage
 import org.sugarandrose.app.databinding.FragmentMoreBinding
 import org.sugarandrose.app.injection.qualifier.ActivityContext
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.navigator.Navigator
@@ -49,11 +51,6 @@ interface MoreMvvm {
 
 class MoreFragment : BaseFragment<FragmentMoreBinding, MoreMvvm.ViewModel>(), MoreMvvm.View {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentComponent.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_more)
@@ -74,6 +71,7 @@ class MoreFragment : BaseFragment<FragmentMoreBinding, MoreMvvm.ViewModel>(), Mo
 @PerFragment
 class MoreViewModel @Inject
 constructor(override val adapter: MoreAdapter,
+            @FragmentDisposable private val disposable: CompositeDisposable,
             @ActivityContext private val context: Context,
             private val webManager: WebManager,
             private val socialMediaManager: SocialMediaManager,
