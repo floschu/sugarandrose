@@ -42,17 +42,22 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
+            android:layout_height="match_parent"
             android:foreground="?android:windowContentOverlay"
-            android:nestedScrollingEnabled="false"
-            android:padding="@dimen/card_margin_half"
-            android:scrollbars="vertical"
-            app:adapter="@{vm.adapter}"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/item_more" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:padding="@dimen/card_margin_half"
+                android:scrollbars="vertical"
+                app:adapter="@{vm.adapter}"
+                tools:listitem="@layout/item_more" />
+        </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
 </layout>
