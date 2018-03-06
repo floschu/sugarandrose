@@ -1,5 +1,6 @@
 package org.sugarandrose.app.injection.modules
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import org.sugarandrose.app.BuildConfig
@@ -10,6 +11,8 @@ import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.sugarandrose.app.data.remote.ApiNetworkAvailabilityWrapper
+import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.util.ZonedDateTimeGsonTypeAdapter
 import org.threeten.bp.ZonedDateTime
 import retrofit2.Retrofit
@@ -53,7 +56,7 @@ class NetModule() {
 
     @Provides
     @PerApplication
-    internal fun provideSugarAndRoseApi(gson: Gson, okHttpClient: OkHttpClient): SugarAndRoseApi {
+    internal fun provideSugarAndRoseApi(@AppContext context: Context, gson: Gson, okHttpClient: OkHttpClient): SugarAndRoseApi {
         val httpClientBuilder = okHttpClient.newBuilder()
 
         if (BuildConfig.DEBUG) {
@@ -62,11 +65,13 @@ class NetModule() {
             httpClientBuilder.addInterceptor(loggingInterceptor)
         }
 
-        return Retrofit.Builder()
+        val api = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .callFactory(httpClientBuilder.build())
                 .build().create(SugarAndRoseApi::class.java)
+
+        return ApiNetworkAvailabilityWrapper(api, context)
     }
 }

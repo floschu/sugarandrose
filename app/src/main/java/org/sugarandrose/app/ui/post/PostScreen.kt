@@ -25,12 +25,15 @@ import android.os.Build
 import android.annotation.TargetApi
 import android.content.res.Resources
 import android.net.http.SslError
+import android.support.design.widget.Snackbar
 import android.view.View
 import android.webkit.WebViewClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
+import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.util.extensions.getColorHex
+import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
 
@@ -116,10 +119,9 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         binding.webview.settings.javaScriptEnabled = true
         binding.webview.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
         binding.webview.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-        binding.webview.settings.defaultFontSize = resources.getDimension(R.dimen.text_size_regular).toInt()
     }
 
-    override fun loadContent(content: String) = binding.webview.loadData(content, "text/html; charset=UTF-8", null)
+    override fun loadContent(content: String) = binding.webview.loadDataWithBaseURL("file:///android_asset", content, "text/html; charset=UTF-8", "UTF-8", "")
 
     private inner class AppWebViewClient : WebViewClient() {
 
@@ -148,17 +150,17 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         }
 
         override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
-            Timber.e(error.toString())
+            Timber.e("onReceivedError: $error")
             viewModel.onWebViewError()
         }
 
         override fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?) {
-            Timber.e(errorResponse.toString())
+            Timber.e("onReceivedHttpError: $errorResponse")
             viewModel.onWebViewError()
         }
 
         override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
-            Timber.e(error.toString())
+            Timber.e("onReceivedSslError: $error")
             viewModel.onWebViewError()
         }
     }
@@ -170,6 +172,8 @@ class PostViewModel @Inject
 constructor(private val api: SugarAndRoseApi,
             private val webManager: WebManager,
             private val navigator: Navigator,
+            private val errorManager: ErrorManager,
+            private val snacker: Snacker,
             resources: Resources
 ) : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
     override var post: LocalPost by NotifyPropertyChangedDelegate(LocalPost(), BR.post)
@@ -177,10 +181,10 @@ constructor(private val api: SugarAndRoseApi,
 
     private var header =
 //            "<link rel=\"stylesheet\" type=\"text/header\" href=\"//fonts.googleapis.com/header?family=Oswald\" />" +
-                    "<style type=\"text/css\">" +
+            "<style type=\"text/css\">" +
                     "@font-face {" +
                     "font-family: Oswald;" +
-                    "src: url(\"file:///android_asset/fonts/oswald.ttf\")" +
+                    "src: url(\"file:///android_asset/oswald.ttf\")" +
                     "}" +
                     "body {" +
                     "padding-bottom: 50px;" +
@@ -219,7 +223,7 @@ constructor(private val api: SugarAndRoseApi,
                 .doOnSubscribe { loading = true }
                 .map(::LocalPost)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPostSuccess, Timber::e)
+                .subscribe(this::onPostSuccess, this::onPostError)
                 .addTo(disposable)
     }
 
@@ -229,6 +233,8 @@ constructor(private val api: SugarAndRoseApi,
         }
         this.post.content?.let { view?.loadContent(it) }
     }
+
+    private fun onPostError(throwable: Throwable) = errorManager.showError(throwable, snacker::show)
 
     override fun onMoreClick() = webManager.open(post.url)
 

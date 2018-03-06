@@ -17,9 +17,7 @@ import okhttp3.OkHttpClient
 import org.sugarandrose.app.ui.categories.CategoriesCacheManager
 import org.sugarandrose.app.ui.more.MoreCacheManager
 import org.sugarandrose.app.ui.roses.RosesCacheManager
-import org.sugarandrose.app.util.manager.EventLogManager
-import org.sugarandrose.app.util.manager.NotificationsManager
-import org.sugarandrose.app.util.manager.WebManager
+import org.sugarandrose.app.util.manager.*
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -68,4 +66,5 @@ interface AppComponentProvides {
     fun rosesCacheManager(): RosesCacheManager
     fun moreCacheManager(): MoreCacheManager
     fun categoriesCacheManager(): CategoriesCacheManager
+    fun errorManager(): ErrorManager
 }

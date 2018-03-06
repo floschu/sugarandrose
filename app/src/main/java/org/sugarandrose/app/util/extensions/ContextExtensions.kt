@@ -30,6 +30,8 @@ import android.content.Intent
 import io.reactivex.schedulers.Schedulers
 import org.sugarandrose.app.R
 import java.io.IOException
+import android.net.NetworkInfo
+import android.net.ConnectivityManager
 
 
 fun Context.getCurrentLocale(): Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -83,3 +85,10 @@ fun Context.areYouSureDialog(callback: () -> Unit) = AlertDialog.Builder(this, R
     setCancelable(true)
     show()
 }
+
+val Context.isNetworkAvailable: Boolean
+    get() {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }

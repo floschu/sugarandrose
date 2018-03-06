@@ -49,4 +49,10 @@
 
     <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
     <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>
+
+    <string name="error_network_unavailable">Keine Internetverbindung.</string>
+    <string name="error_server_unavailable">Der Server ist nicht erreichbar.</string>
+    <string name="error_server_error">Ein Server Fehler ist aufgetreten.</string>
+    <string name="error_other">Ein Fehler ist aufgetreten.</string>
+    <string name="error_retry">Wiederholen</string>
 </resources>
