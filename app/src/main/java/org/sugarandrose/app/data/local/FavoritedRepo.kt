@@ -1,7 +1,7 @@
 package org.sugarandrose.app.data.local
 
 import io.reactivex.Flowable
-import org.sugarandrose.app.data.model.LocalDisplayItem
+import org.sugarandrose.app.data.model.local.LocalDisplayItem
 
 interface FavoritedRepo {
     val allDisplayItems: Flowable<List<LocalDisplayItem>>

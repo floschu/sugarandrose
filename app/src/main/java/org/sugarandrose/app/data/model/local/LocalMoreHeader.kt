@@ -1,4 +1,4 @@
-package org.sugarandrose.app.data.model
+package org.sugarandrose.app.data.model.local
 
 import android.support.annotation.StringRes
 

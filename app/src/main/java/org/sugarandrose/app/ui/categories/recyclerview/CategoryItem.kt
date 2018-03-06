@@ -1,7 +1,7 @@
 package org.sugarandrose.app.ui.categories.recyclerview
 
 import android.view.View
-import org.sugarandrose.app.data.model.LocalCategory
+import org.sugarandrose.app.data.model.local.LocalCategory
 import org.sugarandrose.app.databinding.ItemCategoryBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseActivityViewHolder

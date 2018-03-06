@@ -1,7 +1,8 @@
-package org.sugarandrose.app.data.model
+package org.sugarandrose.app.data.model.local
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import org.sugarandrose.app.data.model.local.PaperParcelLocalRose
 import org.sugarandrose.app.util.extensions.toRealmString
 import org.threeten.bp.ZonedDateTime
 import paperparcel.PaperParcel

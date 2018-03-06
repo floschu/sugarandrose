@@ -3,9 +3,9 @@ package org.sugarandrose.app.util.manager
 import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
-import org.sugarandrose.app.data.model.LocalDisplayItem
-import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.data.model.LocalRose
+import org.sugarandrose.app.data.model.local.LocalDisplayItem
+import org.sugarandrose.app.data.model.local.LocalPost
+import org.sugarandrose.app.data.model.local.LocalRose
 import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerApplication
 import javax.inject.Inject

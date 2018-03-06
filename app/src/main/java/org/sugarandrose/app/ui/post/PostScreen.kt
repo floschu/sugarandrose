@@ -18,7 +18,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.local.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.ActivityPostBinding
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable

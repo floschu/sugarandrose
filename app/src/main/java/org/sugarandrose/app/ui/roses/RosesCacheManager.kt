@@ -5,9 +5,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
 import org.jsoup.Jsoup
-import org.sugarandrose.app.data.model.LocalDisplayHeader
-import org.sugarandrose.app.data.model.LocalDisplayItem
-import org.sugarandrose.app.data.model.LocalRose
+import org.sugarandrose.app.data.model.local.LocalDisplayHeader
+import org.sugarandrose.app.data.model.local.LocalDisplayItem
+import org.sugarandrose.app.data.model.local.LocalRose
 import org.sugarandrose.app.data.model.remote.Roses
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.injection.scopes.PerApplication

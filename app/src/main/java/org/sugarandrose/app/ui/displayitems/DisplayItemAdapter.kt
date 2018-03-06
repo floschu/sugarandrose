@@ -3,7 +3,7 @@ package org.sugarandrose.app.ui.displayitems
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.*
+import org.sugarandrose.app.data.model.local.*
 import org.sugarandrose.app.util.Utils
 
 

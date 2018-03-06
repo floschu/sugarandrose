@@ -5,7 +5,7 @@ import android.view.View
 import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
-import org.sugarandrose.app.data.model.LocalMedia
+import org.sugarandrose.app.data.model.local.LocalMedia
 import org.sugarandrose.app.databinding.ItemMediaBinding
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerViewHolder

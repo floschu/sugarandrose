@@ -5,10 +5,10 @@ import io.reactivex.rxkotlin.Flowables
 import io.realm.Realm
 import io.realm.RealmObject
 import org.sugarandrose.app.data.local.FavoritedRepo
-import org.sugarandrose.app.data.model.LocalDisplayItem
-import org.sugarandrose.app.data.model.LocalMedia
-import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.data.model.LocalRose
+import org.sugarandrose.app.data.model.local.LocalDisplayItem
+import org.sugarandrose.app.data.model.local.LocalMedia
+import org.sugarandrose.app.data.model.local.LocalPost
+import org.sugarandrose.app.data.model.local.LocalRose
 import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.util.extensions.fromRealmString
 import org.sugarandrose.app.util.extensions.use

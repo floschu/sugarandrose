@@ -1,7 +1,7 @@
 package org.sugarandrose.app.ui.displayitems
 
 import android.view.View
-import org.sugarandrose.app.data.model.LocalDisplayHeader
+import org.sugarandrose.app.data.model.local.LocalDisplayHeader
 import org.sugarandrose.app.databinding.ItemDisplayHeaderBinding
 import org.sugarandrose.app.ui.base.BaseActivityViewHolder
 import org.sugarandrose.app.ui.base.view.MvvmView

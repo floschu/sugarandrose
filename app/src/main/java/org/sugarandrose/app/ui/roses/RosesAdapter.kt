@@ -1,8 +1,8 @@
 package org.sugarandrose.app.ui.roses
 
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
-import org.sugarandrose.app.data.model.LocalDisplayHeader
-import org.sugarandrose.app.data.model.LocalRose
+import org.sugarandrose.app.data.model.local.LocalDisplayHeader
+import org.sugarandrose.app.data.model.local.LocalRose
 import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
 
 /**

@@ -3,10 +3,10 @@ package org.sugarandrose.app.ui.more.recyclerview
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalMore
-import org.sugarandrose.app.data.model.LocalMoreHeader
-import org.sugarandrose.app.data.model.LocalMoreItem
-import org.sugarandrose.app.data.model.LocalMorePage
+import org.sugarandrose.app.data.model.local.LocalMore
+import org.sugarandrose.app.data.model.local.LocalMoreHeader
+import org.sugarandrose.app.data.model.local.LocalMoreItem
+import org.sugarandrose.app.data.model.local.LocalMorePage
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.util.NotifyDatasetChangedDelegate
 import org.sugarandrose.app.util.Utils

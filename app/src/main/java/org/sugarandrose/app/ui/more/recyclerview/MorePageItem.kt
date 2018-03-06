@@ -2,7 +2,7 @@ package org.sugarandrose.app.ui.more.recyclerview
 
 import android.view.View
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalMorePage
+import org.sugarandrose.app.data.model.local.LocalMorePage
 import org.sugarandrose.app.databinding.ItemMoreGridBinding
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseFragmentViewHolder

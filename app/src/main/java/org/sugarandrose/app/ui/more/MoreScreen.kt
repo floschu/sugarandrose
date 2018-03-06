@@ -12,10 +12,10 @@ import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.FavoritedRepo
-import org.sugarandrose.app.data.model.LocalMore
-import org.sugarandrose.app.data.model.LocalMoreHeader
-import org.sugarandrose.app.data.model.LocalMoreItem
-import org.sugarandrose.app.data.model.LocalMorePage
+import org.sugarandrose.app.data.model.local.LocalMore
+import org.sugarandrose.app.data.model.local.LocalMoreHeader
+import org.sugarandrose.app.data.model.local.LocalMoreItem
+import org.sugarandrose.app.data.model.local.LocalMorePage
 import org.sugarandrose.app.databinding.FragmentMoreBinding
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable

@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalMedia
-import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.local.LocalMedia
+import org.sugarandrose.app.data.model.local.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_DEFAULT
 import org.sugarandrose.app.data.remote.parseMaxPages
@@ -84,13 +85,10 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 
     private var currentPostsPage = 1
     private var maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
-    private var currentMediaPage = 1
-    private var maximumNumberOfMediaPages = TOTAL_PAGES_DEFAULT
 
     override fun onRefresh() {
         adapter.clear()
         currentPostsPage = 1
-        currentMediaPage = 1
         loadNextPage()
     }
 
@@ -99,7 +97,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                 .doOnSubscribe { refreshing = true }
                 .doOnError(Timber::e)
                 .doOnEvent { _, _ -> refreshing = false }
-                .subscribe().let { disposable.add(it) }
+                .subscribe().addTo(disposable)
     }
 
     private fun loadPosts() = Single.just(currentPostsPage >= maximumNumberOfPostPages)
@@ -119,20 +117,4 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess(adapter::add)
             .subscribeOn(AndroidSchedulers.mainThread())
-
-    private fun loadMedia() = Single.just(currentMediaPage >= maximumNumberOfMediaPages)
-            .flatMap {
-                if (it) Single.never()
-                else api.getMediaPage(currentMediaPage).doOnSubscribe { maximumNumberOfMediaPages++ }
-            }
-            .doOnSuccess { maximumNumberOfMediaPages = parseMaxPages(it) }
-            .map { it.response()?.body() }
-            .flattenAsFlowable { it }
-            .map { LocalMedia(it) }
-            .toList()
-            .map { it.sortedBy { it.date } }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess(adapter::add)
-            .subscribeOn(AndroidSchedulers.mainThread())
-
 }

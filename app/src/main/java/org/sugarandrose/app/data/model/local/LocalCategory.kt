@@ -1,5 +1,6 @@
-package org.sugarandrose.app.data.model
+package org.sugarandrose.app.data.model.local
 
+import org.sugarandrose.app.data.model.local.PaperParcelLocalCategory
 import org.sugarandrose.app.data.model.remote.Category
 import paperparcel.PaperParcel
 import paperparcel.PaperParcelable

@@ -5,7 +5,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.MenuItem
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalCategory
+import org.sugarandrose.app.data.model.local.LocalCategory
 import org.sugarandrose.app.databinding.ActivitySubcategoryBinding
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity

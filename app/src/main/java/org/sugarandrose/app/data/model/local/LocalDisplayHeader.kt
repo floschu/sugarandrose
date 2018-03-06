@@ -1,4 +1,4 @@
-package org.sugarandrose.app.data.model
+package org.sugarandrose.app.data.model.local
 
 import org.sugarandrose.app.util.extensions.toRealmString
 import org.threeten.bp.ZonedDateTime

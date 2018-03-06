@@ -5,7 +5,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
-import org.sugarandrose.app.data.model.LocalMorePage
+import org.sugarandrose.app.data.model.local.LocalMorePage
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.injection.scopes.PerApplication
 import timber.log.Timber

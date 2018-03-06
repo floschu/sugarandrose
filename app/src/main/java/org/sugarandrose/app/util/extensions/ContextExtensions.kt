@@ -21,11 +21,16 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Build
+import android.support.annotation.ArrayRes
+import android.support.annotation.StringRes
+import android.view.LayoutInflater
 import com.squareup.picasso.Picasso
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.sugarandrose.app.R
+import org.sugarandrose.app.util.exceptions.RxDialogException
 import java.io.IOException
 import java.util.*
 
@@ -36,6 +41,13 @@ fun Context.getCurrentLocale(): Locale = if (Build.VERSION.SDK_INT >= Build.VERS
     @Suppress("DEPRECATION")
     this.resources.configuration.locale
 }
+
+val Context.isNetworkAvailable: Boolean
+    get() {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
 
 inline fun <reified T> Context.castWithUnwrap(): T? {
     if (this is T) return this
@@ -82,9 +94,16 @@ fun Context.areYouSureDialog(callback: () -> Unit) = AlertDialog.Builder(this, R
     show()
 }
 
-val Context.isNetworkAvailable: Boolean
-    get() {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetworkInfo = connectivityManager.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected
-    }
+fun Context.rxSingleChoiceDialog(@StringRes titleResId: Int, @ArrayRes arrayInt: Int, preSelected: Int): Single<Int> =
+        Single.create { emitter: SingleEmitter<Int> ->
+            AlertDialog.Builder(this, R.style.DialogTheme).apply {
+                setTitle(titleResId)
+                setSingleChoiceItems(arrayInt, preSelected, { dialog, which ->
+                    emitter.onSuccess(which)
+                    dialog.dismiss()
+                })
+                setCancelable(true)
+                setOnCancelListener { emitter.onError(RxDialogException.canceled()) }
+                show()
+            }
+        }.subscribeOn(AndroidSchedulers.mainThread())

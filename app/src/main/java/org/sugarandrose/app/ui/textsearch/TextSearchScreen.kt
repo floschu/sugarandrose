@@ -1,6 +1,7 @@
 package org.sugarandrose.app.ui.textsearch
 
 import android.app.Activity
+import android.content.Context
 import android.databinding.Bindable
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
@@ -12,14 +13,19 @@ import android.view.inputmethod.InputMethodManager
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.local.LocalMedia
+import org.sugarandrose.app.data.model.local.LocalPost
+import org.sugarandrose.app.data.model.local.TextSearchFilter
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
+import org.sugarandrose.app.data.remote.parseMaxPages
 import org.sugarandrose.app.databinding.FragmentTextsearchBinding
+import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
@@ -29,6 +35,7 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
+import org.sugarandrose.app.util.extensions.rxSingleChoiceDialog
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -49,6 +56,7 @@ interface TextSearchMvvm {
         fun loadNextPage()
 
         fun onDeleteClick()
+        fun onChangeFilterClick()
 
         val adapter: DisplayItemAdapter
         @get:Bindable
@@ -59,6 +67,8 @@ interface TextSearchMvvm {
         var hasMedia: Boolean
         @get:Bindable
         var tryIt: Boolean
+        @get:Bindable
+        var currentFilter: TextSearchFilter
     }
 }
 
@@ -105,12 +115,14 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 
 @PerFragment
 class TextSearchViewModel @Inject
-constructor(@FragmentDisposable private val disposable: CompositeDisposable,
+constructor(@ActivityContext private val context: Context,
+            @FragmentDisposable private val disposable: CompositeDisposable,
             private val api: SugarAndRoseApi
 ) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
     override var tryIt: Boolean by NotifyPropertyChangedDelegate(true, BR.tryIt)
+    override var currentFilter: TextSearchFilter by NotifyPropertyChangedDelegate(TextSearchFilter.POSTS, BR.currentFilter)
     override var query: String = ""
         set(value) {
             field = value
@@ -135,17 +147,18 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                     adapter.clear()
                     currentPage = 1
                 }
-                .flatMapSingle(this::loadPage)
+                .flatMapSingle(this::loadPosts)
                 .subscribe().let { disposable.add(it) }
     }
 
     override fun loadNextPage() {
+        //todo load media/roses
         if (currentPage >= maximumNumberOfPages) return
         currentPage++
-        loadPage(query).subscribe().let { disposable.add(it) }
+        loadPosts(query).subscribe().let { disposable.add(it) }
     }
 
-    private fun loadPage(searchQuery: String) = api.getPostsForQuery(searchQuery, currentPage)
+    private fun loadPosts(searchQuery: String) = api.getPostsForQuery(searchQuery, currentPage)
             .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfPages = it } }
             .map { it.response()?.body() }
             .flattenAsFlowable { it }
@@ -165,8 +178,40 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                 view?.toggleToolbarScrolling(hasMedia)
             }
 
+    //todo
+    private fun loadMedia(searchQuery: String) = Single.just(currentPage >= maximumNumberOfPages)
+            .flatMap {
+                if (it) Single.never()
+                else api.getMediaPage(currentPage).doOnSubscribe { maximumNumberOfPages++ }
+            }
+            .doOnSuccess { maximumNumberOfPages = parseMaxPages(it) }
+            .map { it.response()?.body() }
+            .flattenAsFlowable { it }
+            .map { LocalMedia(it) }
+            .toList()
+            .map { it.sortedBy { it.date } }
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess(adapter::add)
+            .subscribeOn(AndroidSchedulers.mainThread())
+
+    //todo
+    private fun loadRoses(searchQuery: String) = Single.just(currentPage >= maximumNumberOfPages)
+
     override fun onDeleteClick() {
         query = ""
         view?.hideKeyboard()
+    }
+
+    override fun onChangeFilterClick() {
+        context.rxSingleChoiceDialog(R.string.search_types_title, R.array.search_types, TextSearchFilter.valueOf(currentFilter.toString()).ordinal)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onChangeFilter).addTo(disposable)
+    }
+
+    private fun onChangeFilter(index: Int) {
+        tryIt = true
+        adapter.clear()
+        currentPage = 1
+        currentFilter = TextSearchFilter.values()[index]
     }
 }

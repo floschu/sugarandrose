@@ -8,9 +8,9 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalMedia
-import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.data.model.LocalRose
+import org.sugarandrose.app.data.model.local.LocalMedia
+import org.sugarandrose.app.data.model.local.LocalPost
+import org.sugarandrose.app.data.model.local.LocalRose
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.navigator.Navigator

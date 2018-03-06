@@ -9,8 +9,8 @@ import io.reactivex.disposables.CompositeDisposable
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalCategory
-import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.local.LocalCategory
+import org.sugarandrose.app.data.model.local.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
 import org.sugarandrose.app.databinding.ActivityCategorydetailBinding
