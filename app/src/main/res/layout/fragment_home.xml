@@ -16,6 +16,7 @@
         <include
             android:id="@+id/include_toolbar"
             layout="@layout/toolbar_custom_title"
+            app:displayLogo="@{true}"
             app:title="@{@string/name}" />
 
         <LinearLayout

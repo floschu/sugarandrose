@@ -79,12 +79,6 @@ object BindingAdapters {
         view.loadUrl(url)
     }
 
-    @BindingAdapter("loadWebContent")
-    @JvmStatic
-    fun loadWebContent(view: WebView, content: String) {
-        view.loadDataWithBaseURL("file:///android_asset/", content, "text/html; charset=UTF-8", null, null)
-    }
-
     @BindingAdapter("setColorScheme")
     @JvmStatic
     fun setColorScheme(view: SwipeRefreshLayout, enable: Boolean) {

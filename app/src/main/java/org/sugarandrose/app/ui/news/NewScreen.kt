@@ -96,7 +96,6 @@ constructor(private val api: SugarAndRoseApi) : BaseViewModel<NewMvvm.View>(), N
     }
 
     override fun loadNextPage() {
-//        Single.merge(loadPosts(), loadMedia())
         loadPosts()
                 .doOnSubscribe { refreshing = true }
                 .doOnError(Timber::e)

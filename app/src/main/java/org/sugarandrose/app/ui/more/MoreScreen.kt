@@ -134,7 +134,8 @@ constructor(override val adapter: MoreAdapter,
                 withAboutIconShown(true)
                 withAboutVersionShown(true)
                 withActivityTitle(context.getString(R.string.more_app_info))
-                withActivityStyle(Libs.ActivityStyle.DARK)
+                withActivityStyle(Libs.ActivityStyle.LIGHT)
+                withAboutDescription(context.getString(R.string.more_dev_info))
                 withLibraries(
                         "Dagger2", "LeakCanary", "OkHttp", "Retrofit", "Timber", "gson", "rxjava",
                         "rxAndroid", "Realm", "tailoredappsandroidtemplate",

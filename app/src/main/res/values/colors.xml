@@ -15,7 +15,7 @@
     <color name="success">@color/md_green_500</color>
     <color name="error">@color/md_red_500</color>
 
-    <color name="textBlackPrimary">@color/md_black_1000</color>
+    <color name="textBlackPrimary">@color/md_grey_900</color>
     <color name="textBlackSecondary">@color/md_grey_600</color>
     <color name="textBlackDisabled">@color/md_grey_500</color>
     <color name="textWhitePrimary">@color/md_white_1000</color>

@@ -18,6 +18,7 @@
         <include
             android:id="@+id/include_toolbar"
             layout="@layout/toolbar_custom_title"
+            app:displayLogo="@{true}"
             app:title="@{vm.category.name}" />
 
         <android.support.v4.widget.SwipeRefreshLayout

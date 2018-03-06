@@ -18,6 +18,7 @@
         <include
             android:id="@+id/include_toolbar"
             layout="@layout/toolbar_custom_title"
+            app:displayLogo="@{false}"
             app:title="@{vm.post.title}" />
 
         <android.support.v4.widget.NestedScrollView
@@ -30,8 +31,7 @@
             <WebView
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:loadWebContent="@{vm.post.content}" />
+                android:layout_height="match_parent" />
         </android.support.v4.widget.NestedScrollView>
 
         <ProgressBar

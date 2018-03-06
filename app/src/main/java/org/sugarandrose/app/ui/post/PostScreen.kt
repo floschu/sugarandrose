@@ -27,6 +27,7 @@ import android.content.res.Resources
 import android.net.http.SslError
 import android.view.View
 import android.webkit.WebViewClient
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.util.extensions.getColorHex
@@ -41,7 +42,9 @@ import timber.log.Timber
 
 interface PostMvvm {
 
-    interface View : MvvmView
+    interface View : MvvmView {
+        fun loadContent(content: String)
+    }
 
     interface ViewModel : MvvmViewModel<View> {
         fun init(id: Long)
@@ -116,6 +119,8 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         binding.webview.settings.defaultFontSize = resources.getDimension(R.dimen.text_size_regular).toInt()
     }
 
+    override fun loadContent(content: String) = binding.webview.loadData(content, "text/html; charset=UTF-8", null)
+
     private inner class AppWebViewClient : WebViewClient() {
 
         @Suppress("OverridingDeprecatedMember")
@@ -170,55 +175,59 @@ constructor(private val api: SugarAndRoseApi,
     override var post: LocalPost by NotifyPropertyChangedDelegate(LocalPost(), BR.post)
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
 
-    private var css = "<style type=\"text/css\">" +
-            "@font-face {" +
-            "font-family: Oswald;" +
-            "src: url(\"oswald.ttf\")" +
-            "}" +
-            "body {" +
-            "padding-bottom: 50px;" +
-            "}" +
-            "h1 {" +
-            "font-family: Oswald;" +
-            "}" +
-            "h2 {" +
-            "color: ${resources.getColorHex(R.color.textBlackSecondary)};" +
-            "font-family: Oswald;" +
-            "}" +
-            "h3 {" +
-            "color: ${resources.getColorHex(R.color.textBlackSecondary)};" +
-            "font-family: Oswald;" +
-            "}" +
-            "p {" +
-            "color: ${resources.getColorHex(R.color.textBlackPrimary)};" +
-            "}" +
-            "a {" +
-            "color: ${resources.getColorHex(R.color.colorAccent)};" +
-            "font-weight: bold;" +
-            "text-decoration: none;" +
-            "}" +
-            "img {" +
-            "display: inline;" +
-            "width: auto;" +
-            "height: auto;" +
-            "max-width: 100%;" +
-            "border-radius: 5px 5px 5px 5px;" +
-            "margin-bottom: 5px;" +
-            "}" +
-            "</style>"
+    private var header =
+//            "<link rel=\"stylesheet\" type=\"text/header\" href=\"//fonts.googleapis.com/header?family=Oswald\" />" +
+                    "<style type=\"text/css\">" +
+                    "@font-face {" +
+                    "font-family: Oswald;" +
+                    "src: url(\"file:///android_asset/fonts/oswald.ttf\")" +
+                    "}" +
+                    "body {" +
+                    "padding-bottom: 50px;" +
+                    "}" +
+                    "h1 {" +
+                    "font-family: Oswald;" +
+                    "}" +
+                    "h2 {" +
+                    "color: ${resources.getColorHex(R.color.textBlackSecondary)};" +
+                    "font-family: Oswald;" +
+                    "}" +
+                    "h3 {" +
+                    "color: ${resources.getColorHex(R.color.textBlackSecondary)};" +
+                    "font-family: Oswald;" +
+                    "}" +
+                    "p {" +
+                    "color: ${resources.getColorHex(R.color.textBlackPrimary)};" +
+                    "}" +
+                    "a {" +
+                    "color: ${resources.getColorHex(R.color.colorAccent)};" +
+                    "font-weight: bold;" +
+                    "text-decoration: none;" +
+                    "}" +
+                    "img {" +
+                    "display: inline;" +
+                    "width: auto;" +
+                    "height: auto;" +
+                    "max-width: 100%;" +
+                    "border-radius: 5px 5px 5px 5px;" +
+                    "margin-bottom: 5px;" +
+                    "}" +
+                    "</style>"
 
     override fun init(id: Long) {
         api.getPost(id)
                 .doOnSubscribe { loading = true }
                 .map(::LocalPost)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onPostSuccess, Timber::e)
                 .addTo(disposable)
     }
 
     private fun onPostSuccess(post: LocalPost) {
         this.post = post.apply {
-            content = "<html><head>$css</head><body>$content</body></html>"
+            content = "<html><head>$header</head><body>$content</body></html>"
         }
+        this.post.content?.let { view?.loadContent(it) }
     }
 
     override fun onMoreClick() = webManager.open(post.url)
