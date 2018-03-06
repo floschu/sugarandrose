@@ -1,7 +1,7 @@
 package org.sugarandrose.app
 
-import android.app.Application
 import android.content.res.Resources
+import android.support.multidex.MultiDexApplication
 import com.google.firebase.messaging.FirebaseMessaging
 import com.jakewharton.picasso.OkHttp3Downloader
 import com.jakewharton.threetenabp.AndroidThreeTen
@@ -17,6 +17,9 @@ import okhttp3.Cache
 import paperparcel.Adapter
 import paperparcel.ProcessorConfig
 import timber.log.Timber
+import com.mikepenz.aboutlibraries.LibsConfiguration
+
+
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -37,7 +40,7 @@ import timber.log.Timber
                 Adapter(RealmListPaperParcelTypeConverter::class)
         )
 )
-class SugarAndRoseApp : Application() {
+class SugarAndRoseApp : MultiDexApplication() {
     private val CACHE_SIZE = (30 * 1024 * 1024).toLong() // 30 MB
 
     override fun onCreate() {

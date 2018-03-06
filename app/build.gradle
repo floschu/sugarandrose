@@ -31,6 +31,8 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
 
+        multiDexEnabled true
+
         setProperty("archivesBaseName", "SugarAndRose-v$versionName-b$versionCode")
 
         buildConfigField "String", "BASE_URL", "\"https://sugarandrose.org/wp-json/wp/v2/\""
@@ -174,6 +176,12 @@ dependencies {
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.17'
 
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.9.0'
+
+    implementation('com.mikepenz:aboutlibraries:5.9.1@aar') {
+        transitive = true
+    }
+
+    implementation 'com.android.support:multidex:1.0.1'
 }
 
 

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_int_tailoredappsandroidtemplate" translatable="false"></string>
+    <!-- Author section -->
+    <string name="library_tailoredappsandroidtemplate_author" translatable="false">Tailored Media GmbH</string>
+    <string name="library_tailoredappsandroidtemplate_authorWebsite" translatable="false">https://www.tailored-apps.com/</string>
+    <!-- Library section -->
+    <string name="library_tailoredappsandroidtemplate_libraryName" translatable="false">TailoredAppsAndroidTemplate</string>
+    <string name="library_tailoredappsandroidtemplate_libraryDescription" translatable="false">The Tailored Apps Android application template.</string>
+    <string name="library_tailoredappsandroidtemplate_libraryWebsite" translatable="false">https://github.com/tailoredmedia/AndroidTemplate</string>
+    <string name="library_tailoredappsandroidtemplate_libraryVersion" translatable="false">1.0</string>
+    <!-- OpenSource section -->
+    <string name="library_tailoredappsandroidtemplate_isOpenSource" translatable="false">true</string>
+    <string name="library_tailoredappsandroidtemplate_repositoryLink" translatable="false">https://github.com/tailoredmedia/AndroidTemplate</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_tailoredappsandroidtemplate_classPath" translatable="false"></string>
+    <!-- License section -->
+    <string name="library_tailoredappsandroidtemplate_licenseId" translatable="false">apache_2_0</string>
+
+
+    <string name="define_int_sssimageview" translatable="false"></string>
+    <!-- Author section -->
+    <string name="library_sssimageview_author" translatable="false">Dave Morrissey</string>
+    <string name="library_sssimageview_authorWebsite" translatable="false"></string>
+    <!-- Library section -->
+    <string name="library_sssimageview_libraryName" translatable="false">Subsampling Scale Image View</string>
+    <string name="library_sssimageview_libraryDescription" translatable="false">A custom image view for Android, designed for photo galleries and displaying huge images (e.g. maps and building plans) without OutOfMemoryErrors. Includes pinch to zoom, panning, rotation and animation support, and allows easy extension so you can add your own overlays and touch event detection.</string>
+    <string name="library_sssimageview_libraryWebsite" translatable="false">https://github.com/davemorrissey/subsampling-scale-image-view</string>
+    <string name="library_sssimageview_libraryVersion" translatable="false">3.9.0</string>
+    <!-- OpenSource section -->
+    <string name="library_sssimageview_isOpenSource" translatable="false">true</string>
+    <string name="library_sssimageview_repositoryLink" translatable="false">https://github.com/davemorrissey/subsampling-scale-image-view</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_sssimageview_classPath" translatable="false"></string>
+    <!-- License section -->
+    <string name="library_sssimageview_licenseId" translatable="false">apache_2_0</string>
+
+
+    <string name="define_int_threetenabp" translatable="false"></string>
+    <!-- Author section -->
+    <string name="library_threetenabp_author" translatable="false">Jake Wharton</string>
+    <string name="library_threetenabp_authorWebsite" translatable="false"></string>
+    <!-- Library section -->
+    <string name="library_threetenabp_libraryName" translatable="false">ThreeTenABP</string>
+    <string name="library_threetenabp_libraryDescription" translatable="false">An adaptation of the JSR-310 backport for Android.</string>
+    <string name="library_threetenabp_libraryWebsite" translatable="false">https://github.com/JakeWharton/ThreeTenABP</string>
+    <string name="library_threetenabp_libraryVersion" translatable="false">1.0.4</string>
+    <!-- OpenSource section -->
+    <string name="library_threetenabp_isOpenSource" translatable="false">true</string>
+    <string name="library_threetenabp_repositoryLink" translatable="false">https://github.com/JakeWharton/ThreeTenABP</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_threetenabp_classPath" translatable="false"></string>
+    <!-- License section -->
+    <string name="library_threetenabp_licenseId" translatable="false">apache_2_0</string>
+
+
+    <string name="define_int_paperparcel" translatable="false"></string>
+    <!-- Author section -->
+    <string name="library_paperparcel_author" translatable="false">Bradley Campbell</string>
+    <string name="library_paperparcel_authorWebsite" translatable="false"></string>
+    <!-- Library section -->
+    <string name="library_paperparcel_libraryName" translatable="false">PaperParcel</string>
+    <string name="library_paperparcel_libraryDescription" translatable="false">Auto-generate the fastest possible Parcelable implementations for Java and Kotlin.</string>
+    <string name="library_paperparcel_libraryWebsite" translatable="false">https://github.com/grandstaish/paperparcel</string>
+    <string name="library_paperparcel_libraryVersion" translatable="false">2.0.1</string>
+    <!-- OpenSource section -->
+    <string name="library_paperparcel_isOpenSource" translatable="false">true</string>
+    <string name="library_paperparcel_repositoryLink" translatable="false">https://github.com/grandstaish/paperparcel</string>
+    <!-- ClassPath for autoDetect section -->
+    <string name="library_paperparcel_classPath" translatable="false"></string>
+    <!-- License section -->
+    <string name="library_paperparcel_licenseId" translatable="false">apache_2_0</string>
+</resources>

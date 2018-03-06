@@ -8,8 +8,6 @@
         <variable
             name="vm"
             type="org.sugarandrose.app.ui.more.MoreMvvm.ViewModel" />
-
-        <import type="org.sugarandrose.app.BuildConfig" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -30,7 +28,7 @@
                 app:contentInsetLeft="0dp"
                 app:contentInsetStart="0dp"
                 app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
                 <ImageView
                     android:id="@+id/iv_logo"
@@ -44,40 +42,17 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:foreground="?android:windowContentOverlay"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:nestedScrollingEnabled="false"
-                    android:padding="@dimen/card_margin_half"
-                    android:scrollbars="vertical"
-                    app:adapter="@{vm.adapter}"
-                    tools:listitem="@layout/item_more" />
-
-                <TextView
-                    android:id="@+id/tv_version"
-                    style="@style/Text.Black.Secondary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/padding"
-                    android:text="@{@string/more_version(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)}"
-                    android:textSize="8sp"
-                    tools:ignore="SmallSp"
-                    tools:text="Version XXX" />
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+            android:nestedScrollingEnabled="false"
+            android:padding="@dimen/card_margin_half"
+            android:scrollbars="vertical"
+            app:adapter="@{vm.adapter}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/item_more" />
     </android.support.design.widget.CoordinatorLayout>
 </layout>

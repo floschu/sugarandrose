@@ -6,6 +6,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mikepenz.aboutlibraries.Libs
+import com.mikepenz.aboutlibraries.LibsBuilder
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.FavoritedRepo
@@ -121,6 +123,24 @@ constructor(override val adapter: MoreAdapter,
         })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_delete_forever, R.string.more_delete_data, {
             context.areYouSureDialog { favoritedRepo.clearData() }
+        })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_info_outline, R.string.more_app_info, {
+            LibsBuilder().apply {
+                withFields(*Libs.toStringArray(R.string::class.java.fields))
+                withVersionShown(false)
+                withLicenseShown(true)
+                withAutoDetect(true)
+                withAboutAppName(context.getString(R.string.app_name))
+                withAboutIconShown(true)
+                withAboutVersionShown(true)
+                withActivityTitle(context.getString(R.string.more_app_info))
+                withActivityStyle(Libs.ActivityStyle.DARK)
+                withLibraries(
+                        "Dagger2", "LeakCanary", "OkHttp", "Retrofit", "Timber", "gson", "rxjava",
+                        "rxAndroid", "Realm", "tailoredappsandroidtemplate",
+                        "SupportLibrary", "Picasso", "sssimageview", "paperparcel"
+                )
+            }.start(context)
         })))
 
         adapter.data = moreData

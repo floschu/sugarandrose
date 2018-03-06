@@ -210,7 +210,7 @@ constructor(private val api: SugarAndRoseApi,
     override fun init(id: Long) {
         api.getPost(id)
                 .doOnSubscribe { loading = true }
-                .map { LocalPost(it) }
+                .map(::LocalPost)
                 .subscribe(this::onPostSuccess, Timber::e)
                 .addTo(disposable)
     }

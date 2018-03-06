@@ -177,3 +177,16 @@
 # Android Annotations
 
 -dontwarn org.springframework.**
+
+
+# Reflection BottomNavigation
+
+-keepclassmembers class android.support.design.internal.BottomNavigationMenuView {
+    private boolean mShiftingMode;
+}
+
+# AboutLibs
+-keep class .R
+-keep class **.R$* {
+    <fields>;
+}
