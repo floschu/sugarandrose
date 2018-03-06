@@ -1,6 +1,5 @@
 package org.sugarandrose.app.ui.base.navigator
 
-import android.os.Bundle
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 

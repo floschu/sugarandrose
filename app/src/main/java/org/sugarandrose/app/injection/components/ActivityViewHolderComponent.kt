@@ -1,10 +1,9 @@
 package org.sugarandrose.app.injection.components
 
+import dagger.Component
 import org.sugarandrose.app.injection.modules.ViewHolderModule
 import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
-
-import dagger.Component
 import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewHolder
 import org.sugarandrose.app.ui.displayitems.LocalDisplayHeaderViewHolder
 import org.sugarandrose.app.ui.displayitems.MediaItemViewHolder

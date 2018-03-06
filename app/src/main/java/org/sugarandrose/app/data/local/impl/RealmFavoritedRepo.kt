@@ -10,10 +10,8 @@ import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.injection.scopes.PerApplication
-import org.sugarandrose.app.util.extensions.findAll
 import org.sugarandrose.app.util.extensions.fromRealmString
 import org.sugarandrose.app.util.extensions.use
-
 import javax.inject.Inject
 import javax.inject.Provider
 

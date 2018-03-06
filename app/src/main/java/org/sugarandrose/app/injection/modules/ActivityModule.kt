@@ -3,19 +3,17 @@ package org.sugarandrose.app.injection.modules
 import android.content.Context
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
-
+import dagger.Module
+import dagger.Provides
+import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.injection.qualifier.ActivityContext
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.qualifier.ActivityFragmentManager
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.feedback.ActivitySnacker
 import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.ActivityNavigator
 import org.sugarandrose.app.ui.base.navigator.Navigator
-
-import dagger.Module
-import dagger.Provides
-import io.reactivex.disposables.CompositeDisposable
-import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 
 /* Copyright 2016 Patrick Löwenstein
  *

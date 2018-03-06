@@ -3,12 +3,15 @@ package org.sugarandrose.app.ui.textsearch
 import android.app.Activity
 import android.databinding.Bindable
 import android.os.Bundle
+import android.support.design.widget.AppBarLayout
+import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
@@ -17,6 +20,7 @@ import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
 import org.sugarandrose.app.databinding.FragmentTextsearchBinding
+import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -28,10 +32,6 @@ import org.sugarandrose.app.util.PaginationScrollListener
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CoordinatorLayout
-import io.reactivex.disposables.CompositeDisposable
-import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 
 
 /**

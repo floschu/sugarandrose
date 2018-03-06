@@ -18,11 +18,8 @@ import android.databinding.BaseObservable
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.annotation.CallSuper
-
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.util.extensions.getParcelable
-import io.reactivex.disposables.CompositeDisposable
-
 import javax.inject.Inject
 
 /**

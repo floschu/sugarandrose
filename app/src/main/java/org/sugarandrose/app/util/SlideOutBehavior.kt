@@ -4,12 +4,12 @@ import android.content.Context
 import android.support.design.widget.CoordinatorLayout
 import android.support.v4.view.ViewCompat
 import android.support.v4.widget.NestedScrollView
-import android.view.View
 import android.util.AttributeSet
+import android.view.View
 import io.reactivex.disposables.Disposable
+import org.sugarandrose.app.util.extensions.isVisible
 import org.sugarandrose.app.util.extensions.slideIn
 import org.sugarandrose.app.util.extensions.slideOut
-import org.sugarandrose.app.util.extensions.isVisible
 
 
 /**

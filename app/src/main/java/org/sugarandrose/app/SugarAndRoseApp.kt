@@ -7,18 +7,16 @@ import com.jakewharton.picasso.OkHttp3Downloader
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.picasso.Picasso
-import org.sugarandrose.app.injection.components.AppComponent
-import org.sugarandrose.app.injection.components.DaggerAppComponent
-import org.sugarandrose.app.injection.modules.AppModule
-import org.sugarandrose.app.util.*
 import io.reactivex.plugins.RxJavaPlugins
 import io.realm.Realm
 import okhttp3.Cache
+import org.sugarandrose.app.injection.components.AppComponent
+import org.sugarandrose.app.injection.components.DaggerAppComponent
+import org.sugarandrose.app.injection.modules.AppModule
+import org.sugarandrose.app.util.RealmListPaperParcelTypeConverter
 import paperparcel.Adapter
 import paperparcel.ProcessorConfig
 import timber.log.Timber
-import com.mikepenz.aboutlibraries.LibsConfiguration
-
 
 
 /* Copyright 2016 Patrick Löwenstein

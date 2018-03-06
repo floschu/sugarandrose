@@ -1,16 +1,15 @@
 package org.sugarandrose.app.injection.components
 
-import org.sugarandrose.app.injection.modules.FragmentModule
-import org.sugarandrose.app.injection.modules.ViewModelModule
-import org.sugarandrose.app.injection.scopes.PerFragment
-
 import dagger.Component
 import io.reactivex.disposables.CompositeDisposable
+import org.sugarandrose.app.injection.modules.FragmentModule
+import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
-import org.sugarandrose.app.ui.favorited.FavoritedFragment
-import org.sugarandrose.app.ui.more.MoreFragment
+import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.categories.overview.CategoriesFragment
+import org.sugarandrose.app.ui.favorited.FavoritedFragment
 import org.sugarandrose.app.ui.home.HomeFragment
+import org.sugarandrose.app.ui.more.MoreFragment
 import org.sugarandrose.app.ui.news.NewFragment
 import org.sugarandrose.app.ui.roses.RosesFragment
 import org.sugarandrose.app.ui.search.SearchFragment

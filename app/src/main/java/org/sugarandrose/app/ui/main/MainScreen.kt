@@ -22,13 +22,13 @@ import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.ActivityMainBinding
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
+import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import javax.inject.Inject
-import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.ui.roses.RosesCacheManager
+import javax.inject.Inject
 
 
 interface MainMvvm {

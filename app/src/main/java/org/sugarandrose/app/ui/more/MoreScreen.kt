@@ -26,11 +26,11 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.more.recyclerview.MoreAdapter
-import org.sugarandrose.app.util.manager.SocialMediaManager
 import org.sugarandrose.app.util.Utils
-import org.sugarandrose.app.util.manager.WebManager
 import org.sugarandrose.app.util.extensions.areYouSureDialog
 import org.sugarandrose.app.util.extensions.openNotificationSettings
+import org.sugarandrose.app.util.manager.SocialMediaManager
+import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
 import javax.inject.Inject
 

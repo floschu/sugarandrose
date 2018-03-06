@@ -1,20 +1,20 @@
 package org.sugarandrose.app.ui.main
 
 import android.annotation.SuppressLint
-import android.support.annotation.IdRes
 import android.os.Bundle
+import android.support.annotation.IdRes
+import android.support.design.internal.BottomNavigationItemView
+import android.support.design.internal.BottomNavigationMenuView
+import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.patloew.navigationviewfragmentadapters.NavigationViewFragmentAdapter
 import org.sugarandrose.app.R
-import timber.log.Timber
-import android.support.design.internal.BottomNavigationItemView
-import android.support.design.internal.BottomNavigationMenuView
-import android.support.design.widget.BottomNavigationView
 import org.sugarandrose.app.ui.favorited.FavoritedFragment
+import org.sugarandrose.app.ui.home.HomeFragment
 import org.sugarandrose.app.ui.more.MoreFragment
 import org.sugarandrose.app.ui.search.SearchFragment
-import org.sugarandrose.app.ui.home.HomeFragment
+import timber.log.Timber
 
 
 /**

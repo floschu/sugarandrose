@@ -6,12 +6,10 @@
     <string name="menu_bnv_favorited">Merkzettel</string>
     <string name="menu_bnv_more">Mehr</string>
 
-    <string name="cont">Weiterlesen</string>
     <string name="share_title">Teilen mit…</string>
     <string name="share_text_post">Hey, schau dir diesen sugar&amp;rose Post an: %s</string>
     <string name="share_text_media">Hey, schau dir dieses Bild an, dass ich auf sugar&amp;rose gefunden habe:</string>
     <string name="share_text_rose">Hey, schau dir diese Rose an, die ich auf sugar&amp;rose gefunden habe:</string>
-    <string name="categories_number">%d Posts</string>
     <string name="notification_channel_fb_name">Push Nachrichten</string>
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
@@ -35,16 +33,11 @@
     <string name="more_twitter">Folge mir auf Twitter</string>
     <string name="more_privacy">Impressum &amp; Datenschutz</string>
     <string name="more_explore">Entdecken</string>
-    <string name="more_recepe_index">Rezeptindex</string>
-    <string name="more_glossar">Glossar</string>
-    <string name="more_rose_index">RosenIndex</string>
-    <string name="more_diy">Do It Yourself</string>
     <string name="more_settings">Einstellungen</string>
     <string name="more_notifications">Benachrichtigungen bearbeiten</string>
     <string name="more_delete_data">Lokale Daten löschen</string>
     <string name="more_app_info">App Info</string>
     <string name="more_dev_info"><![CDATA[Programmierung von <b>Florian Schuster</b><br><b>Web:</b> <a href="https://florianschuster.at/">https://florianschuster.at/</a><br><b>Mail:</b> <a href="mailto:mail@florianschuster.at">mail@florianschuster.at</a></html>]]></string>
-    <string name="more_version">Version %1$s-b%2$d</string>
     <string name="click_for_more">Mehr auf sugarandrose.org</string>
 
     <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
@@ -54,5 +47,4 @@
     <string name="error_server_unavailable">Der Server ist nicht erreichbar.</string>
     <string name="error_server_error">Ein Server Fehler ist aufgetreten.</string>
     <string name="error_other">Ein Fehler ist aufgetreten.</string>
-    <string name="error_retry">Wiederholen</string>
 </resources>

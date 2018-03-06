@@ -3,9 +3,7 @@ package org.sugarandrose.app.ui.more
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import org.sugarandrose.app.data.model.LocalMorePage
 import org.sugarandrose.app.data.remote.SugarAndRoseApi

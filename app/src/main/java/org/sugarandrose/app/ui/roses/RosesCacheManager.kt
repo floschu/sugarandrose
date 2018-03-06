@@ -2,9 +2,7 @@ package org.sugarandrose.app.ui.roses
 
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import org.jsoup.Jsoup
 import org.sugarandrose.app.data.model.LocalDisplayHeader

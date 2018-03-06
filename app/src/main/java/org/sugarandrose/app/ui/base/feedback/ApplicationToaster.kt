@@ -16,7 +16,6 @@ package org.sugarandrose.app.ui.base.feedback
 
 import android.content.Context
 import android.support.annotation.StringRes
-import android.support.v4.app.FragmentActivity
 import android.widget.Toast
 
 open class ApplicationToaster(val context: Context) : Toaster {

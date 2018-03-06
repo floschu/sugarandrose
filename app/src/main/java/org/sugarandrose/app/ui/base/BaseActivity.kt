@@ -3,9 +3,12 @@ package org.sugarandrose.app.ui.base
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.support.annotation.*
+import android.support.annotation.CallSuper
+import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import com.squareup.leakcanary.RefWatcher
+import io.reactivex.disposables.CompositeDisposable
+import io.realm.Realm
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.injection.components.ActivityComponent
@@ -15,8 +18,6 @@ import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.extensions.attachViewOrThrowRuntimeException
-import io.reactivex.disposables.CompositeDisposable
-import io.realm.Realm
 import javax.inject.Inject
 
 /* Copyright 2016 Patrick Löwenstein

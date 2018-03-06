@@ -2,19 +2,19 @@ package org.sugarandrose.app.injection.components
 
 import android.content.Context
 import android.support.v4.app.FragmentManager
+import dagger.Component
+import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.injection.modules.ActivityModule
 import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.qualifier.ActivityContext
+import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.qualifier.ActivityFragmentManager
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import org.sugarandrose.app.ui.main.MainActivity
-import dagger.Component
-import io.reactivex.disposables.CompositeDisposable
-import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
 import org.sugarandrose.app.ui.categories.detail.SubCategoryActivity
+import org.sugarandrose.app.ui.main.MainActivity
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.util.manager.ShareManager

@@ -1,24 +1,24 @@
 package org.sugarandrose.app.util.manager
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.support.v4.content.FileProvider
+import io.reactivex.Completable
+import io.reactivex.Single
+import org.sugarandrose.app.BuildConfig
+import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.data.model.LocalPost
-import javax.inject.Inject
-import android.content.Intent
+import org.sugarandrose.app.data.model.LocalRose
+import org.sugarandrose.app.injection.qualifier.ActivityContext
+import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import android.graphics.Bitmap
+import org.sugarandrose.app.util.extensions.loadWithPicasso
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import android.support.v4.content.FileProvider
-import io.reactivex.Completable
-import org.sugarandrose.app.BuildConfig
-import org.sugarandrose.app.injection.qualifier.ActivityContext
-import org.sugarandrose.app.injection.scopes.PerActivity
-import org.sugarandrose.app.util.extensions.loadWithPicasso
-import io.reactivex.Single
-import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalRose
+import javax.inject.Inject
 
 /**
  * Created by Florian Schuster

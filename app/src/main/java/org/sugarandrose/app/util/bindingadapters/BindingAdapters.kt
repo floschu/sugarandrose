@@ -19,23 +19,22 @@ import android.content.Intent
 import android.databinding.BindingAdapter
 import android.databinding.BindingMethod
 import android.databinding.BindingMethods
-import android.os.Build
 import android.support.annotation.DrawableRes
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.widget.SwipeRefreshLayout
 import android.text.Html
 import android.view.View
+import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import org.threeten.bp.format.DateTimeFormatter
-import android.webkit.WebView
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.util.extensions.fromRealmString
+import org.threeten.bp.format.DateTimeFormatter
 
 
 @BindingMethods(BindingMethod(type = SwipeRefreshLayout::class, attribute = "onRefresh", method = "setOnRefreshListener"))

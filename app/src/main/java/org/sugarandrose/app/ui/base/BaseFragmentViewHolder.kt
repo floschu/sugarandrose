@@ -12,7 +12,6 @@ import org.sugarandrose.app.injection.components.DaggerFragmentViewHolderCompone
 import org.sugarandrose.app.injection.components.FragmentViewHolderComponent
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.base.viewmodel.NoOpViewModel
 import org.sugarandrose.app.util.extensions.attachViewOrThrowRuntimeException
 import org.sugarandrose.app.util.extensions.castWithUnwrap
 import javax.inject.Inject

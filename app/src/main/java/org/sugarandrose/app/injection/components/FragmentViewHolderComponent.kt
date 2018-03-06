@@ -1,11 +1,11 @@
 package org.sugarandrose.app.injection.components
 
+import dagger.Component
 import org.sugarandrose.app.injection.modules.ViewHolderModule
 import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
-import dagger.Component
-import org.sugarandrose.app.ui.more.recyclerview.MoreItemViewHolder
 import org.sugarandrose.app.ui.more.recyclerview.MoreHeaderItemViewHolder
+import org.sugarandrose.app.ui.more.recyclerview.MoreItemViewHolder
 import org.sugarandrose.app.ui.more.recyclerview.MorePageItemViewHolder
 
 /* Copyright 2017 Tailored Media GmbH

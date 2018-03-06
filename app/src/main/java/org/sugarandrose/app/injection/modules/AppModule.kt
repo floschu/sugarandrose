@@ -5,13 +5,13 @@ import android.content.Context
 import android.content.res.Resources
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import dagger.Module
+import dagger.Provides
+import io.realm.Realm
 import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.ui.base.feedback.ApplicationToaster
 import org.sugarandrose.app.ui.base.feedback.Toaster
-import dagger.Module
-import dagger.Provides
-import io.realm.Realm
 
 /* Copyright 2016 Patrick Löwenstein
  *

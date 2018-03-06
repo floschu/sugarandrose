@@ -1,12 +1,11 @@
 package org.sugarandrose.app.injection.modules
 
-import org.sugarandrose.app.data.local.FavoritedRepo
-import org.sugarandrose.app.data.local.impl.RealmFavoritedRepo
-import org.sugarandrose.app.data.local.PrefRepo
-import org.sugarandrose.app.data.local.impl.SharedPrefRepo
-
 import dagger.Binds
 import dagger.Module
+import org.sugarandrose.app.data.local.FavoritedRepo
+import org.sugarandrose.app.data.local.PrefRepo
+import org.sugarandrose.app.data.local.impl.RealmFavoritedRepo
+import org.sugarandrose.app.data.local.impl.SharedPrefRepo
 
 /* Copyright 2016 Patrick Löwenstein
  *

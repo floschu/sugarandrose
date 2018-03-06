@@ -3,9 +3,7 @@ package org.sugarandrose.app.ui.base.viewmodel
 import android.databinding.BaseObservable
 import android.os.Bundle
 import android.support.annotation.CallSuper
-
 import org.sugarandrose.app.ui.base.view.MvvmView
-import io.reactivex.disposables.CompositeDisposable
 
 /* Copyright 2016 Patrick Löwenstein
  *

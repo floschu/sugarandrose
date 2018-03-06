@@ -2,16 +2,14 @@ package org.sugarandrose.app.injection.modules
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-
-import org.sugarandrose.app.injection.qualifier.ChildFragmentManager
-import org.sugarandrose.app.injection.scopes.PerFragment
-import org.sugarandrose.app.ui.base.navigator.ChildFragmentNavigator
-import org.sugarandrose.app.ui.base.navigator.FragmentNavigator
-
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
+import org.sugarandrose.app.injection.qualifier.ChildFragmentManager
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
+import org.sugarandrose.app.injection.scopes.PerFragment
+import org.sugarandrose.app.ui.base.navigator.ChildFragmentNavigator
+import org.sugarandrose.app.ui.base.navigator.FragmentNavigator
 
 /* Copyright 2016 Patrick Löwenstein
  *

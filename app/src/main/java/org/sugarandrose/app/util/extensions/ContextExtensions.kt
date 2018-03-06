@@ -17,21 +17,17 @@ package org.sugarandrose.app.util.extensions
 import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import android.os.Build
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
-import java.io.FileNotFoundException
-import java.util.*
-import android.content.Intent
 import io.reactivex.schedulers.Schedulers
 import org.sugarandrose.app.R
 import java.io.IOException
-import android.net.NetworkInfo
-import android.net.ConnectivityManager
+import java.util.*
 
 
 fun Context.getCurrentLocale(): Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

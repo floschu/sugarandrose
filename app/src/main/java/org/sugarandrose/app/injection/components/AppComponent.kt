@@ -3,6 +3,9 @@ package org.sugarandrose.app.injection.components
 import android.content.Context
 import android.content.res.Resources
 import com.squareup.leakcanary.RefWatcher
+import dagger.Component
+import io.realm.Realm
+import okhttp3.OkHttpClient
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.injection.modules.AppModule
@@ -11,13 +14,13 @@ import org.sugarandrose.app.injection.modules.NetModule
 import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.ui.base.feedback.Toaster
-import dagger.Component
-import io.realm.Realm
-import okhttp3.OkHttpClient
 import org.sugarandrose.app.ui.categories.CategoriesCacheManager
 import org.sugarandrose.app.ui.more.MoreCacheManager
 import org.sugarandrose.app.ui.roses.RosesCacheManager
-import org.sugarandrose.app.util.manager.*
+import org.sugarandrose.app.util.manager.ErrorManager
+import org.sugarandrose.app.util.manager.EventLogManager
+import org.sugarandrose.app.util.manager.NotificationsManager
+import org.sugarandrose.app.util.manager.WebManager
 
 /* Copyright 2016 Patrick Löwenstein
  *
