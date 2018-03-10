@@ -7,9 +7,9 @@
     <string name="menu_bnv_more">Mehr</string>
 
     <string name="share_title">Teilen mit…</string>
-    <string name="share_text_post">Hey, schau dir diesen sugar&amp;rose Post an: %s</string>
-    <string name="share_text_media">Hey, schau dir dieses Bild an, dass ich auf sugar&amp;rose gefunden habe:</string>
-    <string name="share_text_rose">Hey, schau dir diese Rose an, die ich auf sugar&amp;rose gefunden habe:</string>
+    <string name="share_text_post">Ich habe das hier entdeckt: %s</string>
+    <string name="share_text_media">Ich habe das hier entdeckt:</string>
+    <string name="share_text_rose">Ich habe das hier entdeckt:</string>
     <string name="notification_channel_fb_name">Push Nachrichten</string>
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
