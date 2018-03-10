@@ -67,7 +67,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
         super.attachView(view, savedInstanceState)
 
         favoritedRepo.allDisplayItems
-                .map { it.sortedBy { it.date } }
+                .map { it.sortedByDescending { it.date } }
                 .subscribe({
                     adapter.clear()
                     adapter.add(it)

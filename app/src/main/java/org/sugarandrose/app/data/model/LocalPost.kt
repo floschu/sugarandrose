@@ -4,8 +4,10 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import org.sugarandrose.app.data.model.remote.Media
 import org.sugarandrose.app.data.model.remote.Post
+import org.sugarandrose.app.util.extensions.fromRealmString
 import org.sugarandrose.app.util.extensions.toRealmString
 import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import paperparcel.PaperParcel
 import paperparcel.PaperParcelable
 
@@ -31,4 +33,6 @@ open class LocalPost(@PrimaryKey override var id: Long,
         @JvmField
         val CREATOR = PaperParcelLocalPost.CREATOR
     }
+
+    fun getFormattedDate(): String = date.fromRealmString().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 }

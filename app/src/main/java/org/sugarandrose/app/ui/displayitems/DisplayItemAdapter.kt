@@ -26,10 +26,6 @@ open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     }
 
     fun add(items: List<LocalDisplayItem>) {
-//        val list = data + posts //todo media merge
-//        data.clear()
-//        data.addAll(list.sortedByDescending { it.date })
-//        notifyDataSetChanged()
         val oldSize = data.size
         data.addAll(items)
         notifyItemRangeInserted(oldSize, data.size - oldSize)

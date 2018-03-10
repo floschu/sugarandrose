@@ -104,8 +104,8 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     kapt "com.android.databinding:compiler:$gradlePluginVersion"
     implementation 'jp.wasabeef:recyclerview-animators:2.2.7'
-    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.17'
     implementation 'com.patloew.navigationviewfragmentadapters:adapters:0.3.0'
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.17'
 
     //network
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

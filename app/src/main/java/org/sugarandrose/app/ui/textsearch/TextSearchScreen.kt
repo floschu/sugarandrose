@@ -154,7 +154,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                 else Single.just(LocalPost(post))
             }
             .toList()
-            .map { it.sortedBy { it.date } }
+//            .map { it.sortedByDescending { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { loading = true }
             .doOnSuccess(adapter::add)

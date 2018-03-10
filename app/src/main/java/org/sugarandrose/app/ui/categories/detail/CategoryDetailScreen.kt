@@ -120,7 +120,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
                 else Single.just(LocalPost(post))
             }
             .toList()
-            .map { it.sortedBy { it.date } }
+            .map { it.sortedByDescending { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { refreshing = true }
             .doOnSuccess(adapter::add)

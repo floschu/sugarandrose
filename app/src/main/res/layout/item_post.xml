@@ -19,14 +19,15 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground">
+            android:background="?attr/selectableItemBackground"
+            android:onClick="@{vm::onClick}"
+            tools:background="@color/md_white_1000">
 
             <ImageView
                 android:id="@+id/iv"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:adjustViewBounds="true"
-                android:onClick="@{vm::onClick}"
                 android:scaleType="centerCrop"
                 android:src="@{vm.post.image}"
                 app:layout_constraintDimensionRatio="16:9"
@@ -36,17 +37,34 @@
                 tools:src="@drawable/header" />
 
             <TextView
+                android:id="@+id/tv_date"
+                style="@style/Text.Black.Secondary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/horizontal_margin"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginTop="@dimen/vertical_margin"
+                android:text="@{vm.post.formattedDate}"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_title"
+                app:layout_constraintEnd_toStartOf="@id/btn_fav"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv"
+                tools:text="12.1.1230" />
+
+            <TextView
                 android:id="@+id/tv_title"
                 style="@style/Title.Accent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin"
-                android:onClick="@{vm::onClick}"
+                android:layout_marginBottom="@dimen/vertical_margin"
+                android:layout_marginEnd="@dimen/horizontal_margin"
+                android:layout_marginStart="@dimen/horizontal_margin"
                 app:htmlText="@{vm.post.title}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_fav"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv"
+                app:layout_constraintTop_toBottomOf="@id/tv_date"
                 tools:text="Title" />
 
             <ImageView

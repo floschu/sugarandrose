@@ -115,7 +115,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                 else Single.just(LocalPost(post))
             }
             .toList()
-            .map { it.sortedBy { it.date } }
+            .map { it.sortedByDescending { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess(adapter::add)
             .subscribeOn(AndroidSchedulers.mainThread())
@@ -130,7 +130,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
             .flattenAsFlowable { it }
             .map { LocalMedia(it) }
             .toList()
-            .map { it.sortedBy { it.date } }
+            .map { it.sortedByDescending { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess(adapter::add)
             .subscribeOn(AndroidSchedulers.mainThread())
