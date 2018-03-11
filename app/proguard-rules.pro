@@ -185,8 +185,15 @@
     private boolean mShiftingMode;
 }
 
+
 # AboutLibs
+
 -keep class .R
 -keep class **.R$* {
     <fields>;
 }
+
+
+# Video Webview
+
+-keepclassmembers class name.cpr.VideoEnabledWebView$JavascriptInterface { public *; }
