@@ -109,10 +109,10 @@ constructor(override val adapter: MoreAdapter,
             socialMediaManager.openTwitter(BuildConfig.TWITTER_NAME, BuildConfig.TWITTER_ID)
         })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
-            navigator.startActivity(Utils.mail("sugarandrosen@gmail.com"))
+            navigator.startActivity(Utils.mail(BuildConfig.EMAIL))
         })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_privacy, {
-            webManager.open("https://sugarandrose.org/kontakt/impressum/")
+            webManager.open(BuildConfig.IMPRESSUM)
         })))
 
         moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_settings)))

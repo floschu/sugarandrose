@@ -14,14 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin_half"
-        app:cardCornerRadius="6dp">
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{vm::onClick}"
+        android:stateListAnimator="@animator/lift_on_touch"
+        app:cardCornerRadius="6dp"
+        app:cardPreventCornerOverlap="false">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:onClick="@{vm::onClick}"
-            tools:background="@color/md_white_1000">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/iv"

@@ -30,11 +30,13 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.extensions.getColorHex
 import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
 import javax.inject.Inject
+import org.sugarandrose.app.util.VideoEnabledWebChromeClient
+import org.sugarandrose.app.util.VideoEnabledWebView
+import org.sugarandrose.app.util.extensions.*
 
 
 /**
@@ -68,6 +70,8 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
     lateinit var navigator: Navigator
     @Inject
     lateinit var webManager: WebManager
+
+    private lateinit var webChromeClient: VideoEnabledWebChromeClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,9 +108,26 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         super.onPause()
     }
 
+    override fun onBackPressed() {
+        if (!webChromeClient.onBackPressed()) super.onBackPressed()
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        binding.webview.webChromeClient = WebChromeClient()
+        webChromeClient = VideoEnabledWebChromeClient(binding.videoHide, binding.videoFullscreen, null, binding.webview).apply {
+            setOnToggledFullscreen {
+                if (it) {
+                    binding.cardMore.slideOut(250).subscribe().addTo(disposable)
+                    hideStatusBar()
+                    supportActionBar?.hide()
+                } else {
+                    binding.cardMore.slideIn(250).subscribe().addTo(disposable)
+                    supportActionBar?.show()
+                    showSystemUi()
+                }
+            }
+        }
+        binding.webview.webChromeClient = webChromeClient
         binding.webview.webViewClient = AppWebViewClient()
         binding.webview.settings.javaScriptEnabled = true
         binding.webview.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING

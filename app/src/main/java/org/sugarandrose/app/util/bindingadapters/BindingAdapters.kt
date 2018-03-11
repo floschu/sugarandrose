@@ -46,6 +46,12 @@ object BindingAdapters {
         view.visibility = if (visible) View.VISIBLE else View.GONE
     }
 
+    @BindingAdapter("invisibility")
+    @JvmStatic
+    fun setInvisibility(view: View, invisible: Boolean) {
+        view.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
+    }
+
     @BindingAdapter("android:onClick")
     @JvmStatic
     fun setOnClickListener(v: View, runnable: Runnable) {

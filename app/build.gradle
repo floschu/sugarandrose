@@ -45,6 +45,8 @@ android {
         buildConfigField "String", "TWITTER_NAME", "\"sugarandrose\""
         buildConfigField "String", "TWITTER_ID", "\"199252121\""
         buildConfigField "String", "PINTEREST_NAME", "\"sugarandrosem\""
+        buildConfigField "String", "EMAIL", "\"sugarandrosen@gmail.com\""
+        buildConfigField "String", "IMPRESSUM", "\"https://sugarandrose.org/kontakt/impressum/\""
 
     }
     buildTypes {
