@@ -19,12 +19,14 @@ import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.remote.Post
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.ActivityPostBinding
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
 import org.sugarandrose.app.ui.base.feedback.Snacker
+import org.sugarandrose.app.ui.base.feedback.Toaster
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
@@ -52,6 +54,7 @@ interface PostMvvm {
 
     interface ViewModel : MvvmViewModel<View> {
         fun init(id: Long)
+        fun init(path: String)
 
         @get:Bindable
         var loading: Boolean
@@ -87,8 +90,12 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         initWebView()
 
         val id = intent.getLongExtra(Navigator.EXTRA_ARG, -1)
-        if (id < 0) finish()
-        else viewModel.init(id)
+        val path = intent.getStringExtra(Navigator.EXTRA_ARG)
+        when {
+            id > 0 -> viewModel.init(id)
+            path != null -> viewModel.init(path)
+            else -> finish()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -188,6 +195,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
             private val navigator: Navigator,
             private val errorManager: ErrorManager,
             private val snacker: Snacker,
+            private val toaster: Toaster,
             resources: Resources
 ) : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
     override var post: LocalPost by NotifyPropertyChangedDelegate(LocalPost(), BR.post)
@@ -231,6 +239,21 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
                     "margin-bottom: 5px;" +
                     "}" +
                     "</style>"
+
+    override fun init(path: String) {
+        api.getPostsFromDeepLink(path)
+                .doOnSubscribe { loading = true }
+                .doOnEvent { _, _ -> loading = false }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it.isNotEmpty()) init(it.first().id)
+                    else {
+                        toaster.show(R.string.post_uri_error)
+                        navigator.finishActivity()
+                    }
+                }, Timber::e)
+                .addTo(disposable)
+    }
 
     override fun init(id: Long) {
         api.getPost(id)

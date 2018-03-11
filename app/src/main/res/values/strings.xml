@@ -24,6 +24,7 @@
     <string name="search_posts">Beiträge</string>
     <string name="search_media">Medien</string>
     <string name="search_roses">Rosenportraits</string>
+    <string name="post_uri_error">Es wurde leider kein Post gefunden.</string>
 
     <string name="more_about">Social Media und Kontakt</string>
     <string name="more_contact">Kontakt</string>
@@ -47,4 +48,7 @@
     <string name="error_server_unavailable">Der Server ist nicht erreichbar.</string>
     <string name="error_server_error">Ein Server Fehler ist aufgetreten.</string>
     <string name="error_other">Ein Fehler ist aufgetreten.</string>
+
+    <string name="deeplink_roses">/rosenportraets-a-z/</string>
+    <string name="deeplink_posts_pattern">/20..*/..*/..*/..*</string>
 </resources>

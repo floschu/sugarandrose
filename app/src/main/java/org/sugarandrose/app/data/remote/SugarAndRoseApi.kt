@@ -9,6 +9,9 @@ import retrofit2.http.Query
 
 interface SugarAndRoseApi {
 
+    @GET("posts/?fields=id")
+    fun getPostsFromDeepLink(@Query("search") query: String): Single<List<Post>>
+
     //Single Items
     @GET("posts/{id}?fields=id,title,date,link,content,featured_media")
     fun getPost(@Path("id") id: Long): Single<Post>

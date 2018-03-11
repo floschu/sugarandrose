@@ -25,6 +25,32 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="sugarandrose.org"
+                    android:scheme="app" />
+
+                <data
+                    android:host="sugarandrose.org"
+                    android:path="/"
+                    android:scheme="https" />
+
+                <data
+                    android:host="sugarandrose.org"
+                    android:path="@string/deeplink_roses"
+                    android:scheme="https" />
+
+                <data
+                    android:host="sugarandrose.org"
+                    android:pathPattern="@string/deeplink_posts_pattern"
+                    android:scheme="https" />
+            </intent-filter>
         </activity>
 
         <activity

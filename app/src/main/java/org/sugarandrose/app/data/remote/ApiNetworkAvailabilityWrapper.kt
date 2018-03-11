@@ -13,6 +13,7 @@ import retrofit2.adapter.rxjava2.Result
  */
 
 class ApiNetworkAvailabilityWrapper(private val api: SugarAndRoseApi, private val context: Context) : SugarAndRoseApi {
+    override fun getPostsFromDeepLink(query: String): Single<List<Post>> = loadWithNetworkUnavailabilityDetection(api.getPostsFromDeepLink(query))
     override fun getPost(id: Long): Single<Post> = loadWithNetworkUnavailabilityDetection(api.getPost(id))
     override fun getMedia(id: Long): Single<Media> = loadWithNetworkUnavailabilityDetection(api.getMedia(id))
     override fun getPostsPage(page: Int, perPage: Int): Single<Result<List<Post>>> = loadWithNetworkUnavailabilityDetection(api.getPostsPage(page, perPage))
