@@ -10,9 +10,7 @@ import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.ContextCompat
 import org.sugarandrose.app.R
 import org.sugarandrose.app.injection.qualifier.ActivityContext
-import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerActivity
-import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.util.Utils
 import timber.log.Timber
 import javax.inject.Inject

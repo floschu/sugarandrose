@@ -21,7 +21,7 @@ class LocalDisplayHeaderViewHolder(itemView: View) : BaseActivityViewHolder<Item
     }
 
     fun update(item: LocalDisplayHeader) {
-        binding.tvTitle.text = item.title
+        binding.tvTitle.text = item.name
         executePendingBindings()
     }
 }

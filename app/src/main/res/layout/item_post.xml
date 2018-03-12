@@ -62,7 +62,7 @@
                 android:layout_marginBottom="@dimen/vertical_margin"
                 android:layout_marginEnd="@dimen/horizontal_margin"
                 android:layout_marginStart="@dimen/horizontal_margin"
-                app:htmlText="@{vm.post.title}"
+                app:htmlText="@{vm.post.name}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_fav"
                 app:layout_constraintStart_toStartOf="parent"

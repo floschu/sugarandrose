@@ -8,6 +8,7 @@ package org.sugarandrose.app.data.model
 interface LocalDisplayItem {
     var id: Long
     var date: String
+    var name: String
 
     val ANALYTICS_CATEGORY: String
 }

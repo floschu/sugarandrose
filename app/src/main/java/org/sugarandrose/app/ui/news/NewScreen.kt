@@ -11,7 +11,6 @@ import io.reactivex.disposables.CompositeDisposable
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalMedia
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_DEFAULT
@@ -84,13 +83,10 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 
     private var currentPostsPage = 1
     private var maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
-    private var currentMediaPage = 1
-    private var maximumNumberOfMediaPages = TOTAL_PAGES_DEFAULT
 
     override fun onRefresh() {
         adapter.clear()
         currentPostsPage = 1
-        currentMediaPage = 1
         loadNextPage()
     }
 
@@ -114,21 +110,6 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                 if (post.featured_media != 0L) api.getMedia(post.featured_media).map { LocalPost(post, it) }
                 else Single.just(LocalPost(post))
             }
-            .toList()
-            .map { it.sortedByDescending { it.date } }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess(adapter::add)
-            .subscribeOn(AndroidSchedulers.mainThread())
-
-    private fun loadMedia() = Single.just(currentMediaPage >= maximumNumberOfMediaPages)
-            .flatMap {
-                if (it) Single.never()
-                else api.getMediaPage(currentMediaPage).doOnSubscribe { maximumNumberOfMediaPages++ }
-            }
-            .doOnSuccess { maximumNumberOfMediaPages = parseMaxPages(it) }
-            .map { it.response()?.body() }
-            .flattenAsFlowable { it }
-            .map { LocalMedia(it) }
             .toList()
             .map { it.sortedByDescending { it.date } }
             .observeOn(AndroidSchedulers.mainThread())

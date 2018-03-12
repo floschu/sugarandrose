@@ -15,11 +15,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/include_toolbar"
-            layout="@layout/toolbar_custom_title"
-            app:displayLogo="@{false}"
-            app:title="@{vm.post.title}" />
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppBarTheme"
+            app:elevation="0dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/vertical_padding"
+                android:paddingTop="@dimen/vertical_padding"
+                app:layout_collapseMode="parallax"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    style="@style/Title.Accent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:htmlText="@{vm.post.name}"
+                    android:maxLines="3"
+                    tools:text="Das ist ein langer Test für die Toolbar Das a  a aaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaa a a a iesie Toolbar Das iest für die Tooie Toolbar Das iest für die Toot für die Toolbar " />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/video_hide"

@@ -28,14 +28,10 @@ constructor(private val api: SugarAndRoseApi) {
             dataSubject.onNext(value)
         }
 
-    var reloading = false
     val dataSubject: BehaviorSubject<List<LocalDisplayItem>> = BehaviorSubject.createDefault(data)
 
     fun checkReloadData(): Disposable = if (data.isEmpty()) api.getRoses()
             .map(this::mapToLocalRoses)
-            .map(this::addHeaders)
-            .doOnSubscribe { reloading = true }
-            .doOnEvent { _, _ -> reloading = false }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ data = it }, Timber::e)
     else Completable.fromAction { dataSubject.onNext(data) }.subscribe()
@@ -49,13 +45,4 @@ constructor(private val api: SugarAndRoseApi) {
                 val name = it.attr("data-image-title")
                 LocalRose(id, image, name)
             }
-
-    private fun addHeaders(roses: List<LocalRose>): List<LocalDisplayItem> {
-        val result = ArrayList<LocalDisplayItem>()
-        roses.groupBy { it.category }.toSortedMap().forEach {
-            result.add(LocalDisplayHeader(it.key))
-            result.addAll(it.value)
-        }
-        return result
-    }
 }

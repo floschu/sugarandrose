@@ -81,7 +81,7 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         WebView.enableSlowWholeDocumentDraw()
         setAndBindContentView(savedInstanceState, R.layout.activity_post)
 
-        setSupportActionBar(binding.includeToolbar?.toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.let {
             it.setDisplayShowHomeEnabled(true)
             it.setDisplayHomeAsUpEnabled(true)

@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/iv_sad"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/ic_sad"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_bias="0.15"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@id/tv_text"
         app:layout_constraintEnd_toEndOf="parent"

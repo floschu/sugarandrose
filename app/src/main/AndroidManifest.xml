@@ -34,16 +34,19 @@
 
                 <data
                     android:host="sugarandrose.org"
-                    android:scheme="app" />
-
-                <data
-                    android:host="sugarandrose.org"
+                    android:path="@string/deeplink_roses"
                     android:scheme="https" />
+
+                <!--<data-->
+                    <!--android:host="sugarandrose.org"-->
+                    <!--android:path="@string/deeplink_posts_pattern"-->
+                    <!--android:scheme="https" />-->
             </intent-filter>
         </activity>
 
         <activity
             android:name=".ui.post.PostActivity"
+            android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true" />
 
         <activity android:name=".ui.categories.detail.CategoryDetailActivity" />

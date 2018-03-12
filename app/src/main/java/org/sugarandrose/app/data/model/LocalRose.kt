@@ -16,12 +16,11 @@ import paperparcel.PaperParcelable
 open class LocalRose(@PrimaryKey override var id: Long,
                      override var date: String,
                      var image: String,
-                     var name: String,
-                     var category: String,
+                     override var name: String,
                      override var ANALYTICS_CATEGORY: String = "Rose"
 ) : PaperParcelable, RealmObject(), LocalDisplayItem {
-    constructor() : this(0, ZonedDateTime.now().toRealmString(), "", "", "")
-    constructor(id: Long, image: String, name: String) : this(id, ZonedDateTime.now().toRealmString(), image, name, name[0].toString())
+    constructor() : this(0, ZonedDateTime.now().toRealmString(), "", "")
+    constructor(id: Long, image: String, name: String) : this(id, ZonedDateTime.now().toRealmString(), image, name)
 
     companion object {
         @JvmField

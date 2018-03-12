@@ -25,7 +25,7 @@ constructor(@AppContext private val context: Context) {
             putString(FirebaseAnalytics.Param.ITEM_ID, localDisplayItem.id.toString())
             putString(FirebaseAnalytics.Param.ITEM_CATEGORY, localDisplayItem.ANALYTICS_CATEGORY)
             when (localDisplayItem) {
-                is LocalPost -> putString(FirebaseAnalytics.Param.ITEM_NAME, localDisplayItem.title)
+                is LocalPost -> putString(FirebaseAnalytics.Param.ITEM_NAME, localDisplayItem.name)
                 is LocalRose -> putString(FirebaseAnalytics.Param.ITEM_NAME, localDisplayItem.name)
             }
         }
@@ -37,7 +37,7 @@ constructor(@AppContext private val context: Context) {
             putString(FirebaseAnalytics.Param.ITEM_ID, localDisplayItem.id.toString())
             putString(FirebaseAnalytics.Param.ITEM_CATEGORY, localDisplayItem.ANALYTICS_CATEGORY)
             if (localDisplayItem is LocalPost) {
-                putString(FirebaseAnalytics.Param.ITEM_NAME, localDisplayItem.title)
+                putString(FirebaseAnalytics.Param.ITEM_NAME, localDisplayItem.name)
             }
         }
         analytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
@@ -48,7 +48,7 @@ constructor(@AppContext private val context: Context) {
             putString(FirebaseAnalytics.Param.ITEM_ID, localDisplayItem.id.toString())
             putString(FirebaseAnalytics.Param.ITEM_CATEGORY, localDisplayItem.ANALYTICS_CATEGORY)
             if (localDisplayItem is LocalPost) {
-                putString(FirebaseAnalytics.Param.ITEM_NAME, localDisplayItem.title)
+                putString(FirebaseAnalytics.Param.ITEM_NAME, localDisplayItem.name)
             }
         }
         analytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle)

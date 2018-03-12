@@ -31,12 +31,6 @@ open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         notifyItemRangeInserted(oldSize, data.size - oldSize)
     }
 
-    fun delete(item: LocalDisplayItem) {
-        val index = data.indexOf(item)
-        data.removeAt(index)
-        notifyItemRemoved(index)
-    }
-
     fun clear() {
         data.clear()
         notifyDataSetChanged()

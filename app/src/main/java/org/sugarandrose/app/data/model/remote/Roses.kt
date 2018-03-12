@@ -5,4 +5,4 @@ package org.sugarandrose.app.data.model.remote
  * florian.schuster@tailored-apps.com
  */
 
-data class Roses(val id: Long, val content: DisplayText, val excerpt: DisplayText)
+data class Roses(val content: DisplayText)

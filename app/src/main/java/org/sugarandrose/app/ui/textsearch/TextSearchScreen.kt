@@ -29,6 +29,7 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
+import org.sugarandrose.app.util.extensions.hideKeyboard
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -83,8 +84,12 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
     }
 
     override fun hideKeyboard() {
-        val inputMethodManager = context!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        if (inputMethodManager.isActive) inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+        context?.hideKeyboard(binding.etSearch)
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (!isVisibleToUser) hideKeyboard()
     }
 
     override fun toggleToolbarScrolling(enable: Boolean) {
@@ -154,7 +159,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                 else Single.just(LocalPost(post))
             }
             .toList()
-//            .map { it.sortedByDescending { it.date } }
+            .map { it.sortedByDescending { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { loading = true }
             .doOnSuccess(adapter::add)
@@ -167,6 +172,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 
     override fun onDeleteClick() {
         query = ""
+        tryIt = !hasMedia
         view?.hideKeyboard()
     }
 }

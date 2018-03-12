@@ -14,6 +14,7 @@
 
 package org.sugarandrose.app.util.extensions
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
@@ -21,6 +22,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Build
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.squareup.picasso.Picasso
 import io.reactivex.Single
 import io.reactivex.SingleEmitter
@@ -88,3 +91,8 @@ val Context.isNetworkAvailable: Boolean
         val activeNetworkInfo = connectivityManager.activeNetworkInfo
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
+
+fun Context.hideKeyboard(inputView: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    if (inputMethodManager.isActive) inputMethodManager.hideSoftInputFromWindow(inputView.windowToken, 0)
+}

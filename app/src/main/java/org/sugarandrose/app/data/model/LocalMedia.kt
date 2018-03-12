@@ -16,6 +16,7 @@ import paperparcel.PaperParcelable
 open class LocalMedia(@PrimaryKey override var id: Long,
                       var image: String,
                       override var date: String,
+                      override var name: String = date,
                       override var ANALYTICS_CATEGORY: String = "Media"
 ) : PaperParcelable, RealmObject(), LocalDisplayItem {
     constructor() : this(0, "", "")

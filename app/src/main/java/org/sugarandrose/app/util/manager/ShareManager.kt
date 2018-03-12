@@ -36,8 +36,8 @@ constructor(@ActivityContext private val context: Context, private val navigator
         eventLogManager.logShare(item)
         return if (item.image != null) context.loadWithPicasso(item.image)
                 .flatMap(this::cacheBitmapForShare)
-                .flatMapCompletable { sharePostInternally(item.title, item.url, it) }
-        else sharePostInternally(item.title, item.url)
+                .flatMapCompletable { sharePostInternally(item.name, item.url, it) }
+        else sharePostInternally(item.name, item.url)
     }
 
     private fun sharePostInternally(title: String, url: String, file: File? = null): Completable = Completable.create {

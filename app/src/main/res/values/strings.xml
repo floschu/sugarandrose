@@ -41,7 +41,8 @@
     <string name="more_dev_info"><![CDATA[Programmierung von <b>Florian Schuster</b><br><b>Web:</b> <a href="https://florianschuster.at/">https://florianschuster.at/</a><br><b>Mail:</b> <a href="mailto:mail@florianschuster.at">mail@florianschuster.at</a></html>]]></string>
     <string name="click_for_more">Mehr auf sugarandrose.org</string>
 
-    <string name="deeplink_roses">rosenportraets-a-z</string>
+    <string name="deeplink_roses">/rosenportraets-a-z/</string>
+    <string name="deeplink_posts_pattern">/20..*/..*/..*/..*</string>
 
     <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
     <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>

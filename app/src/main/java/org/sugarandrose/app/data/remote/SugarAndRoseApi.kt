@@ -39,7 +39,7 @@ interface SugarAndRoseApi {
     fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 10): Single<Result<List<Post>>>
 
     //Roses
-    @GET("pages/6667/?fields=id,content,excerpt")
+    @GET("pages/6667/?fields=content")
     fun getRoses(): Single<Roses>
 
     //More

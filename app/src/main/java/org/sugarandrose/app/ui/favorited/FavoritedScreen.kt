@@ -18,6 +18,7 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
+import org.sugarandrose.app.ui.displayitems.FastScrollDisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
 import javax.inject.Inject
@@ -31,7 +32,7 @@ interface FavoritedMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        val adapter: DisplayItemAdapter
+        val adapter: FastScrollDisplayItemAdapter
         @get:Bindable
         var hasMedia: Boolean
     }
@@ -61,18 +62,15 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 ) : BaseViewModel<FavoritedMvvm.View>(), FavoritedMvvm.ViewModel {
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
 
-    override val adapter: DisplayItemAdapter = DisplayItemAdapter()
+    override val adapter = FastScrollDisplayItemAdapter()
 
     override fun attachView(view: FavoritedMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
 
         favoritedRepo.allDisplayItems
-                .map { it.sortedByDescending { it.date } }
-                .subscribe({
-                    adapter.clear()
-                    adapter.add(it)
-                    hasMedia = it.isNotEmpty()
-                }, Timber::e).let { disposable.add(it) }
+                .map { it.sortedBy { it.name } }
+                .doOnNext { hasMedia = it.isNotEmpty() }
+                .subscribe(adapter::addAllWithHeaders, Timber::e).let { disposable.add(it) }
     }
 
 }

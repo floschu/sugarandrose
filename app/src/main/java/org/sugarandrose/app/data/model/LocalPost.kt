@@ -19,7 +19,7 @@ import paperparcel.PaperParcelable
 @PaperParcel
 open class LocalPost(@PrimaryKey override var id: Long,
                      override var date: String,
-                     var title: String,
+                     override var name: String,
                      var url: String,
                      var image: String?,
                      var content: String?,

@@ -1,49 +1,30 @@
-/* Copyright 2016 Patrick Löwenstein
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License. */
-
 package org.sugarandrose.app.ui.main
 
 import android.content.Intent
 import android.content.res.Resources
-import android.databinding.Bindable
 import android.net.Uri
 import android.os.Bundle
-import io.reactivex.disposables.CompositeDisposable
+import android.support.annotation.IdRes
 import io.reactivex.rxkotlin.addTo
-import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.remote.Post
-import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.ActivityMainBinding
-import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
+import org.sugarandrose.app.ui.home.HomeFragment
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.ui.roses.RosesCacheManager
-import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.manager.WebManager
-import timber.log.Timber
 import javax.inject.Inject
 
 
 interface MainMvvm {
 
-    interface View : MvvmView
+    interface View : MvvmView {
+        fun setSelectedBnvTab(@IdRes menuId: Int, viewpagerPage: Int = 0)
+    }
 
     interface ViewModel : MvvmViewModel<View> {
         fun parseIntentUri(uri: Uri)
@@ -65,7 +46,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
             //setCustomAnimations(R.anim.fade_in, R.anim.fade_out) todo enable animations when lib is fixed
             attachTo(binding.bottomNavigationView)
         }
-
         intent.data?.let { viewModel.parseIntentUri(it) }
     }
 
@@ -83,19 +63,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
         super.onSaveInstanceState(outState)
         adapter.onSaveInstanceState(outState)
     }
+
+    override fun setSelectedBnvTab(@IdRes menuId: Int, viewpagerPage: Int) {
+        binding.bottomNavigationView.selectedItemId = menuId
+        (supportFragmentManager.fragments[0] as? HomeFragment)?.setSelectedPage(viewpagerPage)
+    }
 }
 
 
 @PerActivity
 class MainViewModel @Inject
-constructor(private val navigator: Navigator, private val resources: Resources, private val webManager: WebManager) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
+constructor(private val navigator: Navigator, private val resources: Resources) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
     private val postRegex = Regex("""2[0-9]{3}/[0-9]{2}/[0-9]{2}/*/""")
 
     override fun parseIntentUri(uri: Uri) {
         when {
-            uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> webManager.open(uri) //todo switch to roses fragment
+            uri.lastPathSegment == resources.getString(R.string.deeplink_roses).replace("/", "") -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
             uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) })
-            else -> webManager.open(uri)
         }
     }
 }

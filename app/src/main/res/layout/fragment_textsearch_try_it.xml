@@ -8,7 +8,7 @@
         android:id="@+id/iv_sad"
         android:layout_width="0dp"
         android:layout_height="400dp"
-        android:src="@drawable/drawn_arrow"
+        android:src="@drawable/ic_drawn_arrow"
         android:tint="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1.07:6.2"
@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_bias="0"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
@@ -30,6 +30,6 @@
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toEndOf="@id/iv_sad"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.15"
         app:layout_constraintWidth_default="wrap" />
 </android.support.constraint.ConstraintLayout>

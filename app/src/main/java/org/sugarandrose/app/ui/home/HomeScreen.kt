@@ -1,18 +1,24 @@
 package org.sugarandrose.app.ui.home
 
+import android.databinding.Bindable
 import android.os.Bundle
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentHomeBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
+import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.home.viewpager.HomePagerAdapter
+import org.sugarandrose.app.ui.main.MainActivity
+import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
+import org.sugarandrose.app.util.extensions.castWithUnwrap
 import javax.inject.Inject
 
 /**
@@ -21,10 +27,17 @@ import javax.inject.Inject
  */
 
 interface HomeMvvm {
-    interface View : MvvmView
+    interface View : MvvmView {
+        fun setSelectedPage(page: Int)
+    }
 
     interface ViewModel : MvvmViewModel<View> {
+
         val adapter: FragmentPagerAdapter
+
+        @get:Bindable
+        var selectedPagePosition: Int
+
     }
 }
 
@@ -41,9 +54,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeMvvm.ViewModel>(), Ho
         binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
+    override fun setSelectedPage(page: Int) {
+        viewModel.selectedPagePosition = page
+    }
+
 }
 
 
 @PerFragment
 class HomeViewModel @Inject
-constructor(override val adapter: HomePagerAdapter) : BaseViewModel<HomeMvvm.View>(), HomeMvvm.ViewModel
+constructor(override val adapter: HomePagerAdapter) : BaseViewModel<HomeMvvm.View>(), HomeMvvm.ViewModel {
+    override var selectedPagePosition: Int by NotifyPropertyChangedDelegate(0, BR.selectedPagePosition)
+}

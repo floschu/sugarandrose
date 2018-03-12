@@ -9,8 +9,8 @@ import org.threeten.bp.ZonedDateTime
  * florian.schuster@tailored-apps.com
  */
 
-data class LocalDisplayHeader(val title: String,
-                              override var id: Long = title.hashCode().toLong(),
+data class LocalDisplayHeader(override var name: String,
+                              override var id: Long = name.hashCode().toLong(),
                               override var date: String = ZonedDateTime.now().toRealmString(),
                               override val ANALYTICS_CATEGORY: String = "header"
 ) : LocalDisplayItem
