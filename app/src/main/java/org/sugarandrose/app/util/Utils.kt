@@ -35,8 +35,8 @@ object Utils {
 
     /*---------------------- Intent ----------------------------------*/
     fun web(url: String): Intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-    fun mail(mail: String): Intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + mail))
-    fun call(number: String): Intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number))
-    fun maps(location: String): Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.co.in/maps?q=" + location))
+    fun mail(mail: String): Intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$mail"))
+    fun call(number: String): Intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
+    fun maps(location: String): Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.co.in/maps?q=$location"))
 
 }

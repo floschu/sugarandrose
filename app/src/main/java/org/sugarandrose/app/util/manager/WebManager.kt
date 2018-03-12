@@ -9,7 +9,9 @@ import android.support.customtabs.CustomTabsClient
 import android.support.customtabs.CustomTabsIntent
 import android.support.v4.content.ContextCompat
 import org.sugarandrose.app.R
+import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.qualifier.AppContext
+import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.util.Utils
 import timber.log.Timber
@@ -21,9 +23,9 @@ import javax.inject.Inject
  * florian.schuster@tailored-apps.com
  */
 
-@PerApplication
+@PerActivity
 class WebManager @Inject
-constructor(@AppContext private val context: Context) {
+constructor(@ActivityContext private val context: Context) {
     init {
         CustomTabsClient.connectAndInitialize(context, "com.android.chrome")
     }
@@ -37,7 +39,7 @@ constructor(@AppContext private val context: Context) {
                 setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
                 setShowTitle(true)
                 addDefaultShareMenuItem()
-//                setCloseButtonIcon(getBitmapFromVectorDrawable(R.drawable.ic_arrow_back_white))
+                setCloseButtonIcon(getBitmapFromVectorDrawable(R.drawable.ic_arrow_back))
             }.build().launchUrl(context, Uri.parse(url))
         } catch (throwable: Throwable) {
             Timber.w(throwable)

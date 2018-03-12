@@ -36,6 +36,7 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.ui.roses.RosesCacheManager
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
+import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -87,12 +88,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 
 @PerActivity
 class MainViewModel @Inject
-constructor(private val navigator: Navigator, private val resources: Resources) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
+constructor(private val navigator: Navigator, private val resources: Resources, private val webManager: WebManager) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
+    private val postRegex = Regex("""2[0-9]{3}/[0-9]{2}/[0-9]{2}/*/""")
 
     override fun parseIntentUri(uri: Uri) {
-        if (uri.lastPathSegment == resources.getString(R.string.deeplink_roses).replace("/", ""))
-        //todo switch to roses fragment
-        else if (uri.path.contains(Regex("""2[0-9]{3}/[0-9]{2}/[0-9]{2}/*/""")))
-            navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) })
+        when {
+            uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> webManager.open(uri) //todo switch to roses fragment
+            uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) })
+            else -> webManager.open(uri)
+        }
     }
 }

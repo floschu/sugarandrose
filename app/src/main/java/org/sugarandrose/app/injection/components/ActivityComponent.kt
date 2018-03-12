@@ -19,6 +19,7 @@ import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.util.manager.ShareManager
 import org.sugarandrose.app.util.manager.SocialMediaManager
+import org.sugarandrose.app.util.manager.WebManager
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -62,6 +63,8 @@ interface ActivityComponentProvides : AppComponentProvides {
 
     fun navigator(): Navigator
     fun snacker(): Snacker
+
+    fun webManager(): WebManager
     fun shareManager(): ShareManager
     fun socialMediaManager(): SocialMediaManager
 }

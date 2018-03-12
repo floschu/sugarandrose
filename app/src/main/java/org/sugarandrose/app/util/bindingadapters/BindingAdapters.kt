@@ -33,6 +33,7 @@ import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
+import org.sugarandrose.app.util.Utils
 import org.sugarandrose.app.util.extensions.fromRealmString
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -97,12 +98,6 @@ object BindingAdapters {
         view.text = Html.fromHtml(text)
     }
 
-    @BindingAdapter("logoClick")
-    @JvmStatic
-    fun setLogoClick(view: View, enable: Boolean) {
-        view.setOnClickListener { SugarAndRoseApp.appComponent.webManager().open(BuildConfig.WEB_PAGE) }
-    }
-
     @BindingAdapter("openPhotoDetail")
     @JvmStatic
     fun setOpenPhotoDetail(view: ImageView, path: String?) {
@@ -111,11 +106,9 @@ object BindingAdapters {
             val intent = Intent(view.context, PhotoDetailActivity::class.java)
             intent.putExtra(PhotoDetailActivity.EXTRA_IMG_URL_AND_TRANSITION_NAME, path)
             if (view.context is Activity) {
-                ActivityCompat.startActivity(view.context, intent, ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        view.context as Activity,
-                        view,
-                        path
-                ).toBundle())
+                ActivityCompat.startActivity(view.context, intent,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(view.context as Activity, view, path).toBundle()
+                )
             } else view.context.startActivity(intent)
         }
     }

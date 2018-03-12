@@ -18,7 +18,7 @@
     <string name="textsearch_try_it">Gib hier deinen Suchbegriff ein</string>
     <string name="favorited_no_content_1">Du kannst dir Beiträge merken, indem du</string>
     <string name="favorited_no_content_2">drückst.</string>
-    <string name="home_new_title">Neues</string>
+    <string name="home_new_title">Blogbeiträge</string>
     <string name="home_roses_title">Rosenporträts A-Z</string>
     <string name="loading">Lädt…</string>
     <string name="search_posts">Beiträge</string>
@@ -41,6 +41,8 @@
     <string name="more_dev_info"><![CDATA[Programmierung von <b>Florian Schuster</b><br><b>Web:</b> <a href="https://florianschuster.at/">https://florianschuster.at/</a><br><b>Mail:</b> <a href="mailto:mail@florianschuster.at">mail@florianschuster.at</a></html>]]></string>
     <string name="click_for_more">Mehr auf sugarandrose.org</string>
 
+    <string name="deeplink_roses">rosenportraets-a-z</string>
+
     <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
     <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>
 
@@ -48,7 +50,4 @@
     <string name="error_server_unavailable">Der Server ist nicht erreichbar.</string>
     <string name="error_server_error">Ein Server Fehler ist aufgetreten.</string>
     <string name="error_other">Ein Fehler ist aufgetreten.</string>
-
-    <string name="deeplink_roses">/rosenportraets-a-z/</string>
-    <string name="deeplink_posts_pattern">/20..*/..*/..*/..*</string>
 </resources>

@@ -246,7 +246,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
                 .doOnEvent { _, _ -> loading = false }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    if (it.isNotEmpty()) init(it.first().id)
+                    if (it.isNotEmpty()) init(it.first().id) //todo search for posts via uri
                     else {
                         toaster.show(R.string.post_uri_error)
                         navigator.finishActivity()

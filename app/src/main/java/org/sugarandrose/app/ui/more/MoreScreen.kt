@@ -45,6 +45,8 @@ interface MoreMvvm {
 
     interface ViewModel : MvvmViewModel<View> {
         val adapter: MoreAdapter
+
+        fun onLogoClick()
     }
 }
 
@@ -143,5 +145,9 @@ constructor(override val adapter: MoreAdapter,
         })))
 
         adapter.data = moreData
+    }
+
+    override fun onLogoClick() {
+        webManager.open(BuildConfig.WEB_PAGE)
     }
 }

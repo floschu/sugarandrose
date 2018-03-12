@@ -20,7 +20,6 @@ import org.sugarandrose.app.ui.roses.RosesCacheManager
 import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.EventLogManager
 import org.sugarandrose.app.util.manager.NotificationsManager
-import org.sugarandrose.app.util.manager.WebManager
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -64,7 +63,6 @@ interface AppComponentProvides {
 
     fun notificationManager(): NotificationsManager
     fun eventLogManager(): EventLogManager
-    fun webManager(): WebManager
 
     fun rosesCacheManager(): RosesCacheManager
     fun moreCacheManager(): MoreCacheManager
