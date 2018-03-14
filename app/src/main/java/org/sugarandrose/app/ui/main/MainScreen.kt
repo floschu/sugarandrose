@@ -83,7 +83,11 @@ constructor(private val navigator: Navigator,
     override fun parseIntentUri(uri: Uri) {
         when {
             uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
-//            uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) })
+//            uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) }) todo get id from url
+            uri.query.contains(resources.getString(R.string.deeplink_post_query)) -> {
+                val id = uri.query.removePrefix("${resources.getString(R.string.deeplink_post_query)}=").toLong()
+                navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, id) })
+            }
             else -> webManager.open(uri) //todo test with phone wihtout chrome
         }
     }

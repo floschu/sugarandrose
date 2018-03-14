@@ -42,6 +42,7 @@
     <string name="click_for_more">Mehr auf sugarandrose.org</string>
 
     <string name="deeplink_roses">rosenportraets-a-z</string>
+    <string name="deeplink_post_query">page_id</string>
 
     <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
     <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>

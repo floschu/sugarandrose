@@ -36,7 +36,7 @@ constructor(@ActivityContext private val context: Context, private val navigator
         eventLogManager.logShare(item)
         return if (item.image != null) context.loadWithPicasso(item.image)
                 .flatMap(this::cacheBitmapForShare)
-                .flatMapCompletable { sharePostInternally(item.name, item.url, it) }
+                .flatMapCompletable { sharePostInternally(item.name, "${BuildConfig.WEB_PAGE}?${context.getString(R.string.deeplink_post_query)}=${item.id}", it) }
         else sharePostInternally(item.name, item.url)
     }
 
