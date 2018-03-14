@@ -13,10 +13,10 @@ import org.sugarandrose.app.util.Utils
  */
 
 open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val TYPE_HEADER = 0
-    private val TYPE_POST = 1
-    private val TYPE_MEDIA = 2
-    private val TYPE_ROSE = 3
+    protected val TYPE_HEADER = 0
+    protected val TYPE_POST = 1
+    protected val TYPE_MEDIA = 2
+    protected val TYPE_ROSE = 3
 
     protected val data = ArrayList<LocalDisplayItem>()
     val isEmpty: Boolean get() = data.isEmpty()
@@ -34,6 +34,11 @@ open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     fun clear() {
         data.clear()
         notifyDataSetChanged()
+    }
+
+    fun set(items: List<LocalDisplayItem>) {
+        clear()
+        add(items)
     }
 
     override fun getItemId(position: Int): Long = data[position].id

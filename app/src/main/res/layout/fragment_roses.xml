@@ -18,6 +18,7 @@
             android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:enabled="@{false}"
             app:refreshing="@{vm.refreshing}"
             app:setColorScheme="@{true}">
 
@@ -34,6 +35,8 @@
                 app:fastScrollPopupBgColor="@color/colorAccent"
                 app:fastScrollPopupPosition="adjacent"
                 app:fastScrollPopupTextColor="@color/textWhitePrimary"
+                app:fastScrollThumbColor="@color/colorAccent"
+                app:fastScrollTrackColor="@color/pink"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_rose" />
         </android.support.v4.widget.SwipeRefreshLayout>

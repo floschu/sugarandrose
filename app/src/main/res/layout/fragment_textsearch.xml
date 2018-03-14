@@ -84,7 +84,6 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:padding="@dimen/card_margin_half"
-                    android:scrollbars="vertical"
                     app:adapter="@{vm.adapter}"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_post" />
@@ -101,7 +100,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{!vm.tryIt ? !vm.hasMedia : false}"
+                    android:visibility="@{!vm.tryIt ? (!vm.loading ? !vm.hasMedia : false) : false}"
                     tools:visibility="gone">
 
                     <include layout="@layout/fragment_textsearch_no_content" />

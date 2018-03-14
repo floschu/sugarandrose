@@ -28,7 +28,7 @@
             <com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:padding="@dimen/card_margin_half"
                 app:adapter="@{vm.adapter}"
@@ -37,13 +37,16 @@
                 app:fastScrollPopupBgColor="@color/colorAccent"
                 app:fastScrollPopupPosition="adjacent"
                 app:fastScrollPopupTextColor="@color/textWhitePrimary"
+                app:fastScrollThumbColor="@color/colorAccent"
+                app:fastScrollTrackColor="@color/pink"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:thumbEnabled="@{vm.dataSize > 10}"
                 tools:listitem="@layout/item_post" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{!vm.hasMedia}"
+                android:visibility="@{vm.dataSize == 0}"
                 tools:visibility="gone">
 
                 <include layout="@layout/fragment_favorited_no_content" />

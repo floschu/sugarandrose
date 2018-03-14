@@ -55,7 +55,6 @@
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
                 android:padding="@dimen/card_margin_half"
-                android:scrollbars="vertical"
                 app:adapter="@{vm.adapter}"
                 tools:listitem="@layout/item_more" />
         </android.support.v4.widget.NestedScrollView>

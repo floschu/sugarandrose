@@ -2,6 +2,7 @@ package org.sugarandrose.app.ui.post
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.databinding.Bindable
@@ -22,6 +23,7 @@ import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.model.remote.Post
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.ActivityPostBinding
+import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
@@ -196,7 +198,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
             private val errorManager: ErrorManager,
             private val snacker: Snacker,
             private val toaster: Toaster,
-            resources: Resources
+            @ActivityContext context: Context
 ) : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
     override var post: LocalPost by NotifyPropertyChangedDelegate(LocalPost(), BR.post)
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
@@ -215,18 +217,18 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
                     "font-family: Oswald;" +
                     "}" +
                     "h2 {" +
-                    "color: ${resources.getColorHex(R.color.textBlackSecondary)};" +
+                    "color: ${context.getColorHex(R.color.textBlackSecondary)};" +
                     "font-family: Oswald;" +
                     "}" +
                     "h3 {" +
-                    "color: ${resources.getColorHex(R.color.textBlackSecondary)};" +
+                    "color: ${context.getColorHex(R.color.textBlackSecondary)};" +
                     "font-family: Oswald;" +
                     "}" +
                     "p {" +
-                    "color: ${resources.getColorHex(R.color.textBlackPrimary)};" +
+                    "color: ${context.getColorHex(R.color.textBlackPrimary)};" +
                     "}" +
                     "a {" +
-                    "color: ${resources.getColorHex(R.color.colorAccent)};" +
+                    "color: ${context.getColorHex(R.color.colorAccent)};" +
                     "font-weight: bold;" +
                     "text-decoration: none;" +
                     "}" +

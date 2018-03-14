@@ -40,7 +40,7 @@
                     android:layout_weight="1"
                     android:lines="1"
                     android:maxLines="1"
-                    android:textSize="@dimen/text_size_very_tall"
+                    android:textSize="26sp"
                     app:htmlText="@{title}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/iv_logo"

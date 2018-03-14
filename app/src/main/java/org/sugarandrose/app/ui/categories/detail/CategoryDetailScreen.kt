@@ -2,10 +2,12 @@ package org.sugarandrose.app.ui.categories.detail
 
 import android.databinding.Bindable
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.view.MenuItem
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
@@ -13,7 +15,7 @@ import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
-import org.sugarandrose.app.databinding.ActivityCategorydetailBinding
+import org.sugarandrose.app.databinding.ActivityCategoryDetailBinding
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
@@ -21,55 +23,63 @@ import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
+import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
 import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.PaginationScrollListener
 import timber.log.Timber
 import javax.inject.Inject
+
 
 /**
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
 
-interface CategoryDetailMvvm {
 
+interface CategoryDetailMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        @get:Bindable
-        var refreshing: Boolean
+        var category: LocalCategory
+        val adapterCategories: CategoriesAdapter
+        val adapterItems: DisplayItemAdapter
 
-        fun onRefresh()
         fun loadNextPage()
 
-        val adapter: DisplayItemAdapter
-
         @get:Bindable
-        var category: LocalCategory
+        var refreshing: Boolean
     }
 }
 
 
-class CategoryDetailActivity : BaseActivity<ActivityCategorydetailBinding, CategoryDetailMvvm.ViewModel>(), CategoryDetailMvvm.View {
+class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, CategoryDetailMvvm.ViewModel>(), CategoryDetailMvvm.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setAndBindContentView(savedInstanceState, R.layout.activity_categorydetail)
+        setAndBindContentView(savedInstanceState, R.layout.activity_category_detail)
 
-        setSupportActionBar(binding.includeToolbar?.toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.let {
             it.setDisplayShowHomeEnabled(true)
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        binding.recyclerView.itemAnimator = SlideInUpAnimator()
-        binding.recyclerView.addOnScrollListener(object : PaginationScrollListener() {
-            override fun loadMoreItems() = viewModel.loadNextPage()
-            override fun isLoading() = viewModel.refreshing
-        })
+        binding.recyclerViewCategories.layoutManager = GridLayoutManager(this, 2)
+        binding.recyclerViewCategories.itemAnimator = SlideInUpAnimator()
+
+        binding.recyclerViewItems.itemAnimator = SlideInUpAnimator()
+
+        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
+            val view = binding.scrollView.getChildAt(binding.scrollView.childCount - 1)
+            val diff = view.bottom - (binding.scrollView.height + binding.scrollView.scrollY)
+
+            if (diff == 0 && !viewModel.refreshing) {
+                viewModel.loadNextPage()
+            }
+        }
 
         viewModel.category = intent.getParcelableExtra(Navigator.EXTRA_ARG)
+        viewModel.adapterCategories.data = viewModel.category.children
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -77,11 +87,6 @@ class CategoryDetailActivity : BaseActivity<ActivityCategorydetailBinding, Categ
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (viewModel.adapter.isEmpty) viewModel.onRefresh()
     }
 }
 
@@ -92,23 +97,24 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
             private val api: SugarAndRoseApi
 ) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
-    override var category: LocalCategory by NotifyPropertyChangedDelegate(LocalCategory(), BR.category)
 
-    override val adapter: DisplayItemAdapter = DisplayItemAdapter()
+    override val adapterCategories: CategoriesAdapter = CategoriesAdapter()
+    override val adapterItems: DisplayItemAdapter = DisplayItemAdapter()
+
+    override var category: LocalCategory = LocalCategory()
+        set(value) {
+            field = value
+            loadNextPage()
+        }
 
     private var currentPage = 0
     private var maximumNumberOfPages = 10
 
-    override fun onRefresh() {
-        adapter.clear()
-        currentPage = 0
-        loadNextPage()
-    }
 
     override fun loadNextPage() {
         if (currentPage >= maximumNumberOfPages) return
         currentPage++
-        loadPage().subscribe().let { disposable.add(it) }
+        loadPage().subscribe().addTo(disposable)
     }
 
     private fun loadPage() = api.getPostsForCategory(category.id, currentPage)
@@ -123,7 +129,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
             .map { it.sortedByDescending { it.date } }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { refreshing = true }
-            .doOnSuccess(adapter::add)
+            .doOnSuccess(adapterItems::add)
             .doOnError(Timber::e)
             .doOnEvent { _, _ -> refreshing = false }
 }

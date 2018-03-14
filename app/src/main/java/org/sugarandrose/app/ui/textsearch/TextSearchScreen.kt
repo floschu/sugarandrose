@@ -1,6 +1,5 @@
 package org.sugarandrose.app.ui.textsearch
 
-import android.app.Activity
 import android.databinding.Bindable
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
@@ -8,7 +7,6 @@ import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

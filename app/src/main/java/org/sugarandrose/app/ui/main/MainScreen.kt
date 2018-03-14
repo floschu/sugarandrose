@@ -17,6 +17,7 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.home.HomeFragment
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.ui.roses.RosesCacheManager
+import org.sugarandrose.app.util.manager.WebManager
 import javax.inject.Inject
 
 
@@ -73,13 +74,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 
 @PerActivity
 class MainViewModel @Inject
-constructor(private val navigator: Navigator, private val resources: Resources) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
+constructor(private val navigator: Navigator,
+            private val resources: Resources,
+            private val webManager: WebManager
+) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
     private val postRegex = Regex("""2[0-9]{3}/[0-9]{2}/[0-9]{2}/*/""")
 
     override fun parseIntentUri(uri: Uri) {
         when {
-            uri.lastPathSegment == resources.getString(R.string.deeplink_roses).replace("/", "") -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
-            uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) })
+            uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
+//            uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) })
+            else -> webManager.open(uri) //todo test with phone wihtout chrome
         }
     }
 }

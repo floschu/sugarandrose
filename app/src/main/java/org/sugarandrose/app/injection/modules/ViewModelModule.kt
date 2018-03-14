@@ -5,8 +5,6 @@ import dagger.Binds
 import dagger.Module
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailMvvm
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailViewModel
-import org.sugarandrose.app.ui.categories.detail.SubCategoryMvvm
-import org.sugarandrose.app.ui.categories.detail.SubCategoryViewModel
 import org.sugarandrose.app.ui.categories.overview.CategoriesMvvm
 import org.sugarandrose.app.ui.categories.overview.CategoriesViewModel
 import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemMvvm
@@ -88,9 +86,6 @@ abstract class ViewModelModule {
     internal abstract fun bindTextSearchViewModel(viewModel: TextSearchViewModel): TextSearchMvvm.ViewModel
 
     @Binds
-    internal abstract fun bindCategoryDetailViewModel(viewModel: CategoryDetailViewModel): CategoryDetailMvvm.ViewModel
-
-    @Binds
     internal abstract fun bindHomeViewModel(viewModel: HomeViewModel): HomeMvvm.ViewModel
 
     @Binds
@@ -103,6 +98,6 @@ abstract class ViewModelModule {
     internal abstract fun bindMorePageItemViewModel(viewModel: MorePageItemViewModel): MorePageItemMvvm.ViewModel
 
     @Binds
-    internal abstract fun bindSubCategoryViewModel(viewModel: SubCategoryViewModel): SubCategoryMvvm.ViewModel
+    internal abstract fun bindSubCategoryViewModel(viewModel: CategoryDetailViewModel): CategoryDetailMvvm.ViewModel
 
 }

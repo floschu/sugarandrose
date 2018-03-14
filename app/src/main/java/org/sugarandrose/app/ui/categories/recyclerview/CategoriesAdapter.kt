@@ -14,9 +14,8 @@ import org.sugarandrose.app.util.Utils
 
 class CategoriesAdapter : RecyclerView.Adapter<CategoryItemViewHolder>() {
     var data by NotifyDatasetChangedDelegate<List<LocalCategory>>(emptyList())
-    var closeActivityOnClick = false
 
     override fun getItemCount() = data.size
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryItemViewHolder = Utils.createViewHolder(parent, R.layout.item_category, ::CategoryItemViewHolder)
-    override fun onBindViewHolder(viewHolder: CategoryItemViewHolder, position: Int) = viewHolder.viewModel.update(data[position], closeActivityOnClick)
+    override fun onBindViewHolder(viewHolder: CategoryItemViewHolder, position: Int) = viewHolder.viewModel.update(data[position])
 }

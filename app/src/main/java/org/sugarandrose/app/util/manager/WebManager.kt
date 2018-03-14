@@ -1,6 +1,7 @@
 package org.sugarandrose.app.util.manager
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -38,7 +39,10 @@ constructor(@ActivityContext private val context: Context) {
                 setShowTitle(true)
                 addDefaultShareMenuItem()
                 setCloseButtonIcon(getBitmapFromVectorDrawable(R.drawable.ic_arrow_back))
-            }.build().launchUrl(context, Uri.parse(url))
+            }.build().apply {
+                intent.`package` = "com.android.chrome"
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            }.launchUrl(context, Uri.parse(url))
         } catch (throwable: Throwable) {
             Timber.w(throwable)
             context.startActivity(Utils.web(url))

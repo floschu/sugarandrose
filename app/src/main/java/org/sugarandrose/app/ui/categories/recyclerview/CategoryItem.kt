@@ -10,7 +10,6 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
-import org.sugarandrose.app.ui.categories.detail.SubCategoryActivity
 import javax.inject.Inject
 
 /**
@@ -22,7 +21,7 @@ interface CategoryItemMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        fun update(category: LocalCategory, closeActivityOnClick: Boolean)
+        fun update(category: LocalCategory)
         fun onClick()
 
         var category: LocalCategory
@@ -41,18 +40,11 @@ class CategoryItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemCatego
 class CategoryItemViewModel @Inject
 constructor(private val navigator: Navigator) : BaseViewModel<CategoryItemMvvm.View>(), CategoryItemMvvm.ViewModel {
     override lateinit var category: LocalCategory
-    private var closeActivityOnClick = false
 
-    override fun update(category: LocalCategory, closeActivityOnClick: Boolean) {
+    override fun update(category: LocalCategory) {
         this.category = category
-        this.closeActivityOnClick = closeActivityOnClick
         notifyChange()
     }
 
-    override fun onClick() {
-        val clazz = if (category.children.isNotEmpty()) SubCategoryActivity::class.java
-        else CategoryDetailActivity::class.java
-        navigator.startActivity(clazz, { putExtra(Navigator.EXTRA_ARG, category) })
-        if (closeActivityOnClick) navigator.finishActivity()
-    }
+    override fun onClick() = navigator.startActivity(CategoryDetailActivity::class.java, { putExtra(Navigator.EXTRA_ARG, category) })
 }

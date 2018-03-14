@@ -34,13 +34,7 @@
 
                 <data
                     android:host="sugarandrose.org"
-                    android:path="@string/deeplink_roses"
                     android:scheme="https" />
-
-                <!--<data-->
-                    <!--android:host="sugarandrose.org"-->
-                    <!--android:path="@string/deeplink_posts_pattern"-->
-                    <!--android:scheme="https" />-->
             </intent-filter>
         </activity>
 
@@ -49,11 +43,9 @@
             android:configChanges="orientation|screenSize"
             android:hardwareAccelerated="true" />
 
-        <activity android:name=".ui.categories.detail.CategoryDetailActivity" />
-
         <activity android:name=".ui.photo.PhotoDetailActivity" />
 
-        <activity android:name=".ui.categories.detail.SubCategoryActivity" />
+        <activity android:name=".ui.categories.detail.CategoryDetailActivity" />
 
         <!-- Provider -->
         <provider

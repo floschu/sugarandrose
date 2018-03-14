@@ -34,9 +34,7 @@ import timber.log.Timber
  * limitations under the License. */
 
 @ProcessorConfig(
-        adapters = arrayOf(
-                Adapter(RealmListPaperParcelTypeConverter::class)
-        )
+        adapters = [(Adapter(RealmListPaperParcelTypeConverter::class))]
 )
 class SugarAndRoseApp : MultiDexApplication() {
     private val CACHE_SIZE = (30 * 1024 * 1024).toLong() // 30 MB

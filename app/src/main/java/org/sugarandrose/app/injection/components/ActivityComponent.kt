@@ -13,7 +13,6 @@ import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
-import org.sugarandrose.app.ui.categories.detail.SubCategoryActivity
 import org.sugarandrose.app.ui.main.MainActivity
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
@@ -45,9 +44,8 @@ interface ActivityComponent : ActivityComponentProvides {
 
     fun inject(activity: MainActivity)
     fun inject(activity: PostActivity)
-    fun inject(activity: CategoryDetailActivity)
     fun inject(activity: PhotoDetailActivity)
-    fun inject(activity: SubCategoryActivity)
+    fun inject(activity: CategoryDetailActivity)
 
 }
 

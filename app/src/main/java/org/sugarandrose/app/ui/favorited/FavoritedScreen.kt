@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
@@ -34,7 +35,7 @@ interface FavoritedMvvm {
     interface ViewModel : MvvmViewModel<View> {
         val adapter: FastScrollDisplayItemAdapter
         @get:Bindable
-        var hasMedia: Boolean
+        var dataSize: Int
     }
 }
 
@@ -60,7 +61,7 @@ class FavoritedViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
             private val favoritedRepo: FavoritedRepo
 ) : BaseViewModel<FavoritedMvvm.View>(), FavoritedMvvm.ViewModel {
-    override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
+    override var dataSize: Int by NotifyPropertyChangedDelegate(0, BR.dataSize)
 
     override val adapter = FastScrollDisplayItemAdapter()
 
@@ -69,8 +70,11 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 
         favoritedRepo.allDisplayItems
                 .map { it.sortedBy { it.name } }
-                .doOnNext { hasMedia = it.isNotEmpty() }
-                .subscribe(adapter::addAllWithHeaders, Timber::e).let { disposable.add(it) }
+                .subscribe({
+                    dataSize = it.size
+                    if (it.size > 10) adapter.addAllWithHeaders(it)
+                    else adapter.set(it)
+                }, Timber::e).addTo(disposable)
     }
 
 }
