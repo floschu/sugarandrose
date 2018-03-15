@@ -7,7 +7,6 @@ import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.categories.overview.CategoriesFragment
-import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.favorited.FavoritedFragment
 import org.sugarandrose.app.ui.home.HomeFragment
 import org.sugarandrose.app.ui.more.MoreFragment
@@ -51,6 +50,4 @@ interface FragmentComponent : FragmentComponentProvides {
 interface FragmentComponentProvides : ActivityComponentProvides {
     @FragmentDisposable
     fun fragmentDisposable(): CompositeDisposable
-
-    fun pagedPostLoadingManager(): PagedPostLoadingManager
 }

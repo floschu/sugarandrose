@@ -106,9 +106,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 
 @PerFragment
 class TextSearchViewModel @Inject
-constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val pagedPostLoadingManager: PagedPostLoadingManager
-) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
     override var tryIt: Boolean by NotifyPropertyChangedDelegate(true, BR.tryIt)
@@ -121,6 +119,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 
     override val adapter: DisplayItemAdapter = DisplayItemAdapter()
 
+    private val pagedPostLoadingManager = PagedPostLoadingManager()
     private val querySubject = PublishSubject.create<String>()
 
     override fun attachView(view: TextSearchMvvm.View, savedInstanceState: Bundle?) {

@@ -2,6 +2,7 @@ package org.sugarandrose.app.ui.displayitems
 
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.model.remote.Post
@@ -19,9 +20,9 @@ import javax.inject.Inject
  * florian.schuster@tailored-apps.com
  */
 
-@PerFragment
-class PagedPostLoadingManager @Inject
-constructor(private val api: SugarAndRoseApi) {
+class PagedPostLoadingManager {
+    private val api = SugarAndRoseApp.appComponent.sugarAndRoseApi()
+
     private var maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
     private var currentPostsPage = 1
 

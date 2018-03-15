@@ -90,13 +90,13 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
 
 @PerActivity
 class CategoryDetailViewModel @Inject
-constructor(@ActivityDisposable private val disposable: CompositeDisposable,
-            private val pagedPostLoadingManager: PagedPostLoadingManager
-) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
+constructor(@ActivityDisposable private val disposable: CompositeDisposable) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
     override val adapterCategories: CategoriesAdapter = CategoriesAdapter()
     override val adapterItems: DisplayItemAdapter = DisplayItemAdapter()
+
+    private val pagedPostLoadingManager = PagedPostLoadingManager()
 
     override var category: LocalCategory = LocalCategory()
         set(value) {

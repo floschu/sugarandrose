@@ -71,12 +71,12 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
 @PerFragment
 class NewViewModel @Inject
-constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val pagedPostLoadingManager: PagedPostLoadingManager
-) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
     override val adapter: DisplayItemAdapter = DisplayItemAdapter()
+
+    private val pagedPostLoadingManager = PagedPostLoadingManager()
 
     override fun onRefresh() {
         adapter.clear()
