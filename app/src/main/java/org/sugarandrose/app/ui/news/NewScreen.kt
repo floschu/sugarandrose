@@ -5,16 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.data.remote.SugarAndRoseApi
-import org.sugarandrose.app.data.remote.TOTAL_PAGES_DEFAULT
-import org.sugarandrose.app.data.remote.parseMaxPages
 import org.sugarandrose.app.databinding.FragmentNewBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -22,7 +18,8 @@ import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
+import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
+import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
 import timber.log.Timber
@@ -75,45 +72,24 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 @PerFragment
 class NewViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val api: SugarAndRoseApi
+            private val pagedPostLoadingManager: PagedPostLoadingManager
 ) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
     override val adapter: DisplayItemAdapter = DisplayItemAdapter()
 
-    private var currentPostsPage = 1
-    private var maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
-
     override fun onRefresh() {
         adapter.clear()
-        currentPostsPage = 1
+        pagedPostLoadingManager.resetPages()
         loadNextPage()
     }
 
     override fun loadNextPage() {
-        loadPosts()
+        pagedPostLoadingManager.loadPostsPage()
                 .doOnSubscribe { refreshing = true }
-                .doOnError(Timber::e)
                 .doOnEvent { _, _ -> refreshing = false }
-                .subscribe().let { disposable.add(it) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(adapter::add, Timber::e)
+                .addTo(disposable)
     }
-
-    private fun loadPosts() = Single.just(currentPostsPage >= maximumNumberOfPostPages)
-            .flatMap {
-                if (it) Single.never()
-                else api.getPostsPage(currentPostsPage).doOnSubscribe { currentPostsPage++ }
-            }
-            .doOnSuccess { maximumNumberOfPostPages = parseMaxPages(it) }
-            .map { it.response()?.body() }
-            .flattenAsFlowable { it }
-            .flatMapSingle { post ->
-                if (post.featured_media != 0L) api.getMedia(post.featured_media).map { LocalPost(post, it) }
-                else Single.just(LocalPost(post))
-            }
-            .toList()
-            .map { it.sortedByDescending { it.date } }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSuccess(adapter::add)
-            .subscribeOn(AndroidSchedulers.mainThread())
-
 }

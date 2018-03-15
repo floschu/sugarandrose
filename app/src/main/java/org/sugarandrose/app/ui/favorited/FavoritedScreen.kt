@@ -18,8 +18,7 @@ import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
-import org.sugarandrose.app.ui.displayitems.FastScrollDisplayItemAdapter
+import org.sugarandrose.app.ui.displayitems.recyclerview.FastScrollDisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
 import javax.inject.Inject

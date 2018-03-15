@@ -1,12 +1,12 @@
-package org.sugarandrose.app.ui.displayitems
+package org.sugarandrose.app.ui.displayitems.recyclerview
 
 import android.databinding.Bindable
 import android.view.View
 import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
-import org.sugarandrose.app.data.model.LocalRose
-import org.sugarandrose.app.databinding.ItemRoseBinding
+import org.sugarandrose.app.data.model.LocalMedia
+import org.sugarandrose.app.databinding.ItemMediaBinding
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.base.BaseActivityViewHolder
@@ -24,15 +24,15 @@ import javax.inject.Inject
  * florian.schuster@tailored-apps.com
  */
 
-interface RoseItemMvvm {
+interface MediaItemMvvm {
     interface View : MvvmView
 
     interface ViewModel : MvvmViewModel<View> {
-        fun update(rose: LocalRose)
+        fun update(media: LocalMedia)
         fun onFavoriteClick()
         fun onShareClick()
 
-        var rose: LocalRose
+        var media: LocalMedia
         @get:Bindable
         var favorited: Boolean
         @get:Bindable
@@ -40,7 +40,7 @@ interface RoseItemMvvm {
     }
 }
 
-class RoseItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemRoseBinding, RoseItemMvvm.ViewModel>(itemView), RoseItemMvvm.View {
+class MediaItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemMediaBinding, MediaItemMvvm.ViewModel>(itemView), MediaItemMvvm.View {
 
     init {
         viewHolderComponent.inject(this)
@@ -49,33 +49,34 @@ class RoseItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemRoseBindin
 }
 
 @PerViewHolder
-class RoseItemViewModel @Inject
+class MediaItemViewModel @Inject
 constructor(@ActivityDisposable private val disposable: CompositeDisposable,
             private val favoritedRepo: FavoritedRepo,
             private val shareManager: ShareManager,
             private val eventLogManager: EventLogManager
-) : BaseViewModel<RoseItemMvvm.View>(), RoseItemMvvm.ViewModel {
-    override lateinit var rose: LocalRose
+) : BaseViewModel<MediaItemMvvm.View>(), MediaItemMvvm.ViewModel {
+    override lateinit var media: LocalMedia
     override var favorited: Boolean = false
     override var loading by NotifyPropertyChangedDelegate(false, BR.loading)
 
-    override fun update(rose: LocalRose) {
-        this.rose = rose
-        this.favorited = favoritedRepo.isContained(this.rose)
+    override fun update(media: LocalMedia) {
+        this.media = media
+        this.favorited = favoritedRepo.isContained(this.media)
         notifyChange()
     }
 
     override fun onFavoriteClick() {
-        if (favorited) favoritedRepo.deleteItem(rose)
-        else favoritedRepo.addItem(rose)
+        if (favorited) favoritedRepo.deleteItem(media)
+        else favoritedRepo.addItem(media)
         favorited = !favorited
         notifyPropertyChanged(BR.favorited)
 
-        if (favorited) eventLogManager.logFavorite(rose)
+        if (favorited) eventLogManager.logFavorite(media)
     }
 
+
     override fun onShareClick() {
-        shareManager.shareRose(rose)
+        shareManager.shareMedia(media)
                 .doOnSubscribe { loading = true }
                 .doOnError(Timber::e)
                 .doOnEvent { loading = false }

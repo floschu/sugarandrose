@@ -7,16 +7,13 @@ import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.data.remote.SugarAndRoseApi
-import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
 import org.sugarandrose.app.databinding.FragmentTextsearchBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -24,7 +21,8 @@ import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
-import org.sugarandrose.app.ui.displayitems.DisplayItemAdapter
+import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
+import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
 import org.sugarandrose.app.util.extensions.hideKeyboard
@@ -78,7 +76,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
             override fun isLoading() = viewModel.loading
         })
         binding.recyclerView.setOnTouchListener { _, _ -> hideKeyboard(); false }
-        toggleToolbarScrolling(false)
+//        toggleToolbarScrolling(false)
     }
 
     override fun hideKeyboard() {
@@ -109,7 +107,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 @PerFragment
 class TextSearchViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val api: SugarAndRoseApi
+            private val pagedPostLoadingManager: PagedPostLoadingManager
 ) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
@@ -124,8 +122,6 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
     override val adapter: DisplayItemAdapter = DisplayItemAdapter()
 
     private val querySubject = PublishSubject.create<String>()
-    private var currentPage = 0
-    private var maximumNumberOfPages = 10
 
     override fun attachView(view: TextSearchMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
@@ -136,36 +132,25 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                 .doOnNext {
                     tryIt = false
                     adapter.clear()
-                    currentPage = 1
+                    pagedPostLoadingManager.resetPages()
                 }
                 .flatMapSingle(this::loadPage)
-                .subscribe().let { disposable.add(it) }
+                .subscribe().addTo(disposable)
     }
 
     override fun loadNextPage() {
-        if (currentPage >= maximumNumberOfPages) return
-        currentPage++
-        loadPage(query).subscribe().let { disposable.add(it) }
+        loadPage(query).subscribe().addTo(disposable)
     }
 
-    private fun loadPage(searchQuery: String) = api.getPostsForQuery(searchQuery, currentPage)
-            .doOnSuccess { it.response()?.headers()?.values(TOTAL_PAGES_HEADER)?.firstOrNull()?.toInt()?.let { maximumNumberOfPages = it } }
-            .map { it.response()?.body() }
-            .flattenAsFlowable { it }
-            .flatMapSingle { post ->
-                if (post.featured_media != 0L) api.getMedia(post.featured_media).map { LocalPost(post, it) }
-                else Single.just(LocalPost(post))
-            }
-            .toList()
-            .map { it.sortedByDescending { it.date } }
-            .observeOn(AndroidSchedulers.mainThread())
+    private fun loadPage(query: String) = pagedPostLoadingManager.loadQueryPage(query)
             .doOnSubscribe { loading = true }
+            .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess(adapter::add)
-            .doOnSuccess { loading = false }
             .doOnError(Timber::e)
             .doOnEvent { _, _ ->
+                loading = false
                 hasMedia = !adapter.isEmpty
-                view?.toggleToolbarScrolling(hasMedia)
+//                view?.toggleToolbarScrolling(hasMedia)
             }
 
     override fun onDeleteClick() {

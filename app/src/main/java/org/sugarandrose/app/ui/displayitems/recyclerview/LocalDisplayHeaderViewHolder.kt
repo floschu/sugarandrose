@@ -1,4 +1,4 @@
-package org.sugarandrose.app.ui.displayitems
+package org.sugarandrose.app.ui.displayitems.recyclerview
 
 import android.view.View
 import org.sugarandrose.app.data.model.LocalDisplayHeader

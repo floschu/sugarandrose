@@ -9,7 +9,7 @@ import org.sugarandrose.app.ui.categories.overview.CategoriesMvvm
 import org.sugarandrose.app.ui.categories.overview.CategoriesViewModel
 import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemMvvm
 import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewModel
-import org.sugarandrose.app.ui.displayitems.*
+import org.sugarandrose.app.ui.displayitems.recyclerview.*
 import org.sugarandrose.app.ui.favorited.FavoritedMvvm
 import org.sugarandrose.app.ui.favorited.FavoritedViewModel
 import org.sugarandrose.app.ui.home.HomeMvvm

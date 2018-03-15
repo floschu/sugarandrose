@@ -1,4 +1,4 @@
-package org.sugarandrose.app.ui.displayitems
+package org.sugarandrose.app.ui.displayitems.recyclerview
 
 import android.databinding.Bindable
 import android.view.View

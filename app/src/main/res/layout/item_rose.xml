@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="org.sugarandrose.app.ui.displayitems.RoseItemMvvm.ViewModel" />
+            type="org.sugarandrose.app.ui.displayitems.recyclerview.RoseItemMvvm.ViewModel" />
     </data>
 
     <android.support.v7.widget.CardView
