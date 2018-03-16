@@ -16,15 +16,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
 
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan">
+        <activity android:name=".ui.LauncherActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -72,7 +75,7 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_notification" />
+            android:resource="@drawable/ic_rose" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"

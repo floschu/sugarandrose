@@ -10,7 +10,7 @@
     <string name="share_text_post">Ich habe das hier entdeckt: %s</string>
     <string name="share_text_media">Ich habe das hier entdeckt:</string>
     <string name="share_text_rose">Ich habe das hier entdeckt:</string>
-    <string name="notification_channel_fb_name">Push Nachrichten</string>
+    <string name="notification_channel_fb_name">Nachrichten über neue Posts</string>
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
     <string name="search_hint">Suche</string>

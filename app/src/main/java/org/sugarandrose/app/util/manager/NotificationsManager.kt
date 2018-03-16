@@ -40,12 +40,11 @@ constructor(@AppContext private val context: Context) {
 
     private fun pushSimpleMessage(channelId: String, intent: Intent, title: String, message: String, subText: String? = null) {
         val notification = NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.ic_rose)
                 .setColor(ContextCompat.getColor(context, R.color.colorAccent))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setContentIntent(PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT))
                 .setContentTitle(title)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setContentText(message)
                 .setShowWhen(true)
                 .setAutoCancel(true)

@@ -40,6 +40,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
     lateinit var rosesCacheManager: RosesCacheManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setAndBindContentView(savedInstanceState, R.layout.activity_main)
 
