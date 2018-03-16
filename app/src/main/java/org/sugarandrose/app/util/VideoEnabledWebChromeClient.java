@@ -70,7 +70,7 @@ public class VideoEnabledWebChromeClient extends WebChromeClient implements Medi
      * Builds a video enabled WebChromeClient.
      * @param activityNonVideoView A View in the activity's layout that contains every other view that should be hidden when the video goes full-screen.
      * @param activityVideoView A ViewGroup in the activity's layout that will display the video. Typically you would like this to fill the whole layout.
-     * @param loadingView A View to be shown while the video is loading (typically only used in API level <11). Must be already inflated and not attached to a parent view.
+     * @param loadingView A View to be shown while the video is refreshing (typically only used in API level <11). Must be already inflated and not attached to a parent view.
      */
     @SuppressWarnings("unused")
     public VideoEnabledWebChromeClient(View activityNonVideoView, ViewGroup activityVideoView, View loadingView)
@@ -86,7 +86,7 @@ public class VideoEnabledWebChromeClient extends WebChromeClient implements Medi
      * Builds a video enabled WebChromeClient.
      * @param activityNonVideoView A View in the activity's layout that contains every other view that should be hidden when the video goes full-screen.
      * @param activityVideoView A ViewGroup in the activity's layout that will display the video. Typically you would like this to fill the whole layout.
-     * @param loadingView A View to be shown while the video is loading (typically only used in API level <11). Must be already inflated and not attached to a parent view.
+     * @param loadingView A View to be shown while the video is refreshing (typically only used in API level <11). Must be already inflated and not attached to a parent view.
      * @param webView The owner VideoEnabledWebView. Passing it will enable the VideoEnabledWebChromeClient to detect the HTML5 video ended event and exit full-screen.
      * Note: The web page must only contain one video tag in order for the HTML5 video ended event to work. This could be improved if needed (see Javascript code).
      */
@@ -156,7 +156,7 @@ public class VideoEnabledWebChromeClient extends WebChromeClient implements Medi
                 // - com.android.org.chromium.content.browser.ContentVideoView$VideoSurfaceView, which inherits from android.view.SurfaceView (typically API level 19+)
 
                 // Handle HTML5 video ended event only if the class is a SurfaceView
-                // Test case: TextureView of Sony Xperia T API level 16 doesn't work fullscreen when loading the javascript below
+                // Test case: TextureView of Sony Xperia T API level 16 doesn't work fullscreen when refreshing the javascript below
                 if (webView != null && webView.getSettings().getJavaScriptEnabled() && focusedChild instanceof SurfaceView)
                 {
                     // Run javascript code that detects the video end and notifies the Javascript interface
@@ -225,7 +225,7 @@ public class VideoEnabledWebChromeClient extends WebChromeClient implements Medi
     }
 
     @Override
-    public View getVideoLoadingProgressView() // Video will start loading
+    public View getVideoLoadingProgressView() // Video will start refreshing
     {
         if (loadingView != null)
         {

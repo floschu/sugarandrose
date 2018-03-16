@@ -1,14 +1,11 @@
 package org.sugarandrose.app.ui.categories.detail
 
-import android.databinding.Bindable
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
-import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.databinding.ActivityCategoryDetailBinding
@@ -22,7 +19,6 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
 import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
-import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -42,9 +38,6 @@ interface CategoryDetailMvvm {
         val adapterItems: DisplayItemAdapter
 
         fun loadNextPage()
-
-        @get:Bindable
-        var refreshing: Boolean
     }
 }
 
@@ -62,21 +55,16 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
         }
 
         binding.recyclerViewCategories.layoutManager = GridLayoutManager(this, 2)
-        binding.recyclerViewCategories.itemAnimator = SlideInUpAnimator()
-
-        binding.recyclerViewItems.itemAnimator = SlideInUpAnimator()
 
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
             val view = binding.scrollView.getChildAt(binding.scrollView.childCount - 1)
             val diff = view.bottom - (binding.scrollView.height + binding.scrollView.scrollY)
-
-            if (diff == 0 && !viewModel.refreshing) {
-                viewModel.loadNextPage()
-            }
+            if (diff == 0 && !viewModel.adapterItems.loading) viewModel.loadNextPage()
         }
 
         viewModel.category = intent.getParcelableExtra(Navigator.EXTRA_ARG)
         viewModel.adapterCategories.data = viewModel.category.children
+        viewModel.adapterItems.displayFirstLoading = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -91,7 +79,6 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
 @PerActivity
 class CategoryDetailViewModel @Inject
 constructor(@ActivityDisposable private val disposable: CompositeDisposable) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
-    override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
     override val adapterCategories: CategoriesAdapter = CategoriesAdapter()
     override val adapterItems: DisplayItemAdapter = DisplayItemAdapter()
@@ -106,8 +93,9 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable) : B
 
     override fun loadNextPage() {
         pagedPostLoadingManager.loadCategoryPage(category)
-                .doOnSubscribe { refreshing = true }
-                .doOnEvent { _, _ -> refreshing = false }
+                .doOnSubscribe { adapterItems.loading = true }
+                .doOnEvent { _, _ -> adapterItems.loading = false }
+                .doOnSuccess { adapterItems.endOfPages = it.isEmpty() }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(adapterItems::add, Timber::e)
                 .addTo(disposable)

@@ -54,7 +54,7 @@ class PhotoDetailActivity : BaseActivity<ActivityPhotodetailBinding, NoOpViewMod
             binding.photoView.isEnabled = true
             startPostponedEnterTransition()
         }, {
-            Timber.d("Error on loading image for PhotoDetailActivity: $url")
+            Timber.d("Error on refreshing image for PhotoDetailActivity: $url")
             finish()
         }).addTo(disposable)
     }

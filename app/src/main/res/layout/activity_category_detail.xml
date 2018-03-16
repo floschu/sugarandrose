@@ -40,50 +40,41 @@
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeContainer"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:enabled="@{false}"
+            android:layout_height="wrap_content"
             android:foreground="?android:windowContentOverlay"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:refreshing="@{vm.refreshing}"
-            app:setColorScheme="@{true}">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/scroll_view"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_categories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:paddingEnd="@dimen/card_margin_half"
+                    android:paddingStart="@dimen/card_margin_half"
+                    android:paddingTop="@dimen/card_margin_half"
+                    app:adapter="@{vm.adapterCategories}"
+                    tools:listitem="@layout/item_category" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view_categories"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:nestedScrollingEnabled="false"
-                        android:paddingEnd="@dimen/card_margin_half"
-                        android:paddingStart="@dimen/card_margin_half"
-                        android:paddingTop="@dimen/card_margin_half"
-                        app:adapter="@{vm.adapterCategories}"
-                        tools:listitem="@layout/item_category" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recycler_view_items"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:nestedScrollingEnabled="false"
-                        android:padding="@dimen/card_margin_half"
-                        app:adapter="@{vm.adapterItems}"
-                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_post" />
-                </LinearLayout>
-            </android.support.v4.widget.NestedScrollView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    android:padding="@dimen/card_margin_half"
+                    app:adapter="@{vm.adapterItems}"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_post" />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
 </layout>

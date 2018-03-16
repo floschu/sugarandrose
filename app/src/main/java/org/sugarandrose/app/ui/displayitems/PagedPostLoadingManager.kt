@@ -35,7 +35,7 @@ class PagedPostLoadingManager {
     fun loadCategoryPage(category: LocalCategory) = loadPage(api.getPostsForCategory(category.id))
 
     private fun loadPage(loadingSingle: Single<Result<List<Post>>>): Single<List<LocalPost>> =
-            Single.just(currentPostsPage >= maximumNumberOfPostPages)
+            Single.just(currentPostsPage > maximumNumberOfPostPages)
                     .flatMap {
                         if (it) Single.just(emptyList())
                         else loadingSingle

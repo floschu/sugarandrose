@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.reactivex.disposables.CompositeDisposable
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
@@ -45,7 +44,6 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvv
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
-        binding.recyclerView.itemAnimator = SlideInUpAnimator()
     }
 }
 

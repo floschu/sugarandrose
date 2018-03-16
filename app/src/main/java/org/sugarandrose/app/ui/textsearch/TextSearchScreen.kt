@@ -11,7 +11,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentTextsearchBinding
@@ -49,7 +48,7 @@ interface TextSearchMvvm {
 
         val adapter: DisplayItemAdapter
         @get:Bindable
-        var loading: Boolean
+        var refreshing: Boolean
         @get:Bindable
         var query: String
         @get:Bindable
@@ -70,10 +69,9 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.itemAnimator = SlideInUpAnimator()
         binding.recyclerView.addOnScrollListener(object : PaginationScrollListener() {
             override fun loadMoreItems() = viewModel.loadNextPage()
-            override fun isLoading() = viewModel.loading
+            override fun isLoading() = viewModel.adapter.loading
         })
         binding.recyclerView.setOnTouchListener { _, _ -> hideKeyboard(); false }
 //        toggleToolbarScrolling(false)
@@ -107,7 +105,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 @PerFragment
 class TextSearchViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
-    override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)
+    override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
     override var tryIt: Boolean by NotifyPropertyChangedDelegate(true, BR.tryIt)
     override var query: String = ""
@@ -132,6 +130,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable) : B
                     tryIt = false
                     adapter.clear()
                     pagedPostLoadingManager.resetPages()
+                    refreshing = true
                 }
                 .flatMapSingle(this::loadPage)
                 .subscribe().addTo(disposable)
@@ -142,12 +141,14 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable) : B
     }
 
     private fun loadPage(query: String) = pagedPostLoadingManager.loadQueryPage(query)
-            .doOnSubscribe { loading = true }
+            .doOnSubscribe { adapter.loading = true }
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess { adapter.endOfPages = it.isEmpty() }
             .doOnSuccess(adapter::add)
             .doOnError(Timber::e)
             .doOnEvent { _, _ ->
-                loading = false
+                refreshing = false
+                adapter.loading = false
                 hasMedia = !adapter.isEmpty
 //                view?.toggleToolbarScrolling(hasMedia)
             }

@@ -17,18 +17,21 @@ open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     protected val TYPE_POST = 1
     protected val TYPE_MEDIA = 2
     protected val TYPE_ROSE = 3
+    protected val TYPE_LOADING = 4
 
     protected val data = ArrayList<LocalDisplayItem>()
     val isEmpty: Boolean get() = data.isEmpty()
+    var endOfPages = false
+    var loading = true
+    var displayFirstLoading = false
 
     init {
         this.setHasStableIds(true)
     }
 
     fun add(items: List<LocalDisplayItem>) {
-        val oldSize = data.size
         data.addAll(items)
-        notifyItemRangeInserted(oldSize, data.size - oldSize)
+        notifyDataSetChanged()
     }
 
     fun clear() {
@@ -37,25 +40,30 @@ open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     }
 
     fun set(items: List<LocalDisplayItem>) {
-        clear()
-        add(items)
+        data.clear()
+        data.addAll(items)
+        notifyDataSetChanged()
     }
 
-    override fun getItemId(position: Int): Long = data[position].id
+    override fun getItemId(position: Int): Long = if (position == data.size) 0 else data[position].id
 
-    override fun getItemViewType(position: Int): Int = when (data[position]) {
-        is LocalPost -> TYPE_POST
-        is LocalRose -> TYPE_ROSE
-        is LocalDisplayHeader -> TYPE_HEADER
-        else -> TYPE_MEDIA
-    }
+    override fun getItemViewType(position: Int): Int =
+            if (position == data.size) TYPE_LOADING else
+                when (data[position]) {
+                    is LocalPost -> TYPE_POST
+                    is LocalRose -> TYPE_ROSE
+                    is LocalDisplayHeader -> TYPE_HEADER
+                    else -> TYPE_MEDIA
+                }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = if (data.isEmpty() && !displayFirstLoading) 0 else data.size + 1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         TYPE_POST -> Utils.createViewHolder(parent, R.layout.item_post, ::PostItemViewHolder)
         TYPE_ROSE -> Utils.createViewHolder(parent, R.layout.item_rose, ::RoseItemViewHolder)
         TYPE_HEADER -> Utils.createViewHolder(parent, R.layout.item_display_header, ::LocalDisplayHeaderViewHolder)
-        else -> Utils.createViewHolder(parent, R.layout.item_media, ::MediaItemViewHolder)
+        TYPE_MEDIA -> Utils.createViewHolder(parent, R.layout.item_media, ::MediaItemViewHolder)
+        else -> Utils.createViewHolder(parent, R.layout.item_loading, ::LoadingViewHolder)
     }
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
@@ -64,6 +72,7 @@ open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             is MediaItemViewHolder -> viewHolder.viewModel.update(data[position] as LocalMedia)
             is RoseItemViewHolder -> viewHolder.viewModel.update(data[position] as LocalRose)
             is LocalDisplayHeaderViewHolder -> viewHolder.update(data[position] as LocalDisplayHeader)
+            is LoadingViewHolder -> viewHolder.update(!endOfPages)
         }
     }
 }

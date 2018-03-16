@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentNewBinding
@@ -54,11 +53,9 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.recyclerView.itemAnimator = SlideInUpAnimator()
         binding.recyclerView.addOnScrollListener(object : PaginationScrollListener() {
             override fun loadMoreItems() = viewModel.loadNextPage()
-            override fun isLoading() = viewModel.refreshing
+            override fun isLoading() = viewModel.adapter.loading
         })
     }
 
@@ -81,14 +78,19 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable) : B
     override fun onRefresh() {
         adapter.clear()
         pagedPostLoadingManager.resetPages()
+        refreshing = true
         loadNextPage()
     }
 
     override fun loadNextPage() {
         pagedPostLoadingManager.loadPostsPage()
-                .doOnSubscribe { refreshing = true }
-                .doOnEvent { _, _ -> refreshing = false }
+                .doOnSubscribe { adapter.loading = true }
+                .doOnEvent { _, _ ->
+                    refreshing = false
+                    adapter.loading = false
+                }
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSuccess { adapter.endOfPages = it.isEmpty() }
                 .subscribe(adapter::add, Timber::e)
                 .addTo(disposable)
     }

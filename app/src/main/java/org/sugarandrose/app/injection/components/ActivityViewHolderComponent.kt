@@ -5,10 +5,7 @@ import org.sugarandrose.app.injection.modules.ViewHolderModule
 import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewHolder
-import org.sugarandrose.app.ui.displayitems.recyclerview.LocalDisplayHeaderViewHolder
-import org.sugarandrose.app.ui.displayitems.recyclerview.MediaItemViewHolder
-import org.sugarandrose.app.ui.displayitems.recyclerview.PostItemViewHolder
-import org.sugarandrose.app.ui.displayitems.recyclerview.RoseItemViewHolder
+import org.sugarandrose.app.ui.displayitems.recyclerview.*
 
 /* Copyright 2017 Tailored Media GmbH
  *
@@ -31,4 +28,5 @@ interface ActivityViewHolderComponent {
     fun inject(vh: RoseItemViewHolder)
     fun inject(vh: LocalDisplayHeaderViewHolder)
     fun inject(vh: CategoryItemViewHolder)
+    fun inject(vh: LoadingViewHolder)
 }

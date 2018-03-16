@@ -30,7 +30,8 @@ class FastScrollDisplayItemAdapter : DisplayItemAdapter(), FastScrollRecyclerVie
         return when (viewType) {
             TYPE_POST -> (2 * resources.getDimensionPixelSize(R.dimen.card_margin_half)) + ((9 * resources.displayMetrics.widthPixels) / 16) + (2 * resources.getDimensionPixelSize(R.dimen.margin)) + resources.getDimensionPixelSize(R.dimen.title_one_line)
             TYPE_ROSE -> (2 * resources.getDimensionPixelSize(R.dimen.card_margin_half)) + resources.displayMetrics.widthPixels + (2 * resources.getDimensionPixelSize(R.dimen.margin)) + resources.getDimensionPixelSize(R.dimen.title_one_line)
-            else -> resources.getDimensionPixelSize(R.dimen.vertical_margin) + resources.getDimensionPixelSize(R.dimen.title_one_line) + (2 * resources.getDimensionPixelSize(R.dimen.padding))
+            TYPE_HEADER -> resources.getDimensionPixelSize(R.dimen.vertical_margin) + resources.getDimensionPixelSize(R.dimen.title_one_line) + (2 * resources.getDimensionPixelSize(R.dimen.padding))
+            else -> resources.getDimensionPixelSize(R.dimen.normal_fab_size) + (2 * resources.getDimensionPixelSize(R.dimen.padding))
         }
     }
 }

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.FavoritedRepo
@@ -44,12 +43,6 @@ class FavoritedFragment : BaseFragment<FragmentFavoritedBinding, FavoritedMvvm.V
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_favorited)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.recyclerView.itemAnimator = SlideInUpAnimator()
     }
 
 }
