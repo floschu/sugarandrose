@@ -27,14 +27,11 @@ constructor(private val api: SugarAndRoseApi) {
             dataSubject.onNext(value)
         }
 
-    var reloading = false
     val dataSubject: BehaviorSubject<List<LocalCategory>> = BehaviorSubject.createDefault(data)
 
     fun reloadData(): Disposable =
             if (data.isEmpty()) api.getCategories().observeOn(AndroidSchedulers.mainThread())
                     .map(this::mapParents)
-                    .doOnSubscribe { reloading = true }
-                    .doOnEvent { _, _ -> reloading = false }
                     .subscribe({ data = it }, Timber::e)
             else Completable.fromAction { dataSubject.onNext(data) }.subscribe()
 

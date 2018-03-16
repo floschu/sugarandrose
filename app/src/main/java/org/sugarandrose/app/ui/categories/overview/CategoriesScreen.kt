@@ -1,11 +1,13 @@
 package org.sugarandrose.app.ui.categories.overview
 
+import android.databinding.Bindable
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.reactivex.disposables.CompositeDisposable
+import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
 import org.sugarandrose.app.injection.qualifier.ChildFragmentManager
@@ -23,6 +25,7 @@ import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
 import org.sugarandrose.app.ui.search.SearchFragment
 import org.sugarandrose.app.ui.search.SearchMvvm
 import org.sugarandrose.app.ui.textsearch.TextSearchFragment
+import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.extensions.castWithUnwrap
 import timber.log.Timber
 import javax.inject.Inject
@@ -39,6 +42,9 @@ interface CategoriesMvvm {
     }
 
     interface ViewModel : MvvmViewModel<View> {
+        @get:Bindable
+        var refreshing: Boolean
+
         val adapter: CategoriesAdapter
 
         fun onSearchClick()
@@ -65,13 +71,18 @@ class CategoriesViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
             private val categoriesCacheManager: CategoriesCacheManager
 ) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
+    override var refreshing: Boolean by NotifyPropertyChangedDelegate(true, BR.refreshing)
 
     override val adapter: CategoriesAdapter = CategoriesAdapter()
 
     override fun attachView(view: CategoriesMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
+        refreshing = true
         disposable.addAll(
-                categoriesCacheManager.dataSubject.subscribe({ adapter.data = it }, Timber::e),
+                categoriesCacheManager.dataSubject.subscribe({
+                    if (it.isNotEmpty()) refreshing = false
+                    adapter.data = it
+                }, Timber::e),
                 categoriesCacheManager.reloadData()
         )
     }

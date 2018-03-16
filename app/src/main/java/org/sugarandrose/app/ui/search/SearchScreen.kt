@@ -28,7 +28,7 @@ interface SearchMvvm {
 
 
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchMvvm.ViewModel>(), SearchMvvm.View {
-    var isInTextSearch = false
+    private var isInTextSearch = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
@@ -53,12 +53,10 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchMvvm.ViewModel>
         isInTextSearch = true
     }
 
-    override fun onBackPressed(): Boolean {
-        return if (isInTextSearch) {
-            goBackToOverview()
-            true
-        } else false
-    }
+    override fun onBackPressed(): Boolean = if (isInTextSearch) {
+        goBackToOverview()
+        true
+    } else false
 }
 
 

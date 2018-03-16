@@ -23,6 +23,9 @@
 
     <dimen name="title_one_line">28dp</dimen>
 
+
+    <dimen name="tabIndicatorHeight">2dp</dimen>
+
     <!-- Text -->
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_regular">14sp</dimen>
