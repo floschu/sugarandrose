@@ -59,7 +59,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 
     override fun attachView(view: FavoritedMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
-
+        adapter.endOfPages = true
         favoritedRepo.allDisplayItems
                 .map { it.sortedBy { it.name } }
                 .subscribe({

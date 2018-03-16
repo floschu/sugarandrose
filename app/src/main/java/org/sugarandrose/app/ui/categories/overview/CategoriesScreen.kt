@@ -8,14 +8,22 @@ import android.view.ViewGroup
 import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
+import org.sugarandrose.app.injection.qualifier.ChildFragmentManager
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
+import org.sugarandrose.app.ui.base.navigator.ChildFragmentNavigator
+import org.sugarandrose.app.ui.base.navigator.FragmentNavigator
+import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.categories.CategoriesCacheManager
 import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
+import org.sugarandrose.app.ui.search.SearchFragment
+import org.sugarandrose.app.ui.search.SearchMvvm
+import org.sugarandrose.app.ui.textsearch.TextSearchFragment
+import org.sugarandrose.app.util.extensions.castWithUnwrap
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,10 +34,14 @@ import javax.inject.Inject
  */
 
 interface CategoriesMvvm {
-    interface View : MvvmView
+    interface View : MvvmView {
+        fun openTextSearch()
+    }
 
     interface ViewModel : MvvmViewModel<View> {
         val adapter: CategoriesAdapter
+
+        fun onSearchClick()
     }
 }
 
@@ -41,9 +53,9 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvv
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_categories)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
+    override fun openTextSearch() {
+        if (parentFragment != null && parentFragment is SearchFragment)
+            (parentFragment as SearchFragment).goToTextSearch()
     }
 }
 
@@ -58,10 +70,13 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 
     override fun attachView(view: CategoriesMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
-
         disposable.addAll(
                 categoriesCacheManager.dataSubject.subscribe({ adapter.data = it }, Timber::e),
                 categoriesCacheManager.reloadData()
         )
+    }
+
+    override fun onSearchClick() {
+        view?.openTextSearch()
     }
 }

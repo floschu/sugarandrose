@@ -57,13 +57,15 @@ import javax.inject.Inject
 abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragment(), MvvmView {
 
     protected lateinit var binding: B
-    @Inject protected lateinit var viewModel: VM
-    @Inject protected lateinit var refWatcher: RefWatcher
+    @Inject
+    protected lateinit var viewModel: VM
+    @Inject
+    protected lateinit var refWatcher: RefWatcher
 
     @field:[Inject FragmentDisposable]
     internal lateinit var disposable: CompositeDisposable
 
-    internal val fragmentComponent : FragmentComponent by lazy {
+    internal val fragmentComponent: FragmentComponent by lazy {
         DaggerFragmentComponent.builder()
                 .fragmentModule(FragmentModule(this))
                 .activityComponent((activity as BaseActivity<*, *>).activityComponent)
@@ -82,7 +84,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
 
         try {
             FragmentComponent::class.java.getDeclaredMethod("inject", this::class.java).invoke(fragmentComponent, this)
-        } catch(e: NoSuchMethodException) {
+        } catch (e: NoSuchMethodException) {
             throw RtfmException("You forgot to add \"fun inject(fragment: ${this::class.java.simpleName})\" in FragmentComponent")
         }
     }
@@ -113,4 +115,11 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
         return binding.root
     }
 
+    /**
+     * Could handle back press.
+     * @return true if back press was handled
+     */
+    open fun onBackPressed(): Boolean {
+        return false
+    }
 }

@@ -19,6 +19,7 @@ import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.ui.roses.RosesCacheManager
 import org.sugarandrose.app.util.manager.WebManager
 import javax.inject.Inject
+import org.sugarandrose.app.ui.base.BaseFragment
 
 
 interface MainMvvm {
@@ -68,6 +69,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
     override fun setSelectedBnvTab(@IdRes menuId: Int, viewpagerPage: Int) {
         binding.bottomNavigationView.selectedItemId = menuId
         (supportFragmentManager.fragments[0] as? HomeFragment)?.setSelectedPage(viewpagerPage)
+    }
+
+    override fun onBackPressed() {
+        var handled = false
+        for (f in supportFragmentManager.fragments) {
+            if (f is BaseFragment<*, *>) {
+                handled = f.onBackPressed()
+                if (handled) break
+            }
+        }
+        if (!handled) super.onBackPressed()
     }
 }
 

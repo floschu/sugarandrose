@@ -2,8 +2,6 @@ package org.sugarandrose.app.ui.textsearch
 
 import android.databinding.Bindable
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.CoordinatorLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +20,11 @@ import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
+import org.sugarandrose.app.ui.search.SearchFragment
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
 import org.sugarandrose.app.util.extensions.hideKeyboard
+import org.sugarandrose.app.util.extensions.showKeyboard
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -38,12 +38,14 @@ import javax.inject.Inject
 interface TextSearchMvvm {
     interface View : MvvmView {
         fun hideKeyboard()
-        fun toggleToolbarScrolling(enable: Boolean)
+
+        fun goBackToOverview()
     }
 
     interface ViewModel : MvvmViewModel<View> {
         fun loadNextPage()
 
+        fun onBackClick()
         fun onDeleteClick()
 
         val adapter: DisplayItemAdapter
@@ -74,30 +76,18 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
             override fun isLoading() = viewModel.adapter.loading
         })
         binding.recyclerView.setOnTouchListener { _, _ -> hideKeyboard(); false }
-//        toggleToolbarScrolling(false)
+
+        binding.etSearch.requestFocus()
+        context?.showKeyboard(binding.etSearch)
     }
 
     override fun hideKeyboard() {
         context?.hideKeyboard(binding.etSearch)
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (!isVisibleToUser) hideKeyboard()
-    }
-
-    override fun toggleToolbarScrolling(enable: Boolean) {
-        val toolbarLayoutParams = binding.toolbar.layoutParams as AppBarLayout.LayoutParams
-        binding.toolbar.layoutParams = toolbarLayoutParams.apply {
-            scrollFlags = if (!enable) 0
-            else AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL or AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS or AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP
-        }
-
-        val appBarLayoutParams = binding.appbar.layoutParams as CoordinatorLayout.LayoutParams
-        binding.appbar.layoutParams = appBarLayoutParams.apply {
-            behavior = if (!enable) null
-            else AppBarLayout.Behavior()
-        }
+    override fun goBackToOverview() {
+        if (parentFragment != null && parentFragment is SearchFragment)
+            (parentFragment as SearchFragment).goBackToOverview()
     }
 }
 
@@ -105,6 +95,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 @PerFragment
 class TextSearchViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
+
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
     override var tryIt: Boolean by NotifyPropertyChangedDelegate(true, BR.tryIt)
@@ -150,12 +141,16 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable) : B
                 refreshing = false
                 adapter.loading = false
                 hasMedia = !adapter.isEmpty
-//                view?.toggleToolbarScrolling(hasMedia)
             }
 
     override fun onDeleteClick() {
         query = ""
         tryIt = !hasMedia
         view?.hideKeyboard()
+    }
+
+    override fun onBackClick() {
+        view?.hideKeyboard()
+        view?.goBackToOverview()
     }
 }

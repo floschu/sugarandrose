@@ -19,7 +19,7 @@ import android.support.v4.app.Fragment
 interface FragmentNavigator : Navigator {
 
     fun replaceChildFragment(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String? = null)
-    fun replaceChildFragmentAndAddToBackStack(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String?, backstackTag: String?)
+    fun replaceChildFragmentAndAddToBackStack(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String? = null, backstackTag: String? = null)
     fun popChildFragmentBackstackImmediate()
 
 }
