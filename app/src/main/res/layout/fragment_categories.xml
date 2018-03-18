@@ -16,30 +16,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:onClick="@{vm::onSearchClick}">
+            android:onClick="@{vm::onSearchClick}"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/et_search"
                 style="@style/Text.Black.Secondary"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/vertical_padding"
                 android:layout_marginEnd="@dimen/horizontal_margin"
                 android:layout_marginStart="@dimen/horizontal_margin"
                 android:layout_marginTop="@dimen/vertical_padding"
+                android:layout_weight="1"
                 android:drawablePadding="@dimen/card_horizontal_padding"
                 android:drawableStart="@drawable/ic_search_black"
                 android:gravity="center_vertical"
                 android:text="@string/search_hint" />
-        </FrameLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/tabIndicatorHeight"
-            android:background="@color/colorAccent" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tabIndicatorHeight"
+                android:background="@color/colorAccent" />
+        </LinearLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"

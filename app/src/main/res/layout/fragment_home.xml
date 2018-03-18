@@ -29,7 +29,7 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
                 app:tabIndicatorColor="@color/colorAccent"
                 app:tabIndicatorHeight="@dimen/tabIndicatorHeight"
                 app:tabMode="fixed"

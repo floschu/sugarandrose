@@ -18,48 +18,55 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="@{vm::onBackClick}"
-                android:paddingEnd="@dimen/card_horizontal_padding"
-                android:paddingStart="@dimen/horizontal_margin"
-                android:src="@drawable/ic_arrow_back" />
-
-            <EditText
-                android:id="@+id/et_search"
-                style="@style/Text.Black"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/vertical_padding"
-                android:layout_marginTop="@dimen/vertical_padding"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/transparent"
-                android:hint="@string/search_posts_hint"
-                android:imeOptions="actionDone"
-                android:inputType="textCapSentences|textAutoCorrect"
-                android:lines="1"
-                android:maxLines="1"
-                android:text="@={vm.query}" />
+                android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:onClick="@{vm::onDeleteClick}"
-                android:paddingEnd="@dimen/horizontal_margin"
-                android:paddingStart="@dimen/horizontal_padding"
-                android:src="@drawable/ic_close"
-                android:visibility="@{!vm.query.empty}" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="@{vm::onBackClick}"
+                    android:paddingEnd="@dimen/card_horizontal_padding"
+                    android:paddingStart="@dimen/horizontal_margin"
+                    android:src="@drawable/ic_arrow_back" />
+
+                <EditText
+                    android:id="@+id/et_search"
+                    style="@style/Text.Black"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/vertical_padding"
+                    android:layout_marginTop="@dimen/vertical_padding"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:hint="@string/search_posts_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="textCapSentences|textAutoCorrect"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:text="@={vm.query}" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:onClick="@{vm::onDeleteClick}"
+                    android:paddingEnd="@dimen/horizontal_margin"
+                    android:paddingStart="@dimen/horizontal_padding"
+                    android:src="@drawable/ic_close"
+                    android:visibility="@{!vm.query.empty}" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tabIndicatorHeight"
+                android:background="@color/colorAccent" />
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/tabIndicatorHeight"
-            android:background="@color/colorAccent" />
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipeContainer"
