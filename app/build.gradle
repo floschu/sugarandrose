@@ -29,7 +29,7 @@ android {
         applicationId "org.sugarandrose.app"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 9
+        versionCode 10
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
 
