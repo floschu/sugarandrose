@@ -20,12 +20,10 @@ class SARFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Timber.d("Firebase Message received: ${remoteMessage.data}")
 
-        val body = remoteMessage.notification?.body ?: return
+        val intent = Intent(SugarAndRoseApp.instance, MainActivity::class.java)
+        val title = remoteMessage.notification?.title ?: getString(R.string.name)
+        val body = remoteMessage.notification?.body ?: getString(R.string.notification_new_post)
 
-        SugarAndRoseApp.appComponent.notificationManager().pushRemote(
-                Intent(SugarAndRoseApp.instance, MainActivity::class.java),
-                remoteMessage.notification?.title ?: getString(R.string.app_name),
-                body
-        )
+        SugarAndRoseApp.appComponent.notificationManager().pushRemote(intent, title, body)
     }
 }

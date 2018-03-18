@@ -10,7 +10,8 @@
     <string name="share_text_post">Ich habe das hier entdeckt: %s</string>
     <string name="share_text_media">Ich habe das hier entdeckt:</string>
     <string name="share_text_rose">Ich habe das hier entdeckt:</string>
-    <string name="notification_channel_fb_name">Nachrichten über neue Posts</string>
+    <string name="notification_channel_fb_name">Nachrichten über neue Blogbeiträge</string>
+    <string name="notification_new_post">Es ist ein neuer Blogbeitrag verfügbar.</string>
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
     <string name="search_hint">Suche</string>
@@ -25,7 +26,7 @@
     <string name="search_posts">Beiträge</string>
     <string name="search_media">Medien</string>
     <string name="search_roses">Rosenportraits</string>
-    <string name="post_uri_error">Es wurde leider kein Post gefunden.</string>
+    <string name="post_uri_error">Es wurde leider kein Beitrag mit dieser ID gefunden.</string>
 
     <string name="more_about">Social Media und Kontakt</string>
     <string name="more_contact">Kontakt</string>
