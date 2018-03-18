@@ -31,6 +31,7 @@ import io.reactivex.schedulers.Schedulers
 import org.sugarandrose.app.R
 import java.io.IOException
 import java.util.*
+import android.support.v4.content.ContextCompat.startActivity
 
 
 fun Context.getCurrentLocale(): Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -74,6 +75,15 @@ fun Context.openNotificationSettings() {
         }
     }
     startActivity(intent)
+}
+
+fun Context.shareApp() {
+    val sendIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app, "https://play.google.com/store/apps/details?id=org.sugarandrose.app"))
+        type = "text/plain"
+    }
+    startActivity(sendIntent)
 }
 
 fun Context.areYouSureDialog(callback: () -> Unit) = AlertDialog.Builder(this, R.style.DialogTheme).apply {

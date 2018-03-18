@@ -29,6 +29,7 @@ import org.sugarandrose.app.ui.more.recyclerview.MoreAdapter
 import org.sugarandrose.app.util.Utils
 import org.sugarandrose.app.util.extensions.areYouSureDialog
 import org.sugarandrose.app.util.extensions.openNotificationSettings
+import org.sugarandrose.app.util.extensions.shareApp
 import org.sugarandrose.app.util.manager.SocialMediaManager
 import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
@@ -109,6 +110,9 @@ constructor(override val adapter: MoreAdapter,
         })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_twitter, R.string.more_twitter, {
             socialMediaManager.openTwitter(BuildConfig.TWITTER_NAME, BuildConfig.TWITTER_ID)
+        })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_share, R.string.more_share_app, {
+            context.shareApp()
         })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
             navigator.startActivity(Utils.mail(BuildConfig.EMAIL))
