@@ -115,7 +115,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable) : B
         super.attachView(view, savedInstanceState)
         querySubject.distinctUntilChanged()
                 .debounce(500, TimeUnit.MILLISECONDS)
-                .filter { it.isNotEmpty() }
+                .filter(String::isNotEmpty)
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
                     tryIt = false

@@ -28,10 +28,11 @@ class PagedPostLoadingManager {
 
     fun resetPages() {
         currentPostsPage = 1
+        maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
     }
 
     fun loadPostsPage() = loadPage(api.getPostsPage(currentPostsPage))
-    fun loadQueryPage(query: String) = loadPage(api.getPostsForQuery(query, currentPostsPage))
+    fun loadQueryPage(query: String) = loadPage(api.getPostsForQuery(query, currentPostsPage)) //todo fix
     fun loadCategoryPage(category: LocalCategory) = loadPage(api.getPostsForCategory(category.id))
 
     private fun loadPage(loadingSingle: Single<Result<List<Post>>>): Single<List<LocalPost>> =
