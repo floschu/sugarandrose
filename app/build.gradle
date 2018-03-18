@@ -29,7 +29,7 @@ android {
         applicationId "org.sugarandrose.app"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 10
+        versionCode 11
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
 
@@ -64,7 +64,7 @@ android {
         dev {
             signingConfig signingConfigs.debug
             applicationIdSuffix ".dev"
-            resValue "string", "app_name", "sugar&rose DEV"
+            resValue "string", "app_name", "sugar&dev"
             dimension "backend"
         }
         prod {
