@@ -55,8 +55,7 @@ class SugarAndRoseApp : MultiDexApplication() {
         RxJavaPlugins.setErrorHandler({ Timber.e(it) })
         AndroidThreeTen.init(this)
         setupPicasso()
-
-        FirebaseMessaging.getInstance().subscribeToTopic("sugar_and_rose_notifications")
+        FirebaseMessaging.getInstance().subscribeToTopic("/topics/all")
     }
 
     private fun setupPicasso() {

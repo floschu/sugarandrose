@@ -10,7 +10,7 @@ import timber.log.Timber
  * florian.schuster@tailored-apps.com
  */
 
-class SARFirebaseInstanceIdService : FirebaseInstanceIdService() {
+class SARFBInstanceIdService : FirebaseInstanceIdService() {
     override fun onTokenRefresh() {
         Timber.i("Refreshed token: ${FirebaseInstanceId.getInstance().token}")
     }

@@ -6,12 +6,6 @@
     <string name="menu_bnv_favorited">Merkzettel</string>
     <string name="menu_bnv_more">Mehr</string>
 
-    <string name="share_title">Teilen mit…</string>
-    <string name="share_text_post">Ich habe das hier entdeckt: %s</string>
-    <string name="share_text_media">Ich habe das hier entdeckt:</string>
-    <string name="share_text_rose">Ich habe das hier entdeckt:</string>
-    <string name="notification_channel_fb_name">Nachrichten über neue Blogbeiträge</string>
-    <string name="notification_new_post">Es ist ein neuer Blogbeitrag verfügbar.</string>
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
     <string name="search_hint">Suche</string>
@@ -43,11 +37,21 @@
     <string name="more_dev_info"><![CDATA[Programmierung von <b>Florian Schuster</b><br><b>Web:</b> <a href="https://florianschuster.at/">https://florianschuster.at/</a><br><b>Mail:</b> <a href="mailto:mail@florianschuster.at">mail@florianschuster.at</a></html>]]></string>
     <string name="click_for_more">Mehr auf sugarandrose.org</string>
 
+    <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
+    <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>
+
+    <string name="fb_channel_remote">Nachrichten</string>
+    <string name="fb_channel_posts">Neue Blogbeiträge</string>
+    <string name="notification_new_post_title">Neuer Blogbeitrag verfügbar</string>
+    <string name="notification_new_post_message">Klicke hier um ihn zu öffnen.</string>
+
     <string name="deeplink_roses">rosenportraets-a-z</string>
     <string name="deeplink_post_query">page_id</string>
 
-    <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
-    <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>
+    <string name="share_title">Teilen mit…</string>
+    <string name="share_text_post">Ich habe das hier entdeckt: %s</string>
+    <string name="share_text_media">Ich habe das hier entdeckt:</string>
+    <string name="share_text_rose">Ich habe das hier entdeckt:</string>
 
     <string name="error_network_unavailable">Keine Internetverbindung.</string>
     <string name="error_server_unavailable">Der Server ist nicht erreichbar.</string>

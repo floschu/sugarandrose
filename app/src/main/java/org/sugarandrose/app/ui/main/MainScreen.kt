@@ -21,6 +21,7 @@ import org.sugarandrose.app.util.manager.WebManager
 import javax.inject.Inject
 import org.sugarandrose.app.ui.base.BaseFragment
 
+const val PUSH_POST_ID_INTENT = "org.sugarandrose.app.ui.main.post_id_intent"
 
 interface MainMvvm {
 
@@ -30,6 +31,7 @@ interface MainMvvm {
 
     interface ViewModel : MvvmViewModel<View> {
         fun parseIntentUri(uri: Uri)
+        fun openPost(postId: Long)
     }
 }
 
@@ -49,12 +51,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
             //setCustomAnimations(R.anim.fade_in, R.anim.fade_out) todo enable animations when lib is fixed
             attachTo(binding.bottomNavigationView)
         }
-        intent.data?.let { viewModel.parseIntentUri(it) }
+        intent?.let { handleIntent(it) }
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        intent?.data?.let { viewModel.parseIntentUri(it) }
+        intent?.let { handleIntent(it) }
+    }
+
+    private fun handleIntent(newIntent: Intent) {
+        val pushId = newIntent.getStringExtra(PUSH_POST_ID_INTENT)
+        val uri = newIntent.data
+        if (pushId != null) viewModel.openPost(pushId.toLong())
+        else if (uri != null) viewModel.parseIntentUri(uri)
     }
 
     override fun onResume() {
@@ -96,12 +105,11 @@ constructor(private val navigator: Navigator,
     override fun parseIntentUri(uri: Uri) {
         when {
             uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
+            uri.query.contains(resources.getString(R.string.deeplink_post_query)) -> openPost(uri.query.removePrefix("${resources.getString(R.string.deeplink_post_query)}=").toLong())
 //            uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) }) todo get id from url
-            uri.query.contains(resources.getString(R.string.deeplink_post_query)) -> {
-                val id = uri.query.removePrefix("${resources.getString(R.string.deeplink_post_query)}=").toLong()
-                navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, id) })
-            }
             else -> webManager.open(uri) //todo test with phone wihtout chrome
         }
     }
+
+    override fun openPost(postId: Long) = navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, postId) })
 }

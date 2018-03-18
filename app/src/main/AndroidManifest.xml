@@ -62,12 +62,12 @@
         </provider>
 
         <!-- Services -->
-        <service android:name=".service.SARFirebaseMessagingService">
+        <service android:name=".service.SARFBMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".service.SARFirebaseInstanceIdService">
+        <service android:name=".service.SARFBInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
