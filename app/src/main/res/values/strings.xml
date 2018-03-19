@@ -22,6 +22,8 @@
     <string name="search_roses">Rosenportraits</string>
     <string name="post_uri_error">Es wurde leider kein Beitrag mit dieser ID gefunden.</string>
 
+    <string name="onboarding_skip">Überspringen</string>
+
     <string name="more_about">Social Media und Kontakt</string>
     <string name="more_contact">Kontakt</string>
     <string name="more_facebook">Like mich auf Facebook</string>
@@ -29,6 +31,7 @@
     <string name="more_pinterest">Folge mir auf Pinterest</string>
     <string name="more_twitter">Folge mir auf Twitter</string>
     <string name="more_share_app">App teilen</string>
+    <string name="more_onboarding">App Tutorial</string>
     <string name="more_privacy">Impressum &amp; Datenschutz</string>
     <string name="more_explore">Entdecken</string>
     <string name="more_settings">Einstellungen</string>

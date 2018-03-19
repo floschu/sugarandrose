@@ -107,6 +107,7 @@ dependencies {
     kapt "com.android.databinding:compiler:$gradlePluginVersion"
     implementation 'com.patloew.navigationviewfragmentadapters:adapters:0.3.0'
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.17'
+    compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
 
     //network
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

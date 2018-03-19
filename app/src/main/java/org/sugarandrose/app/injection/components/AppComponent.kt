@@ -7,6 +7,7 @@ import dagger.Component
 import io.realm.Realm
 import okhttp3.OkHttpClient
 import org.sugarandrose.app.data.local.FavoritedRepo
+import org.sugarandrose.app.data.local.PrefRepo
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.injection.modules.AppModule
 import org.sugarandrose.app.injection.modules.DataModule
@@ -55,8 +56,9 @@ interface AppComponentProvides {
 
     fun realm(): Realm
     fun myRepo(): FavoritedRepo
-    fun sugarAndRoseApi(): SugarAndRoseApi
+    fun prefRepo(): PrefRepo
 
+    fun sugarAndRoseApi(): SugarAndRoseApi
     fun okHttpClient(): OkHttpClient
 
     fun toaster(): Toaster

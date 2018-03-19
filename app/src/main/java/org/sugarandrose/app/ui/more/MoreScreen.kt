@@ -26,6 +26,7 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.more.recyclerview.MoreAdapter
+import org.sugarandrose.app.ui.onboarding.OnboardingActivity
 import org.sugarandrose.app.util.Utils
 import org.sugarandrose.app.util.extensions.areYouSureDialog
 import org.sugarandrose.app.util.extensions.openNotificationSettings
@@ -117,7 +118,10 @@ constructor(override val adapter: MoreAdapter,
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
             navigator.startActivity(Utils.mail(BuildConfig.EMAIL))
         })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_privacy, {
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_help_outline, R.string.more_onboarding, {
+            navigator.startActivity(OnboardingActivity::class.java)
+        })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_onboarding, {
             webManager.open(BuildConfig.IMPRESSUM)
         })))
 

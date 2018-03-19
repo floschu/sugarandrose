@@ -1,5 +1,6 @@
 package org.sugarandrose.app.injection.components
 
+import org.sugarandrose.app.ui.onboarding.OnboardingItemFragment
 import dagger.Component
 import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.injection.modules.FragmentModule
@@ -36,6 +37,7 @@ import org.sugarandrose.app.ui.textsearch.TextSearchFragment
 @Component(dependencies = [(ActivityComponent::class)], modules = [(FragmentModule::class), (ViewModelModule::class)])
 interface FragmentComponent : FragmentComponentProvides {
     // create inject methods for your Fragments here
+    fun inject(fragment: OnboardingItemFragment)
 
     fun inject(fragment: NewFragment)
     fun inject(fragment: MoreFragment)

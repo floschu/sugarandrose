@@ -22,6 +22,7 @@ import android.databinding.BindingMethods
 import android.support.annotation.DrawableRes
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewPager
 import android.support.v4.widget.SwipeRefreshLayout
 import android.text.Html
 import android.view.View
@@ -97,6 +98,13 @@ object BindingAdapters {
         @Suppress("DEPRECATION")
         view.text = Html.fromHtml(text)
     }
+
+    @BindingAdapter("pageTransformer")
+    @JvmStatic
+    fun setPageTransformer(viewPager: ViewPager, transformer: ViewPager.PageTransformer) {
+        viewPager.setPageTransformer(false, transformer)
+    }
+
 
     @BindingAdapter("openPhotoDetail")
     @JvmStatic
