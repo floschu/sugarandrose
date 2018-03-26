@@ -3,6 +3,7 @@ package org.sugarandrose.app.ui.home
 import android.databinding.Bindable
 import android.os.Bundle
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +12,14 @@ import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentHomeBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
-import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.home.viewpager.HomePagerAdapter
-import org.sugarandrose.app.ui.main.MainActivity
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.extensions.castWithUnwrap
 import javax.inject.Inject
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
+
 
 /**
  * Created by Florian Schuster
@@ -52,6 +52,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeMvvm.ViewModel>(), Ho
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tabLayout.setupWithViewPager(binding.viewPager)
+
+        context?.let {
+            //            MaterialShowcaseSequence(activity,)
+            MaterialShowcaseView.Builder(activity).apply {
+                setTarget(binding.tabLayout.getChildAt(0))
+                setMaskColour(ContextCompat.getColor(it, R.color.tutorial_color))
+                setContentText(R.string.tutorial_blog)
+                setContentTextColor(ContextCompat.getColor(it, R.color.textWhitePrimary))
+                setDismissText(R.string.tutorial_understand)
+                setDismissTextColor(ContextCompat.getColor(it, R.color.textWhiteSecondary))
+            }.show()
+        }
     }
 
     override fun setSelectedPage(page: Int) {

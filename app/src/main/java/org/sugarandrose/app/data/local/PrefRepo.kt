@@ -15,6 +15,4 @@ package org.sugarandrose.app.data.local
  * limitations under the License. */
 interface PrefRepo {
     var realmEncryptionKey: ByteArray?
-
-    var onboardingComplete: Boolean
 }

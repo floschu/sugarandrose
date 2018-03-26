@@ -6,6 +6,12 @@
     <string name="menu_bnv_favorited">Merkzettel</string>
     <string name="menu_bnv_more">Mehr</string>
 
+    <string name="tutorial_understand">Verstanden</string>
+    <string name="tutorial_blog">Hier kannst du dir die neusten Blogbeiträge von sugar&amp;rose ansehen.</string>
+    <string name="tutorial_roses">Hier kannst du dir verschieden Arten von Rosen ansehen.</string>
+    <string name="tutorial_favorite">Wenn du hier klickst, kannst du Beiträge merken.</string>
+    <string name="tutorial_share">Wenn du hier klickst, kannst du Beiträge an andere Leute weiterleiten.</string>
+
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>
     <string name="search_hint">Suche</string>
@@ -23,8 +29,6 @@
     <string name="post_uri_error">Es wurde leider kein Beitrag mit dieser ID gefunden.</string>
     <string name="no_connection">Bitte verbinde dich mit dem Internet!</string>
 
-    <string name="onboarding_skip">Überspringen</string>
-
     <string name="more_about">Social Media und Kontakt</string>
     <string name="more_contact">Kontakt</string>
     <string name="more_facebook">Like mich auf Facebook</string>
@@ -32,7 +36,6 @@
     <string name="more_pinterest">Folge mir auf Pinterest</string>
     <string name="more_twitter">Folge mir auf Twitter</string>
     <string name="more_share_app">App teilen</string>
-    <string name="more_onboarding">App Tutorial</string>
     <string name="more_privacy">Impressum &amp; Datenschutz</string>
     <string name="more_explore">Entdecken</string>
     <string name="more_settings">Einstellungen</string>

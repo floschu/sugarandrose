@@ -1,10 +1,6 @@
 package org.sugarandrose.app.injection.modules
 
 
-import org.sugarandrose.app.ui.onboarding.OnboardingItemViewModel
-import org.sugarandrose.app.ui.onboarding.OnboardingItemMvvm
-import org.sugarandrose.app.ui.onboarding.OnboardingViewModel
-import org.sugarandrose.app.ui.onboarding.OnboardingMvvm
 import dagger.Binds
 import dagger.Module
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailMvvm
@@ -103,11 +99,4 @@ abstract class ViewModelModule {
 
     @Binds
     internal abstract fun bindSubCategoryViewModel(viewModel: CategoryDetailViewModel): CategoryDetailMvvm.ViewModel
-
-
-    @Binds
-    internal abstract fun bindOnboardingViewModel(viewModel: OnboardingViewModel): OnboardingMvvm.ViewModel
-
-    @Binds
-    internal abstract fun bindOnboardingItemViewModel(viewModel: OnboardingItemViewModel): OnboardingItemMvvm.ViewModel
 }

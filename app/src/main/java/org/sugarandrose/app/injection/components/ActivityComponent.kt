@@ -1,6 +1,5 @@
 package org.sugarandrose.app.injection.components
 
-import org.sugarandrose.app.ui.onboarding.OnboardingActivity
 import android.content.Context
 import android.support.v4.app.FragmentManager
 import dagger.Component
@@ -43,8 +42,6 @@ import org.sugarandrose.app.util.manager.WebManager
 @Component(dependencies = [(AppComponent::class)], modules = [(ActivityModule::class), (ViewModelModule::class)])
 interface ActivityComponent : ActivityComponentProvides {
     // create inject methods for your Activities here
-    fun inject(activity: OnboardingActivity)
-
     fun inject(activity: MainActivity)
     fun inject(activity: PostActivity)
     fun inject(activity: PhotoDetailActivity)

@@ -34,13 +34,8 @@ constructor(@AppContext context: Context) : PrefRepo {
         get() = if (prefs.contains(REALM_ENCRYPTION_KEY)) Base64.decode(prefs.getString(REALM_ENCRYPTION_KEY, null), Base64.DEFAULT) else null
         set(key) = prefs.edit().putString(REALM_ENCRYPTION_KEY, Base64.encodeToString(key, Base64.DEFAULT)).apply()
 
-    override var onboardingComplete: Boolean
-        get() = prefs.getBoolean(ONBOARDING_COMPLETE_KEY, false)
-        set(value) = prefs.edit().putBoolean(ONBOARDING_COMPLETE_KEY, value).apply()
-
     companion object {
         private val REALM_ENCRYPTION_KEY = "realm_encryption_key"
-        private val ONBOARDING_COMPLETE_KEY = "onboarding_complete"
     }
 
 }

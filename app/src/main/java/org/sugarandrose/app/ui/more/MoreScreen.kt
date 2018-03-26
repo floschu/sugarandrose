@@ -27,7 +27,6 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.more.recyclerview.MoreAdapter
-import org.sugarandrose.app.ui.onboarding.OnboardingActivity
 import org.sugarandrose.app.util.Utils
 import org.sugarandrose.app.util.extensions.areYouSureDialog
 import org.sugarandrose.app.util.extensions.openNotificationSettings
@@ -115,25 +114,19 @@ constructor(override val adapter: MoreAdapter,
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_twitter, R.string.more_twitter, {
             socialMediaManager.openTwitter(BuildConfig.TWITTER_NAME, BuildConfig.TWITTER_ID)
         })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_share, R.string.more_share_app, {
-            context.shareApp()
-        })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
             navigator.startActivity(Utils.mail(BuildConfig.EMAIL))
-        })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_help_outline, R.string.more_onboarding, {
-            navigator.startActivity(OnboardingActivity::class.java)
         })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_privacy, {
             webManager.open(BuildConfig.IMPRESSUM)
         })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_share, R.string.more_share_app, context::shareApp)))
 
         moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_settings)))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_notifications_none, R.string.more_notifications, {
-            context.openNotificationSettings()
-        })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_notifications_none, R.string.more_notifications, context::openNotificationSettings)))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_delete_forever, R.string.more_delete_data, {
-            context.areYouSureDialog { favoritedRepo.clearData() }
+            context.areYouSureDialog(favoritedRepo::clearData)
+            //todo reset tutorial
         })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_info_outline, R.string.more_app_info, {
             LibsBuilder().apply {
@@ -149,7 +142,7 @@ constructor(override val adapter: MoreAdapter,
                 withAboutDescription(context.getString(R.string.more_dev_info))
                 withLibraries(
                         "Dagger2", "LeakCanary", "OkHttp", "Retrofit", "Timber", "gson", "rxjava",
-                        "rxAndroid", "Realm", "tailoredappsandroidtemplate",
+                        "rxAndroid", "Realm", "tailoredappsandroidtemplate", "showcase",
                         "SupportLibrary", "Picasso", "sssimageview", "paperparcel"
                 )
             }.start(context)

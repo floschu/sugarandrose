@@ -50,8 +50,6 @@
 
         <activity android:name=".ui.categories.detail.CategoryDetailActivity" />
 
-        <activity android:name=".ui.onboarding.OnboardingActivity" />
-
         <!-- Provider -->
         <provider
             android:name="android.support.v4.content.FileProvider"
