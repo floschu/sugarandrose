@@ -1,8 +1,10 @@
 package org.sugarandrose.app.ui.categories
 
+import com.google.gson.annotations.Until
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.remote.Category
@@ -29,10 +31,10 @@ constructor(private val api: SugarAndRoseApi) {
 
     val dataSubject: BehaviorSubject<List<LocalCategory>> = BehaviorSubject.createDefault(data)
 
-    fun reloadData(): Disposable =
+    fun reloadData(onError: (Throwable) -> Unit): Disposable =
             if (data.isEmpty()) api.getCategories().observeOn(AndroidSchedulers.mainThread())
                     .map(this::mapParents)
-                    .subscribe({ data = it }, Timber::e)
+                    .subscribe({ data = it }, onError::invoke)
             else Completable.fromAction { dataSubject.onNext(data) }.subscribe()
 
     private fun mapParents(cats: List<Category>): List<LocalCategory> =

@@ -40,7 +40,7 @@ class PagedPostLoadingManager {
                     .flatMap {
                         if (it) Single.just(emptyList())
                         else loadingSingle
-                                .doOnSubscribe { currentPostsPage++ }
+                                .doOnSuccess { currentPostsPage++ }
                                 .doOnSuccess { maximumNumberOfPostPages = parseMaxPages(it) }
                                 .map { it.response()?.body() }
                     }

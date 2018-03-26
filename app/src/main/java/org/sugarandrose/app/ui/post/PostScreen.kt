@@ -262,7 +262,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
                 .doOnSubscribe { loading = true }
                 .map(::LocalPost)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPostSuccess, this::onPostError)
+                .subscribe(this::onPostSuccess, { errorManager.showError(it, snacker::show, { init(id) }) })
                 .addTo(disposable)
     }
 
@@ -272,8 +272,6 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
         }
         this.post.content?.let { view?.loadContent(it) }
     }
-
-    private fun onPostError(throwable: Throwable) = errorManager.showError(throwable, snacker::show)
 
     override fun onMoreClick() = webManager.open(post.url)
 

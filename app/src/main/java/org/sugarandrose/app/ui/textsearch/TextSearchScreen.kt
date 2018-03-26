@@ -15,6 +15,7 @@ import org.sugarandrose.app.databinding.FragmentTextsearchBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
+import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
@@ -25,6 +26,7 @@ import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
 import org.sugarandrose.app.util.extensions.hideKeyboard
 import org.sugarandrose.app.util.extensions.showKeyboard
+import org.sugarandrose.app.util.manager.ErrorManager
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -94,7 +96,10 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 
 @PerFragment
 class TextSearchViewModel @Inject
-constructor(@FragmentDisposable private val disposable: CompositeDisposable) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable,
+            private val errorManager: ErrorManager,
+            private val snacker: Snacker
+) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
 
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
     override var hasMedia: Boolean by NotifyPropertyChangedDelegate(false, BR.hasMedia)
@@ -136,7 +141,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable) : B
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { adapter.endOfPages = it.isEmpty() }
             .doOnSuccess(adapter::add)
-            .doOnError(Timber::e)
+            .doOnError { errorManager.showError(it, snacker::show, this::loadNextPage) }
             .doOnEvent { _, _ ->
                 refreshing = false
                 adapter.loading = false

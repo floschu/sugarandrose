@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
+import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.databinding.FragmentCategoriesBinding
 import org.sugarandrose.app.injection.qualifier.ChildFragmentManager
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
+import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.ChildFragmentNavigator
 import org.sugarandrose.app.ui.base.navigator.FragmentNavigator
 import org.sugarandrose.app.ui.base.navigator.Navigator
@@ -27,6 +29,7 @@ import org.sugarandrose.app.ui.search.SearchMvvm
 import org.sugarandrose.app.ui.textsearch.TextSearchFragment
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.extensions.castWithUnwrap
+import org.sugarandrose.app.util.manager.ErrorManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -69,7 +72,9 @@ class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvv
 @PerFragment
 class CategoriesViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val categoriesCacheManager: CategoriesCacheManager
+            private val categoriesCacheManager: CategoriesCacheManager,
+            private val errorManager: ErrorManager,
+            private val snacker: Snacker
 ) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(true, BR.refreshing)
 
@@ -78,13 +83,14 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
     override fun attachView(view: CategoriesMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
         refreshing = true
-        disposable.addAll(
-                categoriesCacheManager.dataSubject.subscribe({
-                    if (it.isNotEmpty()) refreshing = false
-                    adapter.data = it
-                }, Timber::e),
-                categoriesCacheManager.reloadData()
-        )
+        disposable.addAll(categoriesCacheManager.dataSubject.subscribe(this::fillAdapter, Timber::e), reloadData())
+    }
+
+    private fun reloadData() = categoriesCacheManager.reloadData { errorManager.showError(it, snacker::show) }
+
+    private fun fillAdapter(items: List<LocalCategory>) {
+        if (items.isNotEmpty()) refreshing = false
+        adapter.data = items
     }
 
     override fun onSearchClick() {

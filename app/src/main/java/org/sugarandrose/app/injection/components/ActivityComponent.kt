@@ -17,6 +17,7 @@ import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
 import org.sugarandrose.app.ui.main.MainActivity
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
+import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.ShareManager
 import org.sugarandrose.app.util.manager.SocialMediaManager
 import org.sugarandrose.app.util.manager.WebManager
@@ -67,4 +68,5 @@ interface ActivityComponentProvides : AppComponentProvides {
     fun webManager(): WebManager
     fun shareManager(): ShareManager
     fun socialMediaManager(): SocialMediaManager
+    fun errorManager(): ErrorManager
 }

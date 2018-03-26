@@ -12,6 +12,7 @@ import org.sugarandrose.app.databinding.ActivityCategoryDetailBinding
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
+import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
@@ -19,6 +20,7 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
 import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
+import org.sugarandrose.app.util.manager.ErrorManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -78,7 +80,10 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
 
 @PerActivity
 class CategoryDetailViewModel @Inject
-constructor(@ActivityDisposable private val disposable: CompositeDisposable) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
+constructor(@ActivityDisposable private val disposable: CompositeDisposable,
+            private val errorManager: ErrorManager,
+            private val snacker: Snacker
+) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
 
     override val adapterCategories: CategoriesAdapter = CategoriesAdapter()
     override val adapterItems: DisplayItemAdapter = DisplayItemAdapter()
@@ -97,7 +102,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable) : B
                 .doOnEvent { _, _ -> adapterItems.loading = false }
                 .doOnSuccess { adapterItems.endOfPages = it.isEmpty() }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(adapterItems::add, Timber::e)
+                .subscribe(adapterItems::add, { errorManager.showError(it, snacker::show) })
                 .addTo(disposable)
     }
 }

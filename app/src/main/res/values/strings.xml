@@ -21,6 +21,7 @@
     <string name="search_media">Medien</string>
     <string name="search_roses">Rosenportraits</string>
     <string name="post_uri_error">Es wurde leider kein Beitrag mit dieser ID gefunden.</string>
+    <string name="no_connection">Bitte verbinde dich mit dem Internet!</string>
 
     <string name="onboarding_skip">Überspringen</string>
 
@@ -58,7 +59,6 @@
     <string name="share_text_rose">Ich habe das hier entdeckt:</string>
     <string name="share_app">Ich habe diese App entdeckt: %s</string>
 
-    <string name="error_network_unavailable">Keine Internetverbindung.</string>
     <string name="error_server_unavailable">Der Server ist nicht erreichbar.</string>
     <string name="error_server_error">Ein Server Fehler ist aufgetreten.</string>
     <string name="error_other">Ein Fehler ist aufgetreten.</string>

@@ -3,7 +3,9 @@ package org.sugarandrose.app.util.manager
 import android.content.res.Resources
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
-import org.sugarandrose.app.injection.scopes.PerApplication
+import org.sugarandrose.app.injection.scopes.PerActivity
+import org.sugarandrose.app.ui.NoConnectionDialogFragment
+import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.util.NetworkUnavailableException
 import retrofit2.HttpException
 import timber.log.Timber
@@ -15,17 +17,20 @@ import javax.inject.Inject
  * florian.schuster@tailored-apps.com
  */
 
-@PerApplication
+@PerActivity
 class ErrorManager @Inject
-constructor(private val res: Resources) {
+constructor(private val res: Resources, private val navigator: Navigator) {
 
-    fun showError(throwable: Throwable, errorConsumer: (message: String) -> Unit) {
-        Timber.e(throwable)
-        errorConsumer(getUserErrorMessage(throwable))
+    fun showError(throwable: Throwable, errorConsumer: (message: String) -> Unit, retryCallback: (() -> Unit)? = null) {
+        if (throwable is NetworkUnavailableException) {
+            navigator.showDialogFragment(NoConnectionDialogFragment().apply { dialogRetryCallback = retryCallback })
+        } else {
+            Timber.e(throwable)
+            errorConsumer(getUserErrorMessage(throwable))
+        }
     }
 
     private fun getUserErrorMessage(throwable: Throwable): String = when (getErrorCause(throwable)) {
-        ErrorCause.NETWORK_UNAVAILABLE -> res.getString(R.string.error_network_unavailable)
         ErrorCause.SERVER_UNAVAILABLE -> res.getString(R.string.error_server_unavailable)
         ErrorCause.SERVER_ERROR -> getUserErrorMessage(throwable as HttpException)
         ErrorCause.MISSING_ELEMENTS -> res.getString(R.string.error_server_error)

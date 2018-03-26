@@ -14,6 +14,7 @@ import org.sugarandrose.app.databinding.FragmentNewBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
+import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
@@ -21,6 +22,7 @@ import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.PaginationScrollListener
+import org.sugarandrose.app.util.manager.ErrorManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -68,7 +70,10 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
 @PerFragment
 class NewViewModel @Inject
-constructor(@FragmentDisposable private val disposable: CompositeDisposable) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
+constructor(@FragmentDisposable private val disposable: CompositeDisposable,
+            private val errorManager: ErrorManager,
+            private val snacker: Snacker
+) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
     override val adapter: DisplayItemAdapter = DisplayItemAdapter()
@@ -91,7 +96,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable) : B
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { adapter.endOfPages = it.isEmpty() }
-                .subscribe(adapter::add, Timber::e)
+                .subscribe(adapter::add, { errorManager.showError(it, snacker::show, this::onRefresh) })
                 .addTo(disposable)
     }
 }

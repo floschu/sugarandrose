@@ -35,7 +35,7 @@ constructor(private val api: SugarAndRoseApi) {
     var reloading = false
     val dataSubject: BehaviorSubject<List<LocalMorePage>> = BehaviorSubject.createDefault(data)
 
-    fun reloadData(): Disposable = if (data.isEmpty()) Single.concat(MORE_PAGES)
+    fun reloadData(onError: (Throwable) -> Unit): Disposable = if (data.isEmpty()) Single.concat(MORE_PAGES)
              .flatMapSingle { more ->
                  if (more.featured_media != 0L) api.getMedia(more.featured_media).map { LocalMorePage(more, it) }
                  else Single.just(LocalMorePage(more))
@@ -44,6 +44,6 @@ constructor(private val api: SugarAndRoseApi) {
              .observeOn(AndroidSchedulers.mainThread())
              .doOnSubscribe { reloading = true }
              .doOnEvent { _, _ -> reloading = false }
-             .subscribe({ data = it }, Timber::e)
+             .subscribe({ data = it }, onError::invoke)
      else Completable.fromAction { dataSubject.onNext(data) }.subscribe()
 }

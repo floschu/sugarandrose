@@ -6,6 +6,7 @@
     <color name="colorAccentRipple">#a33657</color>
 
     <color name="pink">#fdcfdf</color>
+    <color name="logo_color">#da69a3</color>
 
     <color name="transparent">#00ffffff</color>
     <color name="background">@color/md_white_1000</color>

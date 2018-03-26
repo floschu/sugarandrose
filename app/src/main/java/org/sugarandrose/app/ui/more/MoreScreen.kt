@@ -21,6 +21,7 @@ import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
+import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
@@ -31,6 +32,7 @@ import org.sugarandrose.app.util.Utils
 import org.sugarandrose.app.util.extensions.areYouSureDialog
 import org.sugarandrose.app.util.extensions.openNotificationSettings
 import org.sugarandrose.app.util.extensions.shareApp
+import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.SocialMediaManager
 import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
@@ -81,16 +83,17 @@ constructor(override val adapter: MoreAdapter,
             private val socialMediaManager: SocialMediaManager,
             private val favoritedRepo: FavoritedRepo,
             private val navigator: Navigator,
-            private val moreCacheManager: MoreCacheManager
+            private val moreCacheManager: MoreCacheManager,
+            private val errorManager: ErrorManager,
+            private val snacker: Snacker
 ) : BaseViewModel<MoreMvvm.View>(), MoreMvvm.ViewModel {
 
     override fun attachView(view: MoreMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
-        disposable.addAll(
-                moreCacheManager.dataSubject.subscribe(this::fillAdapter, Timber::e),
-                moreCacheManager.reloadData()
-        )
+        disposable.addAll(moreCacheManager.dataSubject.subscribe(this::fillAdapter, Timber::e), reloadData())
     }
+
+    private fun reloadData() = moreCacheManager.reloadData { errorManager.showError(it, snacker::show) }
 
     private fun fillAdapter(morePages: List<LocalMorePage>) {
         val moreData = ArrayList<Pair<Int, LocalMore>>()
@@ -121,7 +124,7 @@ constructor(override val adapter: MoreAdapter,
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_help_outline, R.string.more_onboarding, {
             navigator.startActivity(OnboardingActivity::class.java)
         })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_onboarding, {
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_privacy, {
             webManager.open(BuildConfig.IMPRESSUM)
         })))
 

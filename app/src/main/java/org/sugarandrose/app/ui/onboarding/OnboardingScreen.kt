@@ -49,7 +49,7 @@ constructor(override val adapter: OnboardingAdapter,
 ) : BaseViewModel<OnboardingMvvm.View>(), OnboardingMvvm.ViewModel {
     override var selectedPagePosition = 0
         set(value) {
-            if (value >= OnboardingAdapter.PAGES - 1) onBoardingFinished()
+            if (value >= OnboardingAdapter.PAGES) onBoardingFinished()
             else {
                 field = value
                 notifyPropertyChanged(BR.selectedPagePosition)

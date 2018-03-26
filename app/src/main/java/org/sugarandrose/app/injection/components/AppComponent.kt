@@ -18,7 +18,6 @@ import org.sugarandrose.app.ui.base.feedback.Toaster
 import org.sugarandrose.app.ui.categories.CategoriesCacheManager
 import org.sugarandrose.app.ui.more.MoreCacheManager
 import org.sugarandrose.app.ui.roses.RosesCacheManager
-import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.EventLogManager
 import org.sugarandrose.app.util.manager.NotificationsManager
 
@@ -69,5 +68,4 @@ interface AppComponentProvides {
     fun rosesCacheManager(): RosesCacheManager
     fun moreCacheManager(): MoreCacheManager
     fun categoriesCacheManager(): CategoriesCacheManager
-    fun errorManager(): ErrorManager
 }

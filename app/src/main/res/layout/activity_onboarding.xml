@@ -16,7 +16,7 @@
         android:orientation="vertical">
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -24,54 +24,40 @@
             app:pageTransformer="@{vm.pageTransformer}"
             app:selectedPagePosition="@={vm.selectedPagePosition}" />
 
-        <android.support.constraint.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
             <TextView
-                android:id="@+id/btn_skip"
-                style="@style/SubTitle.Accent"
+                style="@style/Title.Accent"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center_vertical|start"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center_vertical"
                 android:onClick="@{vm::onSkipClick}"
-                android:padding="@dimen/padding"
-                android:text="@string/onboarding_skip"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/cpi"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:paddingEnd="@dimen/card_horizontal_padding"
+                android:paddingStart="@dimen/card_horizontal_padding"
+                android:text="@string/onboarding_skip" />
 
             <com.viewpagerindicator.CirclePageIndicator
                 android:id="@+id/cpi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:padding="@dimen/padding"
                 app:fillColor="?attr/colorAccent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                app:radius="4dp"
-                app:viewPager="@{viewPager}" />
+                app:radius="5dp" />
 
             <ImageView
-                android:id="@+id/btn_next"
-                android:layout_width="@dimen/normal_fab_size"
-                android:layout_height="0dp"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{vm::onNextClick}"
                 android:padding="@dimen/padding"
                 android:src="@drawable/ic_chevron_right"
-                android:tint="@color/colorAccent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cpi"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
+                android:tint="@color/colorAccent" />
+        </FrameLayout>
     </LinearLayout>
 </layout>
