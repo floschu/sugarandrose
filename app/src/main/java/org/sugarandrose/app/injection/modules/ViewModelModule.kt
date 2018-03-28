@@ -1,6 +1,8 @@
 package org.sugarandrose.app.injection.modules
 
 
+import org.sugarandrose.app.ui.launcher.LauncherViewModel
+import org.sugarandrose.app.ui.launcher.LauncherMvvm
 import org.sugarandrose.app.ui.onboarding.OnboardingViewModel
 import org.sugarandrose.app.ui.onboarding.OnboardingMvvm
 import dagger.Binds
@@ -104,4 +106,7 @@ abstract class ViewModelModule {
 
     @Binds
     internal abstract fun bindOnboardingViewModel(viewModel: OnboardingViewModel): OnboardingMvvm.ViewModel
+
+    @Binds
+    internal abstract fun bindLauncherViewModel(viewModel: LauncherViewModel): LauncherMvvm.ViewModel
 }
