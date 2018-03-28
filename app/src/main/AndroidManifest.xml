@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
 
-        <activity android:name=".ui.LauncherActivity">
+        <activity android:name=".ui.launcher.LauncherActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,6 +49,8 @@
         <activity android:name=".ui.photo.PhotoDetailActivity" />
 
         <activity android:name=".ui.categories.detail.CategoryDetailActivity" />
+
+        <activity android:name=".ui.onboarding.OnboardingActivity" />
 
         <!-- Provider -->
         <provider

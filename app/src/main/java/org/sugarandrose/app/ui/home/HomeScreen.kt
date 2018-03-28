@@ -3,7 +3,6 @@ package org.sugarandrose.app.ui.home
 import android.databinding.Bindable
 import android.os.Bundle
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.home.viewpager.HomePagerAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import javax.inject.Inject
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
 
 
 /**
@@ -33,11 +31,9 @@ interface HomeMvvm {
 
     interface ViewModel : MvvmViewModel<View> {
 
-        val adapter: FragmentPagerAdapter
-
         @get:Bindable
         var selectedPagePosition: Int
-
+        val adapter: FragmentPagerAdapter
     }
 }
 
@@ -53,17 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeMvvm.ViewModel>(), Ho
         super.onViewCreated(view, savedInstanceState)
         binding.tabLayout.setupWithViewPager(binding.viewPager)
 
-        context?.let {
-            //            MaterialShowcaseSequence(activity,)
-            MaterialShowcaseView.Builder(activity).apply {
-                setTarget(binding.tabLayout.getChildAt(0))
-                setMaskColour(ContextCompat.getColor(it, R.color.tutorial_color))
-                setContentText(R.string.tutorial_blog)
-                setContentTextColor(ContextCompat.getColor(it, R.color.textWhitePrimary))
-                setDismissText(R.string.tutorial_understand)
-                setDismissTextColor(ContextCompat.getColor(it, R.color.textWhiteSecondary))
-            }.show()
-        }
+        activity?.supportStartPostponedEnterTransition()
     }
 
     override fun setSelectedPage(page: Int) {

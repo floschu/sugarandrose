@@ -18,6 +18,7 @@ import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.manager.EventLogManager
 import org.sugarandrose.app.util.manager.ShareManager
+import org.sugarandrose.app.util.manager.TutorialManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,7 +28,10 @@ import javax.inject.Inject
  */
 
 interface PostItemMvvm {
-    interface View : MvvmView
+    interface View : MvvmView {
+        val favoriteView: android.view.View
+        val shareView: android.view.View
+    }
 
     interface ViewModel : MvvmViewModel<View> {
         fun update(post: LocalPost)
@@ -49,6 +53,9 @@ class PostItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemPostBindin
         viewHolderComponent.inject(this)
         bindContentView(itemView)
     }
+
+    override val favoriteView: View get() = binding.btnFav
+    override val shareView: View get() = binding.btnShare
 }
 
 @PerViewHolder
@@ -57,7 +64,8 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
             private val navigator: Navigator,
             private val favoritedRepo: FavoritedRepo,
             private val shareManager: ShareManager,
-            private val eventLogManager: EventLogManager
+            private val eventLogManager: EventLogManager,
+            private val tutorialManager: TutorialManager
 ) : BaseViewModel<PostItemMvvm.View>(), PostItemMvvm.ViewModel {
     override lateinit var post: LocalPost
     override var favorited: Boolean = false
@@ -67,6 +75,12 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
         this.post = post
         this.favorited = favoritedRepo.isContained(this.post)
         notifyChange()
+
+        view?.let {
+            tutorialManager.favorite(it.favoriteView) {
+                tutorialManager.share(it.shareView)
+            }
+        }
     }
 
     override fun onClick() {

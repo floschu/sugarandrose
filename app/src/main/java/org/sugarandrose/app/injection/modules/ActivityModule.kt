@@ -14,6 +14,7 @@ import org.sugarandrose.app.ui.base.feedback.ActivitySnacker
 import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.ActivityNavigator
 import org.sugarandrose.app.ui.base.navigator.Navigator
+import org.sugarandrose.app.util.manager.TutorialManager
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -53,4 +54,9 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     internal fun provideSnacker(): Snacker = ActivitySnacker(activity)
+
+
+    @Provides
+    @PerActivity
+    internal fun provideTutorialManager(): TutorialManager = TutorialManager(activity)
 }

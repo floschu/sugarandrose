@@ -1,4 +1,4 @@
-package org.sugarandrose.app.ui
+package org.sugarandrose.app.util
 
 import android.app.Dialog
 import android.app.DialogFragment

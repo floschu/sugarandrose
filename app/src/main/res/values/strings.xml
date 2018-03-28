@@ -6,11 +6,15 @@
     <string name="menu_bnv_favorited">Merkzettel</string>
     <string name="menu_bnv_more">Mehr</string>
 
+    <string name="logo_transition_name">iv_logo_transition</string>
+
+    <string name="onboarding_next">Weiter zur App</string>
+    <string name="onboarding_about"><![CDATA[Ich bin Maria und wohne in Wien – der Mehlspeisen-Stadt schlechthin. <font color="#a5254c">sugar&amp;rose</font> ist mein Blog. Ich liebe Rosen und ich liebe Backen. Kochen bedeutet für mich Entspannung nach einem stressigen Bürotag. Und im Garten bekomme ich den Kopf frei und kann gut abschalten…<br><br> In dieser App TODO]]></string>
+
     <string name="tutorial_understand">Verstanden</string>
-    <string name="tutorial_blog">Hier kannst du dir die neusten Blogbeiträge von sugar&amp;rose ansehen.</string>
-    <string name="tutorial_roses">Hier kannst du dir verschieden Arten von Rosen ansehen.</string>
-    <string name="tutorial_favorite">Wenn du hier klickst, kannst du Beiträge merken.</string>
+    <string name="tutorial_favorite">Wenn du hier klickst, kannst du dir Beiträge merken.</string>
     <string name="tutorial_share">Wenn du hier klickst, kannst du Beiträge an andere Leute weiterleiten.</string>
+    <string name="tutorial_search">Hier kannst du nach Blogbeiträgen suchen.</string>
 
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>

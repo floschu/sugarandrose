@@ -38,12 +38,12 @@ interface MainMvvm {
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), MainMvvm.View {
     private lateinit var adapter: MainAdapter
-    @Inject
-    lateinit var rosesCacheManager: RosesCacheManager
+    @Inject lateinit var rosesCacheManager: RosesCacheManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
+        supportPostponeEnterTransition()
         setAndBindContentView(savedInstanceState, R.layout.activity_main)
 
         MainAdapter.disableShiftMode(binding.bottomNavigationView)

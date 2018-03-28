@@ -12,6 +12,7 @@ import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.FavoritedRepo
+import org.sugarandrose.app.data.local.PrefRepo
 import org.sugarandrose.app.data.model.LocalMore
 import org.sugarandrose.app.data.model.LocalMoreHeader
 import org.sugarandrose.app.data.model.LocalMoreItem
@@ -33,8 +34,10 @@ import org.sugarandrose.app.util.extensions.openNotificationSettings
 import org.sugarandrose.app.util.extensions.shareApp
 import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.SocialMediaManager
+import org.sugarandrose.app.util.manager.TutorialManager
 import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
+import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
 import javax.inject.Inject
 
 
@@ -84,7 +87,9 @@ constructor(override val adapter: MoreAdapter,
             private val navigator: Navigator,
             private val moreCacheManager: MoreCacheManager,
             private val errorManager: ErrorManager,
-            private val snacker: Snacker
+            private val snacker: Snacker,
+            private val tutorialManager: TutorialManager,
+            private val prefRepo: PrefRepo
 ) : BaseViewModel<MoreMvvm.View>(), MoreMvvm.ViewModel {
 
     override fun attachView(view: MoreMvvm.View, savedInstanceState: Bundle?) {
@@ -125,8 +130,11 @@ constructor(override val adapter: MoreAdapter,
         moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_settings)))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_notifications_none, R.string.more_notifications, context::openNotificationSettings)))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_delete_forever, R.string.more_delete_data, {
-            context.areYouSureDialog(favoritedRepo::clearData)
-            //todo reset tutorial
+            context.areYouSureDialog {
+                favoritedRepo.clearData()
+                tutorialManager.resetTutorials()
+                prefRepo.onboardingDone = false
+            }
         })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_info_outline, R.string.more_app_info, {
             LibsBuilder().apply {

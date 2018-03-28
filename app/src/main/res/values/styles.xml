@@ -11,6 +11,8 @@
         <item name="android:windowBackground">@color/background</item>
 
         <item name="android:textColorHint">@color/textBlackSecondary</item>
+
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="AppBarTheme" parent="AppTheme">

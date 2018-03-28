@@ -31,11 +31,11 @@
                 <TextView
                     android:id="@+id/tv_title"
                     style="@style/Title.Accent"
-                    android:paddingTop="@dimen/vertical_padding"
-                    android:paddingBottom="@dimen/vertical_padding"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="3"
+                    android:paddingBottom="@dimen/vertical_padding"
+                    android:paddingTop="@dimen/vertical_padding"
                     app:htmlText="@{vm.post.name}"
                     tools:text="Das ist ein langer Test für d die Toot für die Toolbar " />
             </android.support.v7.widget.Toolbar>
@@ -75,8 +75,8 @@
             android:id="@+id/video_fullscreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            android:background="@color/md_black_1000" />
+            android:background="@color/md_black_1000"
+            android:visibility="gone" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_more"
@@ -84,6 +84,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_margin="@dimen/card_margin"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{vm::onMoreClick}"
+            android:stateListAnimator="@animator/lift_on_touch"
             app:cardCornerRadius="6dp"
             app:layout_behavior="org.sugarandrose.app.util.SlideOutBehavior">
 
@@ -91,8 +95,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
-                android:foreground="?attr/selectableItemBackground"
-                android:onClick="@{vm::onMoreClick}"
                 android:paddingEnd="@dimen/card_horizontal_padding"
                 android:paddingStart="@dimen/card_horizontal_padding">
 

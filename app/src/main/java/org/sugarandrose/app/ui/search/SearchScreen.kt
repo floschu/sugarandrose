@@ -13,6 +13,7 @@ import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.categories.overview.CategoriesFragment
 import org.sugarandrose.app.ui.textsearch.TextSearchFragment
+import org.sugarandrose.app.util.manager.TutorialManager
 import javax.inject.Inject
 
 /**

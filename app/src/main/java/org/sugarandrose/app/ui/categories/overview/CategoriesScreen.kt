@@ -30,6 +30,7 @@ import org.sugarandrose.app.ui.textsearch.TextSearchFragment
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.extensions.castWithUnwrap
 import org.sugarandrose.app.util.manager.ErrorManager
+import org.sugarandrose.app.util.manager.TutorialManager
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,25 +42,32 @@ import javax.inject.Inject
 
 interface CategoriesMvvm {
     interface View : MvvmView {
+        val tutorialView: android.view.View
         fun openTextSearch()
     }
 
     interface ViewModel : MvvmViewModel<View> {
+        fun init()
+        fun onSearchClick()
+
         @get:Bindable
         var refreshing: Boolean
-
         val adapter: CategoriesAdapter
-
-        fun onSearchClick()
     }
 }
 
 
 class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvvm.ViewModel>(), CategoriesMvvm.View {
+    override val tutorialView: android.view.View get() = binding.etSearch
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)
         return setAndBindContentView(inflater, container, savedInstanceState, R.layout.fragment_categories)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.init()
     }
 
     override fun openTextSearch() {
@@ -74,7 +82,8 @@ class CategoriesViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
             private val categoriesCacheManager: CategoriesCacheManager,
             private val errorManager: ErrorManager,
-            private val snacker: Snacker
+            private val snacker: Snacker,
+            private val tutorialManager: TutorialManager
 ) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(true, BR.refreshing)
 
@@ -84,6 +93,10 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
         super.attachView(view, savedInstanceState)
         refreshing = true
         disposable.addAll(categoriesCacheManager.dataSubject.subscribe(this::fillAdapter, Timber::e), reloadData())
+    }
+
+    override fun init() {
+        view?.let { tutorialManager.search(it.tutorialView) }
     }
 
     private fun reloadData() = categoriesCacheManager.reloadData { errorManager.showError(it, snacker::show) }

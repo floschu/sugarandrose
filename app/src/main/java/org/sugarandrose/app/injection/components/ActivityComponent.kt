@@ -1,5 +1,6 @@
 package org.sugarandrose.app.injection.components
 
+import org.sugarandrose.app.ui.onboarding.OnboardingActivity
 import android.content.Context
 import android.support.v4.app.FragmentManager
 import dagger.Component
@@ -16,10 +17,7 @@ import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
 import org.sugarandrose.app.ui.main.MainActivity
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
-import org.sugarandrose.app.util.manager.ErrorManager
-import org.sugarandrose.app.util.manager.ShareManager
-import org.sugarandrose.app.util.manager.SocialMediaManager
-import org.sugarandrose.app.util.manager.WebManager
+import org.sugarandrose.app.util.manager.*
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -42,7 +40,9 @@ import org.sugarandrose.app.util.manager.WebManager
 @Component(dependencies = [(AppComponent::class)], modules = [(ActivityModule::class), (ViewModelModule::class)])
 interface ActivityComponent : ActivityComponentProvides {
     // create inject methods for your Activities here
+    fun inject(activity: OnboardingActivity)
     fun inject(activity: MainActivity)
+
     fun inject(activity: PostActivity)
     fun inject(activity: PhotoDetailActivity)
     fun inject(activity: CategoryDetailActivity)
@@ -66,4 +66,5 @@ interface ActivityComponentProvides : AppComponentProvides {
     fun shareManager(): ShareManager
     fun socialMediaManager(): SocialMediaManager
     fun errorManager(): ErrorManager
+    fun tutorialManager(): TutorialManager
 }

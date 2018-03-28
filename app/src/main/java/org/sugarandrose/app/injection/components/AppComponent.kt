@@ -54,7 +54,7 @@ interface AppComponentProvides {
     fun encryptionKeyManager(): org.sugarandrose.app.data.local.encryption.EncryptionKeyManager
 
     fun realm(): Realm
-    fun myRepo(): FavoritedRepo
+    fun favoritedRepo(): FavoritedRepo
     fun prefRepo(): PrefRepo
 
     fun sugarAndRoseApi(): SugarAndRoseApi
