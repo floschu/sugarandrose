@@ -106,7 +106,7 @@ constructor(override val adapter: MoreAdapter,
         if (morePages.isNotEmpty()) morePages.forEach { moreData.add(Pair(MoreAdapter.TYPE_ITEM_GRID, it)) }
         else moreCacheManager.MORE_PAGES.forEach { moreData.add(Pair(MoreAdapter.TYPE_ITEM_GRID, LocalMorePage())) }
 
-        moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_about)))
+        moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_social)))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_facebook, R.string.more_facebook, {
             socialMediaManager.openFacebook(BuildConfig.FB_NAME, BuildConfig.FB_ID)
         })))
@@ -122,10 +122,13 @@ constructor(override val adapter: MoreAdapter,
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
             navigator.startActivity(Utils.mail(BuildConfig.EMAIL))
         })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_privacy, {
-            webManager.open(BuildConfig.IMPRESSUM)
-        })))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_share, R.string.more_share_app, context::shareApp)))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_masthead, {
+            webManager.open(BuildConfig.MASTHEAD)
+        })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_lock_open, R.string.more_privacy, {
+            webManager.open(BuildConfig.PRIVACY)
+        })))
 
         moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_settings)))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_notifications_none, R.string.more_notifications, context::openNotificationSettings)))

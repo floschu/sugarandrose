@@ -2,14 +2,14 @@
 
 buildscript {
     ext.kotlinVersion = '1.2.31'
-    ext.realmVersion = '4.3.4'
-    ext.gradlePluginVersion = '3.0.1'
-    ext.mockitoVersion = '2.15.0'
+    ext.realmVersion = '5.0.0'
+    ext.gradlePluginVersion = '3.1.0'
+    ext.mockitoVersion = '2.16.0'
     ext.powerMockVersion = '2.0.0-beta.5'
     ext.supportLibVersion = '27.1.0'
-    ext.retrofitVersion = '2.3.0'
+    ext.retrofitVersion = '2.4.0'
     ext.okHttpVersion = '3.10.0'
-    ext.daggerVersion = '2.14.1'
+    ext.daggerVersion = '2.15'
     ext.paperParcelVersion = '2.0.4'
 
     repositories {
@@ -21,12 +21,12 @@ buildscript {
 
     dependencies {
         classpath "com.android.tools.build:gradle:$gradlePluginVersion"
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.1'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.2'
         classpath "io.realm:realm-gradle-plugin:$realmVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.google.gms:google-services:3.1.2'
+        classpath 'com.google.gms:google-services:3.2.0'
         classpath 'com.google.firebase:firebase-plugins:1.1.5'
-        classpath 'io.fabric.tools:gradle:1.25.1'
+        classpath 'io.fabric.tools:gradle:1.25.2'
     }
 }
 

@@ -46,7 +46,8 @@ android {
         buildConfigField "String", "TWITTER_ID", "\"199252121\""
         buildConfigField "String", "PINTEREST_NAME", "\"sugarandrosem\""
         buildConfigField "String", "EMAIL", "\"sugarandrosen@gmail.com\""
-        buildConfigField "String", "IMPRESSUM", "\"https://sugarandrose.org/kontakt/impressum/\""
+        buildConfigField "String", "MASTHEAD", "\"https://sugarandrose.org/kontakt/impressum/\""
+        buildConfigField "String", "PRIVACY", "\"https://sugarandrose.org/kontakt/datenschutzerklaerung/\""
 
     }
     buildTypes {
@@ -123,7 +124,7 @@ dependencies {
     implementation "com.google.dagger:dagger:$daggerVersion"
 
     //rx
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.10'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
@@ -138,9 +139,9 @@ dependencies {
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.9.0'
 
     //firebase
-    implementation 'com.google.firebase:firebase-crash:12.0.0'
-    implementation 'com.google.firebase:firebase-messaging:12.0.0'
-    implementation 'com.google.firebase:firebase-perf:12.0.0'
+    implementation 'com.google.firebase:firebase-crash:12.0.1'
+    implementation 'com.google.firebase:firebase-messaging:12.0.1'
+    implementation 'com.google.firebase:firebase-perf:12.0.1'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }

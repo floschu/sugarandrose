@@ -67,7 +67,7 @@ abstract class BaseActivityViewHolder<B : ViewDataBinding, VM : MvvmViewModel<*>
     }
 
     protected fun bindContentView(view: View) {
-        binding = DataBindingUtil.bind(view)
+        binding = DataBindingUtil.bind(view)!!
         binding.setVariable(BR.vm, viewModel)
         viewModel.attachViewOrThrowRuntimeException(this, null)
     }
