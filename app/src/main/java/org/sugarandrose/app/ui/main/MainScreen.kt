@@ -90,7 +90,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
                 if (handled) break
             }
         }
-        if (!handled) super.onBackPressed()
+        if (!handled) finish()
     }
 }
 
@@ -108,7 +108,7 @@ constructor(private val navigator: Navigator,
             uri.lastPathSegment != null && uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
             uri.query != null && uri.query.contains(resources.getString(R.string.deeplink_post_query)) -> openPost(uri.query.removePrefix("${resources.getString(R.string.deeplink_post_query)}=").toLong())
 //           uri.path != null && uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) }) todo get id from url
-            else -> webManager.open(uri) //todo test with phone wihtout chrome
+            else -> webManager.open(uri)
         }
     }
 

@@ -47,7 +47,9 @@ import javax.inject.Inject
  */
 
 interface MoreMvvm {
-    interface View : MvvmView
+    interface View : MvvmView {
+        fun finishApp()
+    }
 
     interface ViewModel : MvvmViewModel<View> {
         val adapter: MoreAdapter
@@ -72,6 +74,10 @@ class MoreFragment : BaseFragment<FragmentMoreBinding, MoreMvvm.ViewModel>(), Mo
                 override fun getSpanSize(position: Int): Int = if (position in 1..4) 1 else 2
             }
         }
+    }
+
+    override fun finishApp() {
+        activity?.finishAndRemoveTask()
     }
 }
 
@@ -158,6 +164,7 @@ constructor(override val adapter: MoreAdapter,
                 favoritedRepo.clearData()
                 tutorialManager.resetTutorials()
                 prefRepo.onboardingDone = false
+                view?.finishApp()
             }
         })))
 

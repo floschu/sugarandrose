@@ -9,12 +9,13 @@
     <string name="logo_transition_name">iv_logo_transition</string>
 
     <string name="onboarding_next">Weiter zur App</string>
-    <string name="onboarding_about"><![CDATA[Ich bin Maria und wohne in Wien – der Mehlspeisen-Stadt schlechthin. <font color="#a5254c">sugar&amp;rose</font> ist mein Blog. Ich liebe Rosen und ich liebe Backen. Kochen bedeutet für mich Entspannung nach einem stressigen Bürotag. Und im Garten bekomme ich den Kopf frei und kann gut abschalten…<br><br> In dieser App TODO]]></string>
+    <string name="onboarding_about"><![CDATA[Danke für das Interesse an meiner kostenlosen Rezepte- und Rosen-App. Ich bin Rosenliebhaberin und backe für mein Leben gern – auch mit Rosen. Besonders gern Süßes, Kuchen und Mehlspeisen. Auf meinem Blog gibt es jede Woche ein neues Rezept, Rosenfotos oder DIY-Anleitungen mit Rosen.<br>Viel Spaß damit & liebe Grüße, <font color="#a5254c">sugar&amp;rose</font>]]></string>
 
-    <string name="tutorial_understand">Verstanden</string>
-    <string name="tutorial_favorite">Wenn du hier klickst, kannst du dir Beiträge merken.</string>
-    <string name="tutorial_share">Wenn du hier klickst, kannst du Beiträge an andere Leute weiterleiten.</string>
-    <string name="tutorial_search">Hier kannst du nach Blogbeiträgen suchen.</string>
+    <string name="tutorial_understand">OK, verstanden!</string>
+    <string name="tutorial_favorite">Wenn du auf diesen Button klickst, kannst du dir Beiträge merken.</string>
+    <string name="tutorial_unfavorite">Wenn du auf diesen Button klickst, kannst du Beiträge wieder aus deiner Merkliste entfernen.</string>
+    <string name="tutorial_share">Wenn du auf diesen Button klickst, kannst du Beiträge an andere Leute weiterleiten.</string>
+    <string name="tutorial_search">Wenn du hier auf die Suchleiste tippst, kannst du nach Blogbeiträgen suchen.</string>
 
     <string name="search_text_title">Suche</string>
     <string name="search_categories_title">Kategorien</string>

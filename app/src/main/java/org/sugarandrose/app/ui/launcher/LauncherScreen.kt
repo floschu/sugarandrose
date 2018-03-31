@@ -54,7 +54,11 @@ class LauncherActivity : BaseActivity<ActivityLauncherBinding, LauncherMvvm.View
                 else Intent(this, OnboardingActivity::class.java)
 
         startActivity(intent, transition.toBundle())
-        supportFinishAfterTransition()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        finish()
     }
 }
 

@@ -32,7 +32,7 @@ class PagedPostLoadingManager {
     }
 
     fun loadPostsPage() = loadPage(api.getPostsPage(currentPostsPage))
-    fun loadQueryPage(query: String) = loadPage(api.getPostsForQuery(query, currentPostsPage)) //todo fix
+    fun loadQueryPage(query: String) = loadPage(api.getPostsForQuery(query, currentPostsPage))
     fun loadCategoryPage(category: LocalCategory) = loadPage(api.getPostsForCategory(category.id))
 
     private fun loadPage(loadingSingle: Single<Result<List<Post>>>): Single<List<LocalPost>> =

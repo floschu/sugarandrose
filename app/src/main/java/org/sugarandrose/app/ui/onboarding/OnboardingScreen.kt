@@ -38,8 +38,13 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding, OnboardingMvv
         val image = findViewById<ImageView>(R.id.iv_logo)
         val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(this, image, ViewCompat.getTransitionName(image))
 
-        startActivity(Intent(this, MainActivity::class.java), transition.toBundle())
-        supportFinishAfterTransition()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent, transition.toBundle())
+    }
+
+    override fun onStop() {
+        super.onStop()
+        finish()
     }
 }
 

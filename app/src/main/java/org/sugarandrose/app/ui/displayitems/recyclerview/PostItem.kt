@@ -94,7 +94,10 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
         favorited = !favorited
         notifyPropertyChanged(BR.favorited)
 
-        if (favorited) eventLogManager.logFavorite(post)
+        if (favorited) {
+            eventLogManager.logFavorite(post)
+            view?.let { tutorialManager.unfavorite(it.favoriteView) }
+        }
     }
 
     override fun onShareClick() {

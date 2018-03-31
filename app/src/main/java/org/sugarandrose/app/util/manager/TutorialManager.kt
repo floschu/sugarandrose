@@ -25,6 +25,13 @@ class TutorialManager(private val activity: FragmentActivity) {
                 show()
             }
 
+    fun unfavorite(view: View) =
+            getStandardBuilder(view, "unfavorite").apply {
+                setContentText(R.string.tutorial_unfavorite)
+                setShapePadding(20)
+                show()
+            }
+
     fun share(view: View) =
             getStandardBuilder(view, "share").apply {
                 setContentText(R.string.tutorial_share)
