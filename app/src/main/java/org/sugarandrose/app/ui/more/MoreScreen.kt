@@ -122,23 +122,8 @@ constructor(override val adapter: MoreAdapter,
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
             navigator.startActivity(Utils.mail(BuildConfig.EMAIL))
         })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_share, R.string.more_share_app, context::shareApp)))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_masthead, {
-            webManager.open(BuildConfig.MASTHEAD)
-        })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_lock_open, R.string.more_privacy, {
-            webManager.open(BuildConfig.PRIVACY)
-        })))
 
-        moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_settings)))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_notifications_none, R.string.more_notifications, context::openNotificationSettings)))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_delete_forever, R.string.more_delete_data, {
-            context.areYouSureDialog {
-                favoritedRepo.clearData()
-                tutorialManager.resetTutorials()
-                prefRepo.onboardingDone = false
-            }
-        })))
+        moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_info)))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_info_outline, R.string.more_app_info, {
             LibsBuilder().apply {
                 withFields(*Libs.toStringArray(R.string::class.java.fields))
@@ -157,6 +142,23 @@ constructor(override val adapter: MoreAdapter,
                         "SupportLibrary", "Picasso", "sssimageview", "paperparcel"
                 )
             }.start(context)
+        })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_masthead, {
+            webManager.open(BuildConfig.MASTHEAD)
+        })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_lock_open, R.string.more_privacy, {
+            webManager.open(BuildConfig.PRIVACY)
+        })))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_share, R.string.more_share_app, context::shareApp)))
+
+        moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_settings)))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_notifications_none, R.string.more_notifications, context::openNotificationSettings)))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_delete_forever, R.string.more_delete_data, {
+            context.areYouSureDialog {
+                favoritedRepo.clearData()
+                tutorialManager.resetTutorials()
+                prefRepo.onboardingDone = false
+            }
         })))
 
         adapter.data = moreData
