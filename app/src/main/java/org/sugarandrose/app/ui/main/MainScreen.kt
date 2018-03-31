@@ -38,7 +38,8 @@ interface MainMvvm {
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), MainMvvm.View {
     private lateinit var adapter: MainAdapter
-    @Inject lateinit var rosesCacheManager: RosesCacheManager
+    @Inject
+    lateinit var rosesCacheManager: RosesCacheManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,9 +105,9 @@ constructor(private val navigator: Navigator,
 
     override fun parseIntentUri(uri: Uri) {
         when {
-            uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
-            uri.query.contains(resources.getString(R.string.deeplink_post_query)) -> openPost(uri.query.removePrefix("${resources.getString(R.string.deeplink_post_query)}=").toLong())
-//            uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) }) todo get id from url
+            uri.lastPathSegment != null && uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
+            uri.query != null && uri.query.contains(resources.getString(R.string.deeplink_post_query)) -> openPost(uri.query.removePrefix("${resources.getString(R.string.deeplink_post_query)}=").toLong())
+//           uri.path != null && uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) }) todo get id from url
             else -> webManager.open(uri) //todo test with phone wihtout chrome
         }
     }
