@@ -29,8 +29,8 @@ android {
         applicationId "org.sugarandrose.app"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 14
-        versionName "1.0"
+        versionCode 15
+        versionName "1.0.0"
         vectorDrawables.useSupportLibrary = true
 
         multiDexEnabled true
