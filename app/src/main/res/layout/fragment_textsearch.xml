@@ -33,6 +33,7 @@
                     android:onClick="@{vm::onBackClick}"
                     android:paddingEnd="@dimen/card_horizontal_padding"
                     android:paddingStart="@dimen/horizontal_margin"
+                    android:tint="@color/md_black_1000"
                     android:src="@drawable/ic_arrow_back" />
 
                 <EditText

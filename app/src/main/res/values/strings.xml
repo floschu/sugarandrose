@@ -13,7 +13,7 @@
 
     <string name="tutorial_understand">OK, verstanden!</string>
     <string name="tutorial_favorite">Wenn du auf diesen Button klickst, kannst du dir Beiträge merken.</string>
-    <string name="tutorial_unfavorite">Wenn du auf diesen Button klickst, kannst du Beiträge wieder aus deiner Merkliste entfernen.</string>
+    <string name="tutorial_unfavorite">Wenn du auf diesen Button klickst, kannst du Beiträge wieder aus deinem Merkzettel entfernen.</string>
     <string name="tutorial_share">Wenn du auf diesen Button klickst, kannst du Beiträge an andere Leute weiterleiten.</string>
     <string name="tutorial_search">Wenn du hier auf die Suchleiste tippst, kannst du nach Blogbeiträgen suchen.</string>
 
@@ -56,8 +56,10 @@
     <string name="dialog_are_you_sure_title">Lokale Daten löschen</string>
     <string name="dialog_are_you_sure_text">Bist du dir sicher, dass du alle lokal gespeicherten Daten löschen willst?</string>
 
-    <string name="fb_channel_remote">Nachrichten</string>
+    <string name="fb_channel_remote">Neuigkeiten</string>
+    <string name="fb_channel_remote_description">Auf diesem Kanal werden Neuigkeiten von sugar&amp;rose versendet.</string>
     <string name="fb_channel_posts">Neue Blogbeiträge</string>
+    <string name="fb_channel_posts_description">Auf diesem Kanal werden Informationen zu den neusten Blogbeiträgen von sugar&amp;rose versendet.</string>
     <string name="notification_new_post_title">Neuer Blogbeitrag verfügbar</string>
     <string name="notification_new_post_message">Klicke hier um ihn zu öffnen.</string>
 

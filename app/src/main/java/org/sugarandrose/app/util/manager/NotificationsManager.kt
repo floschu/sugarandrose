@@ -96,6 +96,7 @@ constructor(@AppContext private val context: Context, private val resources: Res
             lightColor = Color.MAGENTA
             enableVibration(true)
             enableLights(true)
+            description = context.getString(R.string.fb_channel_remote_description)
         }
 
         val channelPosts = NotificationChannel(
@@ -106,6 +107,7 @@ constructor(@AppContext private val context: Context, private val resources: Res
             lightColor = Color.MAGENTA
             enableVibration(true)
             enableLights(true)
+            description = context.getString(R.string.fb_channel_posts_description)
         }
 
         notificationManager.createNotificationChannel(channelRemote)

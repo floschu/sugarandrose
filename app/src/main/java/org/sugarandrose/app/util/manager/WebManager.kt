@@ -35,10 +35,12 @@ constructor(@ActivityContext private val context: Context) {
         if (url.isEmpty() || !(url.startsWith("http://") || url.startsWith("https://"))) return
         try {
             CustomTabsIntent.Builder().apply {
-                setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                setToolbarColor(ContextCompat.getColor(context, R.color.colorAccent))
                 setShowTitle(true)
                 addDefaultShareMenuItem()
                 setCloseButtonIcon(getBitmapFromVectorDrawable(R.drawable.ic_arrow_back))
+//                setStartAnimations(context, R.anim.fade_in, R.anim.fade_in) todo enable animations when lib is fixed
+//                setExitAnimations(context, R.anim.fade_in, R.anim.fade_in)
             }.build().apply {
                 intent.`package` = "com.android.chrome"
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
