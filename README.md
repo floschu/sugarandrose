@@ -2,4 +2,4 @@
 
 Android Application for the [sugar&rose](https://sugarandrose.org/) Wordpress blog
 
-The Application will be on the Play Store soon™
+[>The Application is now available on the Play Store<](https://play.google.com/store/apps/details?id=org.sugarandrose.app)
