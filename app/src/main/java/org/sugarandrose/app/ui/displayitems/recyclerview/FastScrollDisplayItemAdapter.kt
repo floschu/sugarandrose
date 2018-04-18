@@ -12,7 +12,7 @@ import org.sugarandrose.app.data.model.LocalDisplayItem
  * florian.schuster@tailored-apps.com
  */
 class FastScrollDisplayItemAdapter : DisplayItemAdapter(), FastScrollRecyclerView.SectionedAdapter, FastScrollRecyclerView.MeasurableAdapter {
-    override fun getSectionName(position: Int): String = data[position].name[0].toString()
+    override fun getSectionName(position: Int): String = data[if (position == 0) 0 else position - 1].name[0].toString()
 
     fun addAllWithHeaders(items: List<LocalDisplayItem>) {
         val result = ArrayList<LocalDisplayItem>()

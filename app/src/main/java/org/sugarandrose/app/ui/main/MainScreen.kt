@@ -48,7 +48,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
 
         MainAdapter.disableShiftMode(binding.bottomNavigationView)
         adapter = MainAdapter(supportFragmentManager, R.id.container, R.id.bnv_new, savedInstanceState).apply {
-            //setCustomAnimations(R.anim.fade_in, R.anim.fade_out) todo enable animations when lib is fixed
+            setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
             attachTo(binding.bottomNavigationView)
         }
         intent?.let { handleIntent(it) }

@@ -39,8 +39,8 @@ constructor(@ActivityContext private val context: Context) {
                 setShowTitle(true)
                 addDefaultShareMenuItem()
                 setCloseButtonIcon(getBitmapFromVectorDrawable(R.drawable.ic_arrow_back))
-//                setStartAnimations(context, R.anim.fade_in, R.anim.fade_in) todo enable animations when lib is fixed
-//                setExitAnimations(context, R.anim.fade_in, R.anim.fade_in)
+                setStartAnimations(context, R.anim.fade_in, R.anim.fade_in)
+                setExitAnimations(context, R.anim.fade_in, R.anim.fade_in)
             }.build().apply {
                 intent.`package` = "com.android.chrome"
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

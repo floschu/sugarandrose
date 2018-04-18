@@ -48,6 +48,8 @@ class TutorialManager(private val activity: FragmentActivity) {
     private fun getStandardBuilder(view: View, id: String): MaterialShowcaseView.Builder =
             MaterialShowcaseView.Builder(activity).apply {
                 setTarget(view)
+                setDismissOnTouch(true)
+                setDismissOnTargetTouch(true)
                 setMaskColour(ContextCompat.getColor(activity as Context, R.color.tutorial_color))
                 setContentTextColor(ContextCompat.getColor(activity as Context, R.color.textWhitePrimary))
                 setDismissText(R.string.tutorial_understand)

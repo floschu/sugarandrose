@@ -59,6 +59,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
 
     override fun attachView(view: RosesMvvm.View, savedInstanceState: Bundle?) {
         super.attachView(view, savedInstanceState)
+        adapter.endOfPages = true
         rosesCacheManager.dataSubject
                 .doOnNext { if (!it.isEmpty()) refreshing = false }
                 .subscribe(adapter::addAllWithHeaders, Timber::e).addTo(disposable)

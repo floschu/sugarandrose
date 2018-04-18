@@ -11,6 +11,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
+import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.databinding.FragmentTextsearchBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -137,6 +138,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
     }
 
     private fun loadPage(query: String) = pagedPostLoadingManager.loadQueryPage(query)
+            .onErrorReturnItem(emptyList())
             .doOnSubscribe { adapter.loading = true }
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { adapter.endOfPages = it.isEmpty() }
