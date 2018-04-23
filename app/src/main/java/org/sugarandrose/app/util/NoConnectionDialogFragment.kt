@@ -74,8 +74,11 @@ class NoConnectionDialogFragment : DialogFragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     image.startAnimation(rotationAnimation)
-                    if (activity.isNetworkAvailable) dismiss()
-                }, Timber::e, { dialogRetryCallback?.invoke() })
+                    if (activity != null && activity.isNetworkAvailable) {
+                        dialogRetryCallback?.invoke()
+                        dismiss()
+                    }
+                }, Timber::e)
                 .let { disposable = it }
     }
 
