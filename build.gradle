@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlinVersion = '1.2.31'
+    ext.kotlinVersion = '1.2.40'
     ext.realmVersion = '5.0.0'
     ext.gradlePluginVersion = '3.1.1'
     ext.mockitoVersion = '2.16.0'
@@ -11,6 +11,7 @@ buildscript {
     ext.okHttpVersion = '3.10.0'
     ext.daggerVersion = '2.15'
     ext.paperParcelVersion = '2.0.4'
+    ext.firebaseVersion = '15.0.0'
 
     repositories {
         jcenter()

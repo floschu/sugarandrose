@@ -22,6 +22,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Build
+import android.support.annotation.ColorRes
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.squareup.picasso.Picasso
@@ -54,7 +56,7 @@ inline fun <reified T> Context.castWithUnwrap(): T? {
     return null
 }
 
-fun Context.loadWithPicasso(url: String?): Single<Bitmap> = Single.create { emitter: SingleEmitter<Bitmap> ->
+fun Context.rxPicasso(url: String?): Single<Bitmap> = Single.create { emitter: SingleEmitter<Bitmap> ->
     try {
         val bitmap = Picasso.with(this).load(url).get()
         emitter.onSuccess(bitmap)
@@ -111,3 +113,5 @@ fun Context.showKeyboard(inputView: View) {
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.showSoftInput(inputView, InputMethodManager.SHOW_IMPLICIT)
 }
+
+fun Context.getColorHex(@ColorRes colorInt: Int): String = String.format("#%06X", (0xFFFFFF and ContextCompat.getColor(this, colorInt)))

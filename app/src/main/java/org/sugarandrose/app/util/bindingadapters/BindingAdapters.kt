@@ -105,19 +105,22 @@ object BindingAdapters {
         viewPager.setPageTransformer(false, transformer)
     }
 
-
-    @BindingAdapter("openPhotoDetail")
+    @BindingAdapter("onClickPhotoDetail")
     @JvmStatic
-    fun setOpenPhotoDetail(view: ImageView, path: String?) {
-        if (path == null) return
-        view.setOnClickListener {
-            val intent = Intent(view.context, PhotoDetailActivity::class.java)
-            intent.putExtra(PhotoDetailActivity.EXTRA_IMG_URL_AND_TRANSITION_NAME, path)
+    fun setOnClickPhotoDetail(view: ImageView, path: String?) {
+        if (path == null || path.isEmpty()) view.setOnClickListener(null)
+        else view.setOnClickListener {
+            val intent = Intent(view.context, PhotoDetailActivity::class.java).apply {
+                putExtra(PhotoDetailActivity.EXTRA_IMG_URL_AND_TRANSITION_NAME, path)
+            }
             if (view.context is Activity) {
-                ActivityCompat.startActivity(view.context, intent,
+                ActivityCompat.startActivity(
+                        view.context,
+                        intent,
                         ActivityOptionsCompat.makeSceneTransitionAnimation(view.context as Activity, view, path).toBundle()
                 )
             } else view.context.startActivity(intent)
         }
     }
+
 }

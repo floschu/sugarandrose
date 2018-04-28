@@ -1,23 +1,32 @@
 package org.sugarandrose.app.util.extensions
 
 import android.app.Activity
-import android.content.Context
-import android.support.annotation.ColorRes
-import android.support.v4.content.ContextCompat
+import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
-import io.reactivex.Completable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import org.sugarandrose.app.ui.base.view.MvvmView
+import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
+import org.sugarandrose.app.ui.base.viewmodel.NoOpViewModel
 
 /**
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
 
-fun runOnMainThread(block: () -> Unit): Disposable = Completable.fromAction(block).subscribeOn(AndroidSchedulers.mainThread()).subscribe()
+//ViewModel
 
-fun Context.getColorHex(@ColorRes colorInt: Int): String = String.format("#%06X", (0xFFFFFF and ContextCompat.getColor(this, colorInt)))
+fun <V : MvvmView> MvvmViewModel<V>.attachViewOrThrowRuntimeException(view: MvvmView, savedInstanceState: Bundle?) {
+    try {
+        @Suppress("UNCHECKED_CAST")
+        this.attachView(view as V, savedInstanceState)
+    } catch (e: ClassCastException) {
+        if (this !is NoOpViewModel<*>) {
+            throw RuntimeException(javaClass.simpleName + " must implement MvvmView subclass as declared in " + this.javaClass.simpleName)
+        }
+    }
+}
 
+// Activity
 
 fun Activity.showSystemUi() {
     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -26,4 +35,12 @@ fun Activity.showSystemUi() {
 fun Activity.hideStatusBar() {
     window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
             View.SYSTEM_UI_FLAG_FULLSCREEN
+}
+
+//Bundle
+
+fun <T : Parcelable> Bundle.getParcelable(key: String, defaultObject: T): T = if (containsKey(key)) {
+    getParcelable(key)
+} else {
+    defaultObject
 }

@@ -14,7 +14,7 @@ import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import org.sugarandrose.app.util.extensions.loadWithPicasso
+import org.sugarandrose.app.util.extensions.rxPicasso
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -34,7 +34,7 @@ constructor(@ActivityContext private val context: Context, private val navigator
 
     fun sharePost(item: LocalPost): Completable {
         eventLogManager.logShare(item)
-        return if (item.image != null) context.loadWithPicasso(item.image)
+        return if (item.image != null) context.rxPicasso(item.image)
                 .flatMap(this::cacheBitmapForShare)
                 .flatMapCompletable { sharePostInternally(item.name, "${BuildConfig.WEB_PAGE}?${context.getString(R.string.deeplink_post_query)}=${item.id}", it) }
         else sharePostInternally(item.name, item.url)
@@ -61,7 +61,7 @@ constructor(@ActivityContext private val context: Context, private val navigator
 
     fun shareMedia(item: LocalMedia): Completable {
         eventLogManager.logShare(item)
-        return context.loadWithPicasso(item.image)
+        return context.rxPicasso(item.image)
                 .flatMap(this::cacheBitmapForShare)
                 .flatMapCompletable(this::shareMediaInternally)
     }
@@ -80,7 +80,7 @@ constructor(@ActivityContext private val context: Context, private val navigator
 
     fun shareRose(item: LocalRose): Completable {
         eventLogManager.logShare(item)
-        return context.loadWithPicasso(item.image)
+        return context.rxPicasso(item.image)
                 .flatMap(this::cacheBitmapForShare)
                 .flatMapCompletable(this::shareRoseInternally)
     }
