@@ -11,7 +11,6 @@ buildscript {
     ext.okHttpVersion = '3.10.0'
     ext.daggerVersion = '2.15'
     ext.paperParcelVersion = '2.0.4'
-    ext.firebaseVersion = '15.0.0'
 
     repositories {
         jcenter()
