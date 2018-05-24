@@ -51,8 +51,6 @@ interface AppComponentProvides {
     fun resources(): Resources
     fun refWatcher(): RefWatcher
 
-    fun encryptionKeyManager(): org.sugarandrose.app.data.local.encryption.EncryptionKeyManager
-
     fun realm(): Realm
     fun favoritedRepo(): FavoritedRepo
     fun prefRepo(): PrefRepo

@@ -37,7 +37,7 @@ import timber.log.Timber
         adapters = [(Adapter(RealmListPaperParcelTypeConverter::class))]
 )
 class SugarAndRoseApp : MultiDexApplication() {
-    private val CACHE_SIZE = (30 * 1024 * 1024).toLong() // 30 MB
+    private val CACHE_SIZE = (50 * 1024 * 1024).toLong() // 50 MB
 
     override fun onCreate() {
         super.onCreate()
@@ -45,12 +45,10 @@ class SugarAndRoseApp : MultiDexApplication() {
 
         Timber.plant(Timber.DebugTree())
 
-        SugarAndRoseApp.Companion.instance = this
-        SugarAndRoseApp.Companion.appComponent = DaggerAppComponent.builder()
+        SugarAndRoseApp.instance = this
+        SugarAndRoseApp.appComponent = DaggerAppComponent.builder()
                 .appModule(AppModule(this))
                 .build()
-
-        SugarAndRoseApp.Companion.appComponent.encryptionKeyManager().initEncryptedRealm()
 
         RxJavaPlugins.setErrorHandler({ Timber.e(it) })
         AndroidThreeTen.init(this)
@@ -79,9 +77,9 @@ class SugarAndRoseApp : MultiDexApplication() {
             private set
 
         val realm: Realm
-            get() = SugarAndRoseApp.Companion.appComponent.realm()
+            get() = SugarAndRoseApp.appComponent.realm()
 
         val res: Resources
-            get() = SugarAndRoseApp.Companion.instance.resources
+            get() = SugarAndRoseApp.instance.resources
     }
 }
