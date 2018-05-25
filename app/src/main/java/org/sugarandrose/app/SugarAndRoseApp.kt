@@ -33,9 +33,7 @@ import timber.log.Timber
  * See the License for the specific language governing permissions and
  * limitations under the License. */
 
-@ProcessorConfig(
-        adapters = [(Adapter(RealmListPaperParcelTypeConverter::class))]
-)
+@ProcessorConfig(adapters = [(Adapter(RealmListPaperParcelTypeConverter::class))])
 class SugarAndRoseApp : MultiDexApplication() {
     private val CACHE_SIZE = (50 * 1024 * 1024).toLong() // 50 MB
 
@@ -50,6 +48,7 @@ class SugarAndRoseApp : MultiDexApplication() {
                 .appModule(AppModule(this))
                 .build()
 
+        Realm.init(this)
         RxJavaPlugins.setErrorHandler({ Timber.e(it) })
         AndroidThreeTen.init(this)
         setupPicasso()

@@ -27,7 +27,7 @@ fun View.slideOut(millis: Long): Completable {
     this.startAnimation(fadeOut)
     return Single.timer(millis, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .toCompletable()
+            .ignoreElement()
             .doOnComplete {
                 this@slideOut.clearAnimation()
                 this@slideOut.visibility = View.INVISIBLE
@@ -43,7 +43,7 @@ fun View.slideIn(millis: Long): Completable {
     this.startAnimation(fadeIn)
     return Single.timer(millis, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
-            .toCompletable()
+            .ignoreElement()
             .doOnComplete {
                 this@slideIn.clearAnimation()
                 this@slideIn.visibility = View.VISIBLE

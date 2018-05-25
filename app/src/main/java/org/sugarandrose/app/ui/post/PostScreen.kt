@@ -140,7 +140,6 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
         binding.webview.webViewClient = AppWebViewClient()
         binding.webview.settings.javaScriptEnabled = true
         binding.webview.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING
-        binding.webview.setLayerType(View.LAYER_TYPE_HARDWARE, null)
     }
 
     override fun loadContent(content: String) = binding.webview.loadDataWithBaseURL("file:///android_asset", content, "text/html; charset=UTF-8", "UTF-8", "")
