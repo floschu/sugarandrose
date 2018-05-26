@@ -19,7 +19,7 @@
             style="@style/SubTitle.Accent"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/vertical_margin"
+            android:layout_marginTop="@dimen/margin"
             android:padding="@dimen/padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

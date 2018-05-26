@@ -48,11 +48,9 @@
                 app:htmlText="@{vm.category.name}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_default="wrap"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv"
                 tools:text="Title" />
-
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>

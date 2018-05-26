@@ -35,8 +35,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="3"
-                    android:paddingBottom="@dimen/vertical_padding"
-                    android:paddingTop="@dimen/vertical_padding"
+                    android:paddingBottom="@dimen/padding"
+                    android:paddingTop="@dimen/padding"
                     app:htmlText="@{vm.post.name}"
                     tools:text="Das ist ein langer Test für d die Toot für die Toolbar " />
             </android.support.v7.widget.Toolbar>
@@ -65,7 +65,7 @@
                     android:indeterminate="true"
                     app:invisibility="@{!vm.loading}" />
 
-                <org.sugarandrose.app.util.VideoEnabledWebView
+                <org.sugarandrose.app.util.videowebview.VideoEnabledWebView
                     android:id="@+id/webview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
@@ -96,8 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
-                android:paddingEnd="@dimen/card_horizontal_padding"
-                android:paddingStart="@dimen/card_horizontal_padding">
+                android:paddingEnd="@dimen/card_padding"
+                android:paddingStart="@dimen/card_padding">
 
                 <TextView
                     style="@style/SubTitle.White"

@@ -37,7 +37,7 @@
             style="@style/SubTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/horizontal_margin"
+            android:layout_marginStart="@dimen/margin"
             android:text="@{vm.item.text}"
             android:textColor="@color/textBlackSecondary"
             app:layout_constraintBottom_toBottomOf="parent"

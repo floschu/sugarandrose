@@ -43,9 +43,9 @@
                 style="@style/Text.Black.Secondary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/horizontal_margin"
-                android:layout_marginStart="@dimen/horizontal_margin"
-                android:layout_marginTop="@dimen/vertical_margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="@dimen/margin"
                 android:text="@{vm.post.formattedDate}"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_title"
@@ -59,9 +59,9 @@
                 style="@style/Title.Accent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/vertical_margin"
-                android:layout_marginEnd="@dimen/horizontal_margin"
-                android:layout_marginStart="@dimen/horizontal_margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
                 app:htmlText="@{vm.post.name}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_fav"
@@ -71,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/btn_share"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{vm::onShareClick}"
@@ -80,14 +80,12 @@
                 android:src="@drawable/ic_share"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_default="wrap"
-                app:layout_constraintTop_toBottomOf="@id/iv"
-                app:layout_constraintWidth_default="wrap" />
+                app:layout_constraintTop_toBottomOf="@id/iv" />
 
             <ImageView
                 android:id="@+id/btn_fav"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{vm::onFavoriteClick}"
@@ -95,22 +93,18 @@
                 android:src="@{vm.favorited ? @drawable/ic_bookmark : @drawable/ic_bookmark_border}"
                 android:tint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_share"
-                app:layout_constraintHeight_default="wrap"
+                app:layout_constraintEnd_toStartOf="@+id/btn_share"
                 app:layout_constraintTop_toBottomOf="@id/iv"
-                app:layout_constraintWidth_default="wrap"
                 tools:src="@drawable/ic_bookmark_border" />
 
             <ProgressBar
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:visibility="@{vm.loading}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_default="wrap"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_default="wrap" />
+                app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </layout>

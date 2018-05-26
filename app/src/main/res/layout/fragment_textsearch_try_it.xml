@@ -33,14 +33,12 @@
     <TextView
         android:id="@+id/tv_text"
         style="@style/Title.Accent"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/textsearch_try_it"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toEndOf="@id/iv_sad"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15"
-        app:layout_constraintWidth_default="wrap" />
+        app:layout_constraintVertical_bias="0.15" />
 </android.support.constraint.ConstraintLayout>

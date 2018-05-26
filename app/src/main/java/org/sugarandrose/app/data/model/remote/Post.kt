@@ -11,6 +11,6 @@ class Post(val id: Long,
            val date: ZonedDateTime,
            val title: DisplayText,
            val link: String,
-           val featured_media: Long,
+           val better_featured_image: FeaturedImage,
            val content: DisplayText?
 )

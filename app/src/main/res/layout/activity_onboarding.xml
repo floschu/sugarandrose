@@ -55,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/logo_color"
-                android:paddingEnd="@dimen/card_horizontal_padding"
-                android:paddingStart="@dimen/card_horizontal_padding">
+                android:paddingEnd="@dimen/card_padding"
+                android:paddingStart="@dimen/card_padding">
 
                 <TextView
                     style="@style/SubTitle.White"

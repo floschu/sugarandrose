@@ -4,9 +4,9 @@ import android.content.res.Resources
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.injection.scopes.PerActivity
-import org.sugarandrose.app.util.NoConnectionDialogFragment
+import org.sugarandrose.app.util.views.NoConnectionDialogFragment
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import org.sugarandrose.app.util.NetworkUnavailableException
+import org.sugarandrose.app.util.exceptions.NetworkUnavailableException
 import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException

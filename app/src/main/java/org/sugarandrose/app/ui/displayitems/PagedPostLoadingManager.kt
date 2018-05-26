@@ -45,10 +45,7 @@ class PagedPostLoadingManager {
                                 .map { it.response()?.body() }
                     }
                     .flattenAsFlowable { it }
-                    .flatMapSingle { post ->
-                        if (post.featured_media != 0L) api.getMedia(post.featured_media).map { LocalPost(post, it) }
-                        else Single.just(LocalPost(post))
-                    }
+                    .map(::LocalPost)
                     .toList()
                     .map { it.sortedByDescending { it.date } }
 }

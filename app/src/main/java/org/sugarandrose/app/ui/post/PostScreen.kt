@@ -4,14 +4,12 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.databinding.Bindable
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.webkit.*
 import android.webkit.WebView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +18,6 @@ import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalPost
-import org.sugarandrose.app.data.model.remote.Post
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.databinding.ActivityPostBinding
 import org.sugarandrose.app.injection.qualifier.ActivityContext
@@ -38,8 +35,7 @@ import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.WebManager
 import timber.log.Timber
 import javax.inject.Inject
-import org.sugarandrose.app.util.VideoEnabledWebChromeClient
-import org.sugarandrose.app.util.VideoEnabledWebView
+import org.sugarandrose.app.util.videowebview.VideoEnabledWebChromeClient
 import org.sugarandrose.app.util.extensions.*
 
 

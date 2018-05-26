@@ -34,9 +34,9 @@ public class ViewPagerBindingAdapter {
     @BindingAdapter(value = {"onPageChangeListener", "selectedPagePositionAttrChanged"}, requireAll = false)
     public static void setOnPageChangeListener(ViewPager viewPager, final ViewPager.OnPageChangeListener pageChangeListener, final InverseBindingListener attrChanged) {
         if (pageChangeListener == null && attrChanged == null) {
-            viewPager.setOnPageChangeListener(null);
+            viewPager.clearOnPageChangeListeners();
         } else {
-            viewPager.setOnPageChangeListener(new BindingOnPageChangedListener(pageChangeListener, attrChanged));
+            viewPager.addOnPageChangeListener(new BindingOnPageChangedListener(pageChangeListener, attrChanged));
         }
     }
 

@@ -56,8 +56,6 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        binding.recyclerViewCategories.layoutManager = GridLayoutManager(this, 2)
-
         binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
             val view = binding.scrollView.getChildAt(binding.scrollView.childCount - 1)
             val diff = view.bottom - (binding.scrollView.height + binding.scrollView.scrollY)

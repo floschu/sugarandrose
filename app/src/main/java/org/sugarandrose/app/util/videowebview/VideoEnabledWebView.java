@@ -1,4 +1,4 @@
-package org.sugarandrose.app.util;
+package org.sugarandrose.app.util.videowebview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

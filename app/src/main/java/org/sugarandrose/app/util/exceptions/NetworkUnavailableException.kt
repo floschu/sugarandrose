@@ -1,4 +1,4 @@
-package org.sugarandrose.app.util
+package org.sugarandrose.app.util.exceptions
 
 /**
  * Created by Florian Schuster

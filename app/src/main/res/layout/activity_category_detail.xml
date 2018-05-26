@@ -57,6 +57,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
+                    app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                    app:spanCount="2"
                     android:nestedScrollingEnabled="false"
                     android:paddingEnd="@dimen/card_margin_half"
                     android:paddingStart="@dimen/card_margin_half"

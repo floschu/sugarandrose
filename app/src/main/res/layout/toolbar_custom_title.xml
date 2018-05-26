@@ -27,7 +27,7 @@
             app:layout_collapseMode="parallax"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -36,24 +36,32 @@
                     android:id="@+id/tv_title"
                     style="@style/Title.Accent"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="0dp"
                     android:lines="1"
                     android:maxLines="1"
                     android:textSize="26sp"
+                    android:gravity="center_vertical"
                     app:htmlText="@{title}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_logo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/name" />
 
                 <ImageView
                     android:id="@+id/iv_logo"
                     android:layout_width="@dimen/normal_fab_size"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/horizontal_padding"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/padding"
                     android:padding="@dimen/padding"
                     android:src="@drawable/ic_logo"
                     android:transitionName="@string/logo_transition_name"
-                    android:visibility="@{displayLogo}" />
-            </LinearLayout>
+                    android:visibility="@{displayLogo}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_title"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 </layout>

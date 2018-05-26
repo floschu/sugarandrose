@@ -1,4 +1,4 @@
-package org.sugarandrose.app.util;
+package org.sugarandrose.app.util.videowebview;
 
 import android.media.MediaPlayer;
 import android.view.SurfaceView;

@@ -111,7 +111,7 @@
 
     <style name="TextWithIcon" parent="Text.Black">
         <item name="android:background">?attr/selectableItemBackground</item>
-        <item name="android:drawablePadding">@dimen/card_horizontal_padding</item>
+        <item name="android:drawablePadding">@dimen/card_padding</item>
         <item name="android:gravity">center_vertical</item>
     </style>
 

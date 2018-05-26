@@ -26,8 +26,7 @@ open class LocalPost(@PrimaryKey override var id: Long,
                      override var ANALYTICS_CATEGORY: String = "Post"
 ) : PaperParcelable, RealmObject(), LocalDisplayItem {
     constructor() : this(0, ZonedDateTime.now().toRealmString(), "", "", null, "", "")
-    constructor(post: Post, media: Media) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, media.source_url, post.content?.rendered)
-    constructor(post: Post) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, null, post.content?.rendered)
+    constructor(post: Post) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, post.better_featured_image.source_url, post.content?.rendered)
 
     companion object {
         @JvmField
