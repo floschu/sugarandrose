@@ -82,7 +82,6 @@ class CategoriesViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
             private val categoriesCacheManager: CategoriesCacheManager,
             private val errorManager: ErrorManager,
-            private val snacker: Snacker,
             private val tutorialManager: TutorialManager
 ) : BaseViewModel<CategoriesMvvm.View>(), CategoriesMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(true, BR.refreshing)
@@ -99,7 +98,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
         view?.let { tutorialManager.search(it.tutorialView) }
     }
 
-    private fun reloadData() = categoriesCacheManager.reloadData { errorManager.showError(it, snacker::show) }
+    private fun reloadData() = categoriesCacheManager.reloadData { errorManager.handleWithToast(it) }
 
     private fun fillAdapter(items: List<LocalCategory>) {
         if (items.isNotEmpty()) refreshing = false

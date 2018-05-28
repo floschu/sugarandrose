@@ -14,16 +14,14 @@ import org.sugarandrose.app.databinding.FragmentNewBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
-import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.PaginationScrollListener
+import org.sugarandrose.app.util.pagination.PaginationScrollListener
 import org.sugarandrose.app.util.manager.ErrorManager
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -55,7 +53,7 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.addOnScrollListener(object : PaginationScrollListener() {
+        binding.recyclerView.addOnScrollListener(object : PaginationScrollListener(7) {
             override fun loadMoreItems() = viewModel.loadNextPage()
             override fun isLoading() = viewModel.adapter.loading
         })
@@ -71,8 +69,7 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
 @PerFragment
 class NewViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val errorManager: ErrorManager,
-            private val snacker: Snacker
+            private val errorManager: ErrorManager
 ) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 
@@ -96,7 +93,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { adapter.endOfPages = it.isEmpty() }
-                .subscribe(adapter::add, { errorManager.showError(it, snacker::show, this::onRefresh) })
+                .subscribe(adapter::add, { errorManager.handleWithToast(it, this::onRefresh) })
                 .addTo(disposable)
     }
 }

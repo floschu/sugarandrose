@@ -1,19 +1,12 @@
 package org.sugarandrose.app.ui.displayitems
 
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.model.remote.Post
-import org.sugarandrose.app.data.remote.SugarAndRoseApi
-import org.sugarandrose.app.data.remote.TOTAL_PAGES_DEFAULT
-import org.sugarandrose.app.data.remote.TOTAL_PAGES_HEADER
-import org.sugarandrose.app.data.remote.parseMaxPages
-import org.sugarandrose.app.injection.scopes.PerFragment
+import retrofit2.HttpException
 import retrofit2.adapter.rxjava2.Result
-import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -23,29 +16,32 @@ import javax.inject.Inject
 class PagedPostLoadingManager {
     private val api = SugarAndRoseApp.appComponent.sugarAndRoseApi()
 
-    private var maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
-    private var currentPostsPage = 1
+    private var page = 1
+    private val perPage = 14
+    private var maximumNumberOfPostPages = perPage
 
     fun resetPages() {
-        currentPostsPage = 1
-        maximumNumberOfPostPages = TOTAL_PAGES_DEFAULT
+        page = 1
+        maximumNumberOfPostPages = perPage
     }
 
-    fun loadPostsPage() = loadPage(api.getPostsPage(currentPostsPage))
-    fun loadQueryPage(query: String) = loadPage(api.getPostsForQuery(query, currentPostsPage))
-    fun loadCategoryPage(category: LocalCategory) = loadPage(api.getPostsForCategory(category.id))
+    fun loadPostsPage() = loadPage(api.getPosts(page, perPage))
+    fun loadQueryPage(query: String) = loadPage(api.getPostsForQuery(query, page, perPage))
+    fun loadCategoryPage(category: LocalCategory) = loadPage(api.getPostsForCategory(category.id, perPage))
 
     private fun loadPage(loadingSingle: Single<Result<List<Post>>>): Single<List<LocalPost>> =
-            Single.just(currentPostsPage > maximumNumberOfPostPages)
+            Single.just(page > maximumNumberOfPostPages)
                     .flatMap {
                         if (it) Single.just(emptyList())
                         else loadingSingle
-                                .doOnSuccess { currentPostsPage++ }
-                                .doOnSuccess { maximumNumberOfPostPages = parseMaxPages(it) }
+                                .doOnSuccess { page++ }
+                                .doOnSuccess(::setMaxPages)
                                 .map { it.response()?.body() }
                     }
-                    .flattenAsFlowable { it }
-                    .map(::LocalPost)
-                    .toList()
-                    .map { it.sortedByDescending { it.date } }
+                    .map { it.map(::LocalPost) }
+
+    private fun <T> setMaxPages(result: Result<T>?) {
+        maximumNumberOfPostPages = result?.response()?.headers()?.values("X-WP-TotalPages")?.firstOrNull()?.toInt()
+                ?: perPage
+    }
 }

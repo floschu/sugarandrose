@@ -24,6 +24,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.ViewPager
 import android.support.v4.widget.SwipeRefreshLayout
+import android.support.v7.widget.RecyclerView
 import android.text.Html
 import android.view.View
 import android.webkit.WebView
@@ -36,6 +37,7 @@ import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.util.Utils
 import org.sugarandrose.app.util.extensions.fromRealmString
+import org.sugarandrose.app.util.pagination.RecyclerViewScrollCallback
 import org.threeten.bp.format.DateTimeFormatter
 
 
@@ -122,5 +124,20 @@ object BindingAdapters {
             } else view.context.startActivity(intent)
         }
     }
+
+    @BindingAdapter("visibleThreshold", "onScrolledToBottom", "resetLoadingState")
+    @JvmStatic
+    fun setRecyclerViewScrollCallback(recyclerView: RecyclerView, visibleThreshold: Int,
+                                      onScrolledListener: RecyclerViewScrollCallback.OnScrolledListener,
+                                      resetLoadingState: Boolean) {
+        val callback = RecyclerViewScrollCallback
+                .Builder(recyclerView.layoutManager)
+                .visibleThreshold(visibleThreshold)
+                .onScrolledListener(onScrolledListener)
+                .resetLoadingState(resetLoadingState)
+                .build()
+        recyclerView.addOnScrollListener(callback)
+    }
+
 
 }

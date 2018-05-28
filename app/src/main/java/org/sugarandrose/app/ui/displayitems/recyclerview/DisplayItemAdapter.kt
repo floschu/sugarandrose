@@ -30,8 +30,9 @@ open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     }
 
     fun add(items: List<LocalDisplayItem>) {
+        val oldSize = data.size
         data.addAll(items)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(oldSize + 1, items.count())
     }
 
     fun clear() {

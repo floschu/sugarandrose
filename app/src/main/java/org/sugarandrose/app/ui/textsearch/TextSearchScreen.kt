@@ -11,7 +11,6 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.databinding.FragmentTextsearchBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -24,11 +23,10 @@ import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.ui.search.SearchFragment
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.PaginationScrollListener
+import org.sugarandrose.app.util.pagination.PaginationScrollListener
 import org.sugarandrose.app.util.extensions.hideKeyboard
 import org.sugarandrose.app.util.extensions.showKeyboard
 import org.sugarandrose.app.util.manager.ErrorManager
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -74,7 +72,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerView.addOnScrollListener(object : PaginationScrollListener() {
+        binding.recyclerView.addOnScrollListener(object : PaginationScrollListener(7) {
             override fun loadMoreItems() = viewModel.loadNextPage()
             override fun isLoading() = viewModel.adapter.loading
         })
@@ -98,8 +96,7 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
 @PerFragment
 class TextSearchViewModel @Inject
 constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val errorManager: ErrorManager,
-            private val snacker: Snacker
+            private val errorManager: ErrorManager
 ) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
 
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
@@ -143,7 +140,7 @@ constructor(@FragmentDisposable private val disposable: CompositeDisposable,
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { adapter.endOfPages = it.isEmpty() }
             .doOnSuccess(adapter::add)
-            .doOnError { errorManager.showError(it, snacker::show, this::loadNextPage) }
+            .doOnError { errorManager.handleWithRetrySnack(it, this::loadNextPage) }
             .doOnEvent { _, _ ->
                 refreshing = false
                 adapter.loading = false

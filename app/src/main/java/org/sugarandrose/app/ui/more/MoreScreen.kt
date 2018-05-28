@@ -93,7 +93,6 @@ constructor(override val adapter: MoreAdapter,
             private val navigator: Navigator,
             private val moreCacheManager: MoreCacheManager,
             private val errorManager: ErrorManager,
-            private val snacker: Snacker,
             private val tutorialManager: TutorialManager,
             private val prefRepo: PrefRepo
 ) : BaseViewModel<MoreMvvm.View>(), MoreMvvm.ViewModel {
@@ -103,7 +102,7 @@ constructor(override val adapter: MoreAdapter,
         disposable.addAll(moreCacheManager.dataSubject.subscribe(this::fillAdapter, Timber::e), reloadData())
     }
 
-    private fun reloadData() = moreCacheManager.reloadData { errorManager.showError(it, snacker::show) }
+    private fun reloadData() = moreCacheManager.reloadData { errorManager.handleWithToast(it) }
 
     private fun fillAdapter(morePages: List<LocalMorePage>) {
         val moreData = ArrayList<Pair<Int, LocalMore>>()

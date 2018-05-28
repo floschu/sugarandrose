@@ -79,8 +79,7 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
 @PerActivity
 class CategoryDetailViewModel @Inject
 constructor(@ActivityDisposable private val disposable: CompositeDisposable,
-            private val errorManager: ErrorManager,
-            private val snacker: Snacker
+            private val errorManager: ErrorManager
 ) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
 
     override val adapterCategories: CategoriesAdapter = CategoriesAdapter()
@@ -100,7 +99,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
                 .doOnEvent { _, _ -> adapterItems.loading = false }
                 .doOnSuccess { adapterItems.endOfPages = it.isEmpty() }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(adapterItems::add, { errorManager.showError(it, snacker::show) })
+                .subscribe(adapterItems::add, { errorManager.handleWithToast(it) })
                 .addTo(disposable)
     }
 }

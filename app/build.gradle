@@ -110,6 +110,7 @@ dependencies {
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.17'
     implementation 'com.github.deano2390:MaterialShowcaseView:1.2.0'
 
+
     //network
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"

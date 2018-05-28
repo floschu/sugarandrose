@@ -191,7 +191,6 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
             private val webManager: WebManager,
             private val navigator: Navigator,
             private val errorManager: ErrorManager,
-            private val snacker: Snacker,
             private val toaster: Toaster,
             @ActivityContext context: Context
 ) : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
@@ -257,7 +256,7 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
                 .doOnSubscribe { loading = true }
                 .map(::LocalPost)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPostSuccess, { errorManager.showError(it, snacker::show, { init(id) }) })
+                .subscribe(this::onPostSuccess, { errorManager.handleWithRetrySnack(it) { init(id) } })
                 .addTo(disposable)
     }
 
