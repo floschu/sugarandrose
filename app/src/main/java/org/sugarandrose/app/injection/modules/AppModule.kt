@@ -8,6 +8,7 @@ import com.squareup.leakcanary.RefWatcher
 import dagger.Module
 import dagger.Provides
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.ui.base.feedback.ApplicationToaster
@@ -32,6 +33,7 @@ import org.sugarandrose.app.ui.base.feedback.Toaster
  * FILE MODIFIED 2017 Tailored Media GmbH */
 @Module
 class AppModule(private val app: Application) {
+    private val realmVersion: Long = 1
 
     @Provides
     @PerApplication
@@ -48,7 +50,13 @@ class AppModule(private val app: Application) {
     internal fun provideRefWatcher(): RefWatcher = LeakCanary.install(app)
 
     @Provides
-    internal fun provideRealm(): Realm = Realm.getDefaultInstance()
+    internal fun provideRealm(): Realm {
+        val config = RealmConfiguration.Builder().apply {
+            schemaVersion(realmVersion)
+            deleteRealmIfMigrationNeeded()
+        }.build()
+        return Realm.getInstance(config)
+    }
 
 
     @Provides
