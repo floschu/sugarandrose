@@ -33,6 +33,7 @@ import org.sugarandrose.app.ui.base.feedback.Toaster
  * FILE MODIFIED 2017 Tailored Media GmbH */
 @Module
 class AppModule(private val app: Application) {
+    private val realmFileName = "sugarandrose"
     private val realmVersion: Long = 1
 
     @Provides
@@ -52,6 +53,7 @@ class AppModule(private val app: Application) {
     @Provides
     internal fun provideRealm(): Realm {
         val config = RealmConfiguration.Builder().apply {
+            name(realmFileName)
             schemaVersion(realmVersion)
             deleteRealmIfMigrationNeeded()
         }.build()
