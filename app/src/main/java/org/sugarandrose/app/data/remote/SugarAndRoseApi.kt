@@ -14,7 +14,7 @@ interface SugarAndRoseApi {
     fun getPost(@Path("id") id: Long): Single<Post>
 
     @GET("posts/?fields=id,title,date,link,better_featured_image.source_url&?order=desc&?orderby=date_gmt")
-    fun getPosts(@Query("page") page: Int = 1, @Query("per_page") perPage: Int = 10): Single<Result<List<Post>>>
+    fun getPosts(@Query("page") page: Int, @Query("per_page") perPage: Int): Single<Result<List<Post>>>
 
     @GET("posts/?fields=id")
     fun getPostsFromDeepLink(@Query("search") query: String): Single<List<Post>>
@@ -23,7 +23,7 @@ interface SugarAndRoseApi {
 
     //Query
     @GET("posts/?fields=id,title,date,link,better_featured_image.source_url&?order=desc&?orderby=date_gmt")
-    fun getPostsForQuery(@Query("search") query: String, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 10): Single<Result<List<Post>>>
+    fun getPostsForQuery(@Query("search") query: String, @Query("page") page: Int, @Query("per_page") perPage: Int): Single<Result<List<Post>>>
 
 
 
@@ -32,7 +32,7 @@ interface SugarAndRoseApi {
     fun getCategories(): Single<List<Category>>
 
     @GET("posts/?fields=id,title,date,link,better_featured_image.source_url&?order=desc&?orderby=date_gmt")
-    fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int = 1, @Query("per_page") perPage: Int = 10): Single<Result<List<Post>>>
+    fun getPostsForCategory(@Query("categories") id: Int, @Query("page") page: Int, @Query("per_page") perPage: Int): Single<Result<List<Post>>>
 
 
 

@@ -18,7 +18,7 @@ class PagedPostLoadingManager {
 
     private var page = 1
     private val perPage = 14
-    private var maximumNumberOfPostPages = perPage
+    private var maximumNumberOfPostPages = 1
 
     fun resetPages() {
         page = 1
@@ -27,7 +27,7 @@ class PagedPostLoadingManager {
 
     fun loadPostsPage() = loadPage(api.getPosts(page, perPage))
     fun loadQueryPage(query: String) = loadPage(api.getPostsForQuery(query, page, perPage))
-    fun loadCategoryPage(category: LocalCategory) = loadPage(api.getPostsForCategory(category.id, perPage))
+    fun loadCategoryPage(category: LocalCategory) = loadPage(api.getPostsForCategory(category.id, page, perPage))
 
     private fun loadPage(loadingSingle: Single<Result<List<Post>>>): Single<List<LocalPost>> =
             Single.just(page > maximumNumberOfPostPages)
@@ -41,7 +41,6 @@ class PagedPostLoadingManager {
                     .map { it.map(::LocalPost) }
 
     private fun <T> setMaxPages(result: Result<T>?) {
-        maximumNumberOfPostPages = result?.response()?.headers()?.values("X-WP-TotalPages")?.firstOrNull()?.toInt()
-                ?: perPage
+        result?.response()?.headers()?.values("X-WP-TotalPages")?.firstOrNull()?.toInt()?.let { maximumNumberOfPostPages = it }
     }
 }

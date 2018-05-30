@@ -1,7 +1,6 @@
 package org.sugarandrose.app.ui.categories.detail
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -12,7 +11,6 @@ import org.sugarandrose.app.databinding.ActivityCategoryDetailBinding
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
-import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
@@ -97,7 +95,10 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
         pagedPostLoadingManager.loadCategoryPage(category)
                 .doOnSubscribe { adapterItems.loading = true }
                 .doOnEvent { _, _ -> adapterItems.loading = false }
-                .doOnSuccess { adapterItems.endOfPages = it.isEmpty() }
+                .doOnSuccess {
+                    adapterItems.endOfPages = it.isEmpty()
+                    adapterItems.displayFirstLoading = false
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(adapterItems::add, { errorManager.handleWithToast(it) })
                 .addTo(disposable)

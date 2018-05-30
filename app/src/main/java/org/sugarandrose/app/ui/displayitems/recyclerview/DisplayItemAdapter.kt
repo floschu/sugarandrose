@@ -57,7 +57,9 @@ open class DisplayItemAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                     else -> TYPE_MEDIA
                 }
 
-    override fun getItemCount() = if (data.isEmpty() && !displayFirstLoading) 0 else data.size + 1
+    override fun getItemCount() = if (data.isEmpty() && !displayFirstLoading) 0
+    else if (!loading) data.size
+    else data.size + 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = when (viewType) {
         TYPE_POST -> Utils.createViewHolder(parent, R.layout.item_post, ::PostItemViewHolder)
