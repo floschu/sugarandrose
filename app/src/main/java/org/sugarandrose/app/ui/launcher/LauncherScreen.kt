@@ -37,17 +37,21 @@ interface LauncherMvvm {
 }
 
 class LauncherActivity : BaseActivity<ActivityLauncherBinding, LauncherMvvm.ViewModel>(), LauncherMvvm.View {
+    companion object {
+        const val logoTransitionName = "logo_transition_name"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setAndBindContentView(savedInstanceState, layout)
 
+        binding.ivLogo.transitionName = logoTransitionName
         viewModel.init()
     }
 
     override fun startTransition(onboadingDone: Boolean) {
         val image = findViewById<ImageView>(R.id.iv_logo)
-        val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(this, image, ViewCompat.getTransitionName(image))
+        val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(this, image, logoTransitionName)
 
         val intent =
                 if (onboadingDone) Intent(this, MainActivity::class.java)

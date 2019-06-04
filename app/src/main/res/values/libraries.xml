@@ -53,25 +53,6 @@
     <!-- License section -->
     <string name="library_threetenabp_licenseId" translatable="false">apache_2_0</string>
 
-
-    <string name="define_int_paperparcel" translatable="false"></string>
-    <!-- Author section -->
-    <string name="library_paperparcel_author" translatable="false">Bradley Campbell</string>
-    <string name="library_paperparcel_authorWebsite" translatable="false"></string>
-    <!-- Library section -->
-    <string name="library_paperparcel_libraryName" translatable="false">PaperParcel</string>
-    <string name="library_paperparcel_libraryDescription" translatable="false">Auto-generate the fastest possible Parcelable implementations for Java and Kotlin.</string>
-    <string name="library_paperparcel_libraryWebsite" translatable="false">https://github.com/grandstaish/paperparcel</string>
-    <string name="library_paperparcel_libraryVersion" translatable="false">2.0.1</string>
-    <!-- OpenSource section -->
-    <string name="library_paperparcel_isOpenSource" translatable="false">true</string>
-    <string name="library_paperparcel_repositoryLink" translatable="false">https://github.com/grandstaish/paperparcel</string>
-    <!-- ClassPath for autoDetect section -->
-    <string name="library_paperparcel_classPath" translatable="false"></string>
-    <!-- License section -->
-    <string name="library_paperparcel_licenseId" translatable="false">apache_2_0</string>
-
-
     <string name="define_int_showcase" translatable="false"></string>
     <!-- Author section -->
     <string name="library_showcase_author" translatable="false">Dean Wild</string>

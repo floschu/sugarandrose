@@ -20,6 +20,7 @@ import org.sugarandrose.app.ui.roses.RosesCacheManager
 import org.sugarandrose.app.util.manager.WebManager
 import javax.inject.Inject
 import org.sugarandrose.app.ui.base.BaseFragment
+import org.sugarandrose.app.ui.launcher.LauncherActivity
 
 const val PUSH_POST_ID_INTENT = "org.sugarandrose.app.ui.main.MainActivity.post_id_intent"
 
@@ -38,7 +39,8 @@ interface MainMvvm {
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), MainMvvm.View {
     private lateinit var adapter: MainAdapter
-    @Inject lateinit var rosesCacheManager: RosesCacheManager
+    @Inject
+    lateinit var rosesCacheManager: RosesCacheManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

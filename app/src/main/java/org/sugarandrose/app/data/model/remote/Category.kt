@@ -1,15 +1,15 @@
 package org.sugarandrose.app.data.model.remote
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import paperparcel.PaperParcel
-import paperparcel.PaperParcelable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
 
-@PaperParcel
+@Parcelize
 class Category(var id: Int,
                var name: String,
                @SerializedName("description")
@@ -17,11 +17,6 @@ class Category(var id: Int,
                var link: String,
                var count: Int,
                var parent: Int
-) : PaperParcelable {
-    companion object {
-        @JvmField
-        val CREATOR = PaperParcelCategory.CREATOR
-    }
-
+) : Parcelable {
     constructor() : this(0, "", "", "", 0, 0)
 }

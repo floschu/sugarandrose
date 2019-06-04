@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.firebase-crash'
 apply plugin: 'com.google.firebase.firebase-perf'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android-extensions'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -13,18 +13,6 @@ def keystoreProperties = new Properties()
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
-    signingConfigs {
-        if (keystorePropertiesFile.exists()) {
-            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-            release {
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
-            }
-        }
-
-    }
     defaultConfig {
         applicationId "org.sugarandrose.app"
         minSdkVersion 21
@@ -50,6 +38,19 @@ android {
         buildConfigField "String", "PRIVACY", "\"https://sugarandrose.org/kontakt/datenschutzerklaerung/\""
 
     }
+
+    signingConfigs {
+        if (keystorePropertiesFile.exists()) {
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+    }
+
     buildTypes {
         release {
             if (keystorePropertiesFile.exists()) {
@@ -92,9 +93,12 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
-    //local
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     //ui
     implementation "com.android.support:support-fragment:$supportLibVersion"
@@ -104,10 +108,10 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:customtabs:$supportLibVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     kapt "com.android.databinding:compiler:$gradlePluginVersion"
     implementation 'com.patloew.navigationviewfragmentadapters:adapters:0.3.0'
-    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.17'
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.20'
     implementation 'com.github.deano2390:MaterialShowcaseView:1.2.0'
 
 
@@ -117,17 +121,17 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
-    implementation 'com.google.code.gson:gson:2.8.2'
-    implementation 'org.jsoup:jsoup:1.11.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.jsoup:jsoup:1.12.1'
 
     //di
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
 
     //rx
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.13'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
     //realm
@@ -137,7 +141,7 @@ dependencies {
     //image
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
-    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.9.0'
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     //firebase
     implementation 'com.google.firebase:firebase-crash:15.0.2'
@@ -148,19 +152,14 @@ dependencies {
     }
 
     //util
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "nz.bradcampbell:paperparcel:$paperParcelVersion"
-    implementation "nz.bradcampbell:paperparcel-kotlin:$paperParcelVersion"
-    kapt "nz.bradcampbell:paperparcel-compiler:$paperParcelVersion"
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    implementation 'com.jakewharton.timber:timber:4.7.0'
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
     implementation('com.mikepenz:aboutlibraries:5.9.1@aar') {
         transitive = true
     }
     implementation 'com.android.support:multidex:1.0.3'
 }
-
 
 apply plugin: 'com.google.gms.google-services'

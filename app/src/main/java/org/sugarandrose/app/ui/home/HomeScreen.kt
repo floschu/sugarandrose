@@ -15,6 +15,7 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.home.viewpager.HomePagerAdapter
+import org.sugarandrose.app.ui.launcher.LauncherActivity
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import javax.inject.Inject
 
@@ -48,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeMvvm.ViewModel>(), Ho
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tabLayout.setupWithViewPager(binding.viewPager)
-
+        binding.includeToolbar.ivLogo.transitionName = LauncherActivity.logoTransitionName
         activity?.supportStartPostponedEnterTransition()
     }
 

@@ -112,24 +112,24 @@ constructor(override val adapter: MoreAdapter,
         else moreCacheManager.MORE_PAGES.forEach { moreData.add(Pair(MoreAdapter.TYPE_ITEM_GRID, LocalMorePage())) }
 
         moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_social)))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_facebook, R.string.more_facebook, {
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_facebook, R.string.more_facebook) {
             socialMediaManager.openFacebook(BuildConfig.FB_NAME, BuildConfig.FB_ID)
-        })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_instagram, R.string.more_instagram, {
+        }))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_instagram, R.string.more_instagram) {
             socialMediaManager.openInstagram(BuildConfig.INSTAGRAM_NAME)
-        })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_pinterest, R.string.more_pinterest, {
+        }))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_pinterest, R.string.more_pinterest) {
             socialMediaManager.openPinterest(BuildConfig.PINTEREST_NAME)
-        })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_twitter, R.string.more_twitter, {
+        }))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_twitter, R.string.more_twitter) {
             socialMediaManager.openTwitter(BuildConfig.TWITTER_NAME, BuildConfig.TWITTER_ID)
-        })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact, {
+        }))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_mail_outline, R.string.more_contact) {
             navigator.startActivity(Utils.mail(BuildConfig.EMAIL))
-        })))
+        }))
 
         moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_info)))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_info_outline, R.string.more_app_info, {
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_info_outline, R.string.more_app_info) {
             LibsBuilder().apply {
                 withFields(*Libs.toStringArray(R.string::class.java.fields))
                 withVersionShown(false)
@@ -142,30 +142,30 @@ constructor(override val adapter: MoreAdapter,
                 withActivityStyle(Libs.ActivityStyle.LIGHT)
                 withAboutDescription(context.getString(R.string.more_dev_info))
                 withLibraries(
-                        "Dagger2", "LeakCanary", "OkHttp", "Retrofit", "Timber", "gson", "rxjava",
-                        "rxAndroid", "Realm", "tailoredappsandroidtemplate", "showcase",
-                        "SupportLibrary", "Picasso", "sssimageview", "paperparcel"
+                    "Dagger2", "LeakCanary", "OkHttp", "Retrofit", "Timber", "gson", "rxjava",
+                    "rxAndroid", "Realm", "tailoredappsandroidtemplate", "showcase",
+                    "SupportLibrary", "Picasso", "sssimageview"
                 )
             }.start(context)
-        })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_masthead, {
+        }))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_account_circle, R.string.more_masthead) {
             webManager.open(BuildConfig.MASTHEAD)
-        })))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_lock_open, R.string.more_privacy, {
+        }))
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_lock_open, R.string.more_privacy) {
             webManager.open(BuildConfig.PRIVACY)
-        })))
+        }))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_share, R.string.more_share_app, context::shareApp)))
 
         moreData.add(Pair(MoreAdapter.TYPE_HEADER, LocalMoreHeader(R.string.more_settings)))
         moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_notifications_none, R.string.more_notifications, context::openNotificationSettings)))
-        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_delete_forever, R.string.more_delete_data, {
+        moreData.add(Pair(MoreAdapter.TYPE_ITEM, LocalMoreItem(R.drawable.ic_delete_forever, R.string.more_delete_data) {
             context.areYouSureDialog {
                 favoritedRepo.clearData()
                 tutorialManager.resetTutorials()
                 prefRepo.onboardingDone = false
                 view?.finishApp()
             }
-        })))
+        }))
 
         adapter.data = moreData
     }

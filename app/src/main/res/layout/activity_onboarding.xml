@@ -23,7 +23,6 @@
             android:layout_margin="@dimen/margin"
             android:layout_weight="3"
             android:src="@drawable/ic_logo"
-            android:transitionName="@string/logo_transition_name"
             tools:ignore="NestedWeights" />
 
         <TextView

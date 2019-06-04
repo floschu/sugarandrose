@@ -11,7 +11,7 @@ import org.sugarandrose.app.data.model.LocalDisplayItem
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
-class FastScrollDisplayItemAdapter : DisplayItemAdapter(), FastScrollRecyclerView.SectionedAdapter, FastScrollRecyclerView.MeasurableAdapter {
+class FastScrollDisplayItemAdapter : DisplayItemAdapter(), FastScrollRecyclerView.SectionedAdapter, FastScrollRecyclerView.MeasurableAdapter<RecyclerView.ViewHolder> {
     override fun getSectionName(position: Int): String = data[if (position == 0) 0 else position - 1].name[0].toString()
 
     fun addAllWithHeaders(items: List<LocalDisplayItem>) {
@@ -25,7 +25,7 @@ class FastScrollDisplayItemAdapter : DisplayItemAdapter(), FastScrollRecyclerVie
         super.add(result)
     }
 
-    override fun getViewTypeHeight(recyclerView: RecyclerView?, viewType: Int): Int {
+    override fun getViewTypeHeight(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, viewType: Int): Int {
         val resources = SugarAndRoseApp.appComponent.resources()
         return when (viewType) {
             TYPE_POST -> (2 * resources.getDimensionPixelSize(R.dimen.card_margin_half)) + ((9 * resources.displayMetrics.widthPixels) / 16) + (2 * resources.getDimensionPixelSize(R.dimen.margin)) + resources.getDimensionPixelSize(R.dimen.title_one_line)

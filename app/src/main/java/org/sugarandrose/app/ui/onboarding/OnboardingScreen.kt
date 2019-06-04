@@ -14,6 +14,7 @@ import org.sugarandrose.app.ui.base.BaseActivity
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
+import org.sugarandrose.app.ui.launcher.LauncherActivity
 import org.sugarandrose.app.ui.main.MainActivity
 
 private const val layout: Int = R.layout.activity_onboarding
@@ -36,7 +37,8 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding, OnboardingMvv
 
     override fun startTransition() {
         val image = findViewById<ImageView>(R.id.iv_logo)
-        val transition = ActivityOptionsCompat.makeSceneTransitionAnimation(this, image, ViewCompat.getTransitionName(image))
+        val transition = ActivityOptionsCompat
+            .makeSceneTransitionAnimation(this, image, LauncherActivity.logoTransitionName)
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent, transition.toBundle())

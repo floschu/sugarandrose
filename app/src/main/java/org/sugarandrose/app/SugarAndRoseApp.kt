@@ -13,9 +13,6 @@ import okhttp3.Cache
 import org.sugarandrose.app.injection.components.AppComponent
 import org.sugarandrose.app.injection.components.DaggerAppComponent
 import org.sugarandrose.app.injection.modules.AppModule
-import org.sugarandrose.app.util.RealmListPaperParcelTypeConverter
-import paperparcel.Adapter
-import paperparcel.ProcessorConfig
 import timber.log.Timber
 
 
@@ -33,7 +30,6 @@ import timber.log.Timber
  * See the License for the specific language governing permissions and
  * limitations under the License. */
 
-@ProcessorConfig(adapters = [(Adapter(RealmListPaperParcelTypeConverter::class))])
 class SugarAndRoseApp : MultiDexApplication() {
     private val CACHE_SIZE = (50 * 1024 * 1024).toLong() // 50 MB
 

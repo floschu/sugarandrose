@@ -1,22 +1,21 @@
 package org.sugarandrose.app.data.model
 
+import android.os.Parcelable
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import org.sugarandrose.app.data.model.remote.Media
+import kotlinx.android.parcel.Parcelize
 import org.sugarandrose.app.data.model.remote.Post
 import org.sugarandrose.app.util.extensions.fromRealmString
 import org.sugarandrose.app.util.extensions.toRealmString
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
-import paperparcel.PaperParcel
-import paperparcel.PaperParcelable
 
 /**
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
 
-@PaperParcel
+@Parcelize
 open class LocalPost(@PrimaryKey override var id: Long,
                      override var date: String,
                      override var name: String,
@@ -24,14 +23,9 @@ open class LocalPost(@PrimaryKey override var id: Long,
                      var image: String?,
                      var content: String?,
                      override var ANALYTICS_CATEGORY: String = "Post"
-) : PaperParcelable, RealmObject(), LocalDisplayItem {
+) : Parcelable, RealmObject(), LocalDisplayItem {
     constructor() : this(0, ZonedDateTime.now().toRealmString(), "", "", null, "", "")
     constructor(post: Post) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, post.better_featured_image.source_url, post.content?.rendered)
-
-    companion object {
-        @JvmField
-        val CREATOR = PaperParcelLocalPost.CREATOR
-    }
 
     fun getFormattedDate(): String = date.fromRealmString().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 }
