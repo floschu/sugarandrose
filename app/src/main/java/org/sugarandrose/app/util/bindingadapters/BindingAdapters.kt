@@ -40,7 +40,6 @@ import org.sugarandrose.app.util.extensions.fromRealmString
 import org.sugarandrose.app.util.pagination.RecyclerViewScrollCallback
 import org.threeten.bp.format.DateTimeFormatter
 
-
 @BindingMethods(BindingMethod(type = SwipeRefreshLayout::class, attribute = "onRefresh", method = "setOnRefreshListener"))
 object BindingAdapters {
 
@@ -117,9 +116,9 @@ object BindingAdapters {
             }
             if (view.context is Activity) {
                 ActivityCompat.startActivity(
-                        view.context,
-                        intent,
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(view.context as Activity, view, path).toBundle()
+                    view.context,
+                    intent,
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(view.context as Activity, view, path).toBundle()
                 )
             } else view.context.startActivity(intent)
         }
@@ -127,17 +126,18 @@ object BindingAdapters {
 
     @BindingAdapter("visibleThreshold", "onScrolledToBottom", "resetLoadingState")
     @JvmStatic
-    fun setRecyclerViewScrollCallback(recyclerView: RecyclerView, visibleThreshold: Int,
-                                      onScrolledListener: RecyclerViewScrollCallback.OnScrolledListener,
-                                      resetLoadingState: Boolean) {
+    fun setRecyclerViewScrollCallback(
+        recyclerView: RecyclerView, visibleThreshold: Int,
+        onScrolledListener: RecyclerViewScrollCallback.OnScrolledListener,
+        resetLoadingState: Boolean
+    ) {
+        val layoutManager = recyclerView.layoutManager ?: return
         val callback = RecyclerViewScrollCallback
-                .Builder(recyclerView.layoutManager)
-                .visibleThreshold(visibleThreshold)
-                .onScrolledListener(onScrolledListener)
-                .resetLoadingState(resetLoadingState)
-                .build()
+            .Builder(layoutManager)
+            .visibleThreshold(visibleThreshold)
+            .onScrolledListener(onScrolledListener)
+            .resetLoadingState(resetLoadingState)
+            .build()
         recyclerView.addOnScrollListener(callback)
     }
-
-
 }

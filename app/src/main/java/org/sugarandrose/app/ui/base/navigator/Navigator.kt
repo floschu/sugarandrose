@@ -1,10 +1,10 @@
 package org.sugarandrose.app.ui.base.navigator
 
 import android.app.Activity
-import android.app.DialogFragment
 import android.content.Intent
 import android.net.Uri
 import android.support.annotation.IdRes
+import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 
 /* Copyright 2016 Patrick Löwenstein

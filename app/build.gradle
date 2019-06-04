@@ -1,22 +1,21 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.firebase.firebase-crash'
-apply plugin: 'com.google.firebase.firebase-perf'
-apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'realm-android'
+apply plugin: 'io.fabric'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "org.sugarandrose.app"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 25
         versionName "1.0.1"
         vectorDrawables.useSupportLibrary = true
@@ -36,7 +35,6 @@ android {
         buildConfigField "String", "EMAIL", "\"sugarandrosen@gmail.com\""
         buildConfigField "String", "MASTHEAD", "\"https://sugarandrose.org/kontakt/impressum/\""
         buildConfigField "String", "PRIVACY", "\"https://sugarandrose.org/kontakt/datenschutzerklaerung/\""
-
     }
 
     signingConfigs {
@@ -108,11 +106,13 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:customtabs:$supportLibVersion"
+
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     kapt "com.android.databinding:compiler:$gradlePluginVersion"
+
     implementation 'com.patloew.navigationviewfragmentadapters:adapters:0.3.0'
     implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.20'
-    implementation 'com.github.deano2390:MaterialShowcaseView:1.2.0'
+    implementation 'com.github.deano2390:MaterialShowcaseView:1.3.4'
 
 
     //network
@@ -144,9 +144,10 @@ dependencies {
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
     //firebase
-    implementation 'com.google.firebase:firebase-crash:15.0.2'
-    implementation 'com.google.firebase:firebase-messaging:15.0.2'
-    implementation 'com.google.firebase:firebase-perf:15.2.0'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-perf:17.0.2'
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
         transitive = true
     }

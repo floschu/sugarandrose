@@ -48,7 +48,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
         supportPostponeEnterTransition()
         setAndBindContentView(savedInstanceState, R.layout.activity_main)
 
-        MainAdapter.disableShiftMode(binding.bottomNavigationView)
         adapter = MainAdapter(supportFragmentManager, R.id.container, R.id.bnv_new, savedInstanceState).apply {
             setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
             attachTo(binding.bottomNavigationView)
@@ -107,7 +106,7 @@ constructor(private val navigator: Navigator,
     override fun parseIntentUri(uri: Uri) {
         when {
             uri.lastPathSegment != null && uri.lastPathSegment == resources.getString(R.string.deeplink_roses) -> view?.setSelectedBnvTab(R.id.bnv_new, 1)
-            uri.query != null && uri.query.contains(resources.getString(R.string.deeplink_post_query)) -> openPost(uri.query.removePrefix("${resources.getString(R.string.deeplink_post_query)}=").toLong())
+            uri.query != null && uri.query!!.contains(resources.getString(R.string.deeplink_post_query)) -> openPost(uri.query!!.removePrefix("${resources.getString(R.string.deeplink_post_query)}=").toLong())
 //           uri.path != null && uri.path.contains(postRegex) -> navigator.startActivity(PostActivity::class.java, { putExtra(Navigator.EXTRA_ARG, uri.path) }) todo get id from url
             else -> webManager.open(uri)
         }

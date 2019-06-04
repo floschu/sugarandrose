@@ -12,7 +12,7 @@ import timber.log.Timber
  * florian.schuster@tailored-apps.com
  */
 
-class SARFBMessagingService : FirebaseMessagingService() {
+class FBMService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Timber.d("Firebase Message received: ${remoteMessage.data}")

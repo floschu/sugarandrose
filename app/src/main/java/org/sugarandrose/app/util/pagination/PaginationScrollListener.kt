@@ -8,11 +8,14 @@ import android.support.v7.widget.RecyclerView
  * florian.schuster@tailored-apps.com
  */
 
-abstract class PaginationScrollListener(private val visibleThreshold: Int) : RecyclerView.OnScrollListener() {
+abstract class PaginationScrollListener(
+    private val visibleThreshold: Int
+) : RecyclerView.OnScrollListener() {
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-        val totalItemCount = recyclerView.layoutManager.itemCount
+        val layoutManager = recyclerView.layoutManager ?: return
+        val lastVisibleItemPosition = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+        val totalItemCount = layoutManager.itemCount
 
         if (!isLoading() && (lastVisibleItemPosition + visibleThreshold > totalItemCount)) loadMoreItems()
     }

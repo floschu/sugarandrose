@@ -1,10 +1,10 @@
 package org.sugarandrose.app.ui.base.navigator
 
 import android.app.Activity
-import android.app.DialogFragment
 import android.content.Intent
 import android.net.Uri
 import android.support.annotation.IdRes
+import android.support.v4.app.DialogFragment
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
@@ -91,7 +91,7 @@ open class ActivityNavigator(protected val activity: FragmentActivity) : Navigat
     }
 
     override fun <T : DialogFragment> showDialogFragment(dialog: T, fragmentTag: String) {
-        dialog.show(activity.fragmentManager, fragmentTag)
+        dialog.show(activity.supportFragmentManager, fragmentTag)
     }
 
     override fun popFragmentBackStackImmediate() {
