@@ -25,8 +25,8 @@ class FastScrollDisplayItemAdapter : DisplayItemAdapter(), FastScrollRecyclerVie
         super.add(result)
     }
 
-    override fun getViewTypeHeight(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, viewType: Int): Int {
-        val resources = SugarAndRoseApp.appComponent.resources()
+    override fun getViewTypeHeight(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder?, viewType: Int): Int {
+        val resources = recyclerView.resources
         return when (viewType) {
             TYPE_POST -> (2 * resources.getDimensionPixelSize(R.dimen.card_margin_half)) + ((9 * resources.displayMetrics.widthPixels) / 16) + (2 * resources.getDimensionPixelSize(R.dimen.margin)) + resources.getDimensionPixelSize(R.dimen.title_one_line)
             TYPE_ROSE -> (2 * resources.getDimensionPixelSize(R.dimen.card_margin_half)) + resources.displayMetrics.widthPixels + (2 * resources.getDimensionPixelSize(R.dimen.margin)) + resources.getDimensionPixelSize(R.dimen.title_one_line)

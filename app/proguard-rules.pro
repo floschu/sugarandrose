@@ -7,7 +7,8 @@
 
 
 # Keep model classes
--keep class org.sugarandrose.app.data.model.** { *; }
+-keep class org.sugarandrose.app.** { *; }
+-dontwarn org.sugarandrose.app.**
 
 # Okio
 -keep class sun.misc.Unsafe { *; }

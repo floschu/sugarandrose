@@ -1,7 +1,6 @@
 package org.sugarandrose.app
 
 import android.app.Application
-import android.content.res.Resources
 import com.google.firebase.messaging.FirebaseMessaging
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.squareup.leakcanary.LeakCanary
@@ -19,10 +18,7 @@ class SugarAndRoseApp : Application() {
         if (LeakCanary.isInAnalyzerProcess(this)) return
 
         instance = this
-
-        appComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(this))
-            .build()
+        appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
 
         Timber.plant(Timber.DebugTree())
         Realm.init(this)
@@ -37,11 +33,5 @@ class SugarAndRoseApp : Application() {
 
         lateinit var appComponent: AppComponent
             private set
-
-        val realm: Realm
-            get() = appComponent.realm()
-
-        val res: Resources
-            get() = instance.resources
     }
 }

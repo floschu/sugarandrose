@@ -48,7 +48,6 @@ interface ActivityComponent : ActivityComponentProvides {
     fun inject(activity: LauncherActivity)
     fun inject(activity: OnboardingActivity)
     fun inject(activity: MainActivity)
-
     fun inject(activity: PostActivity)
     fun inject(activity: PhotoDetailActivity)
     fun inject(activity: CategoryDetailActivity)
