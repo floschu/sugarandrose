@@ -16,11 +16,13 @@ object Versions {
 
     const val core_ktx: String = "1.0.2"
 
+    const val androidx_databinding: String = "3.5.0"
+
     const val fragment: String = "1.0.0"
 
-    const val com_android_databinding: String = "3.5.0"
-
     const val customtabs: String = "28.0.0"
+
+    const val aapt2: String = "3.5.0-5435860"
 
     const val com_android_tools_build_gradle: String = "3.5.0"
 
@@ -56,7 +58,7 @@ object Versions {
 
     const val aboutlibraries: String = "5.9.1" // available: "7.0.2"
 
-    const val com_patloew_navigationviewfragmentadapters_adapters: String = "0.3.0"
+    const val adapters: String = "0.3.0"
 
     const val ktlint: String = "0.34.2"
 
@@ -73,6 +75,8 @@ object Versions {
     const val rxpermissions: String = "0.9.5"
 
     const val buildsrcversions: String = "0.4.2"
+
+    const val coil: String = "0.6.1"
 
     const val io_fabric_tools_gradle: String = "1.31.0"
 

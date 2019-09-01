@@ -19,19 +19,12 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import com.squareup.picasso.Picasso
-import io.reactivex.Single
-import io.reactivex.SingleEmitter
-import io.reactivex.schedulers.Schedulers
 import org.sugarandrose.app.R
-import java.io.IOException
-import java.util.*
 import androidx.annotation.ColorRes
 
 inline fun <reified T> Context.castWithUnwrap(): T? {
@@ -46,15 +39,6 @@ inline fun <reified T> Context.castWithUnwrap(): T? {
     }
     return null
 }
-
-fun Context.rxPicasso(url: String?): Single<Bitmap> = Single.create { emitter: SingleEmitter<Bitmap> ->
-    try {
-        val bitmap = Picasso.get().load(url).get()
-        emitter.onSuccess(bitmap)
-    } catch (e: IOException) {
-        emitter.onError(e)
-    }
-}.subscribeOn(Schedulers.io())
 
 fun Context.openNotificationSettings() {
     val intent = Intent().apply {

@@ -3,8 +3,13 @@ package org.sugarandrose.app.util.manager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.FileProvider
+import coil.Coil
+import coil.api.get
+import coil.api.load
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
@@ -14,7 +19,6 @@ import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import org.sugarandrose.app.util.extensions.rxPicasso
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -34,9 +38,9 @@ constructor(@ActivityContext private val context: Context, private val navigator
 
     fun sharePost(item: LocalPost): Completable {
         eventLogManager.logShare(item)
-        return if (item.image != null) context.rxPicasso(item.image)
-                .flatMap(this::cacheBitmapForShare)
-                .flatMapCompletable { sharePostInternally(item.name, "${BuildConfig.WEB_PAGE}?${context.getString(R.string.deeplink_post_query)}=${item.id}", it) }
+        return if (item.image != null) loadImage(item.image)
+            .flatMapSingle(this::cacheBitmapForShare)
+            .flatMapCompletable { sharePostInternally(item.name, "${BuildConfig.WEB_PAGE}?${context.getString(R.string.deeplink_post_query)}=${item.id}", it) }
         else sharePostInternally(item.name, item.url)
     }
 
@@ -61,9 +65,9 @@ constructor(@ActivityContext private val context: Context, private val navigator
 
     fun shareMedia(item: LocalMedia): Completable {
         eventLogManager.logShare(item)
-        return context.rxPicasso(item.image)
-                .flatMap(this::cacheBitmapForShare)
-                .flatMapCompletable(this::shareMediaInternally)
+        return loadImage(item.image)
+            .flatMapSingle(this::cacheBitmapForShare)
+            .flatMapCompletable(this::shareMediaInternally)
     }
 
     private fun shareMediaInternally(bitmap: File): Completable = Completable.create {
@@ -80,9 +84,19 @@ constructor(@ActivityContext private val context: Context, private val navigator
 
     fun shareRose(item: LocalRose): Completable {
         eventLogManager.logShare(item)
-        return context.rxPicasso(item.image)
-                .flatMap(this::cacheBitmapForShare)
-                .flatMapCompletable(this::shareRoseInternally)
+        return loadImage(item.image)
+            .flatMapSingle(this::cacheBitmapForShare)
+            .flatMapCompletable(this::shareRoseInternally)
+    }
+
+    private fun loadImage(url: String?): Maybe<Bitmap> = Maybe.create { emitter ->
+        if (url == null) emitter.onComplete()
+        else {
+            val disposable = Coil.load(context, url) {
+                target { emitter.onSuccess((it as BitmapDrawable).bitmap) }
+            }
+            emitter.setCancellable { disposable.dispose() }
+        }
     }
 
     private fun shareRoseInternally(bitmap: File): Completable = Completable.create {
@@ -96,8 +110,6 @@ constructor(@ActivityContext private val context: Context, private val navigator
         navigator.startActivity(Intent.createChooser(share, context.getString(R.string.share_title)))
         it.onComplete()
     }
-
-
 
     private fun cacheBitmapForShare(bitmap: Bitmap): Single<File> = Single.create { emitter ->
         try {

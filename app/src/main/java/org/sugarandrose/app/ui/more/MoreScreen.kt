@@ -144,7 +144,7 @@ constructor(override val adapter: MoreAdapter,
                 withLibraries(
                     "Dagger2", "LeakCanary", "OkHttp", "Retrofit", "Timber", "gson", "rxjava",
                     "rxAndroid", "Realm", "tailoredappsandroidtemplate", "showcase",
-                    "SupportLibrary", "Picasso", "sssimageview"
+                    "SupportLibrary", "sssimageview"
                 )
             }.start(context)
         }))

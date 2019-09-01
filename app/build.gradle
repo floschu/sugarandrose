@@ -73,7 +73,7 @@ android {
         enabled = true
     }
     lintOptions {
-        abortOnError false
+        abortOnError true
     }
     testOptions {
         unitTests.returnDefaultValues = true
@@ -85,6 +85,13 @@ android {
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
@@ -103,9 +110,9 @@ dependencies {
     implementation Libs.core_ktx
     implementation Libs.customtabs
 
-    kapt Libs.com_android_databinding_compiler
+    kapt Libs.databinding_compiler
 
-    implementation Libs.com_patloew_navigationviewfragmentadapters_adapters
+    implementation Libs.adapters
     implementation Libs.recyclerview_fastscroll
     implementation Libs.materialshowcaseview
 
@@ -134,9 +141,10 @@ dependencies {
     kapt Libs.realm_annotations
 
     //image
-    implementation Libs.picasso
-    implementation Libs.picasso2_okhttp3_downloader
+    implementation Libs.coil
     implementation Libs.subsampling_scale_image_view
+
+    implementation Libs.coil
 
     //firebase
     implementation Libs.firebase_core

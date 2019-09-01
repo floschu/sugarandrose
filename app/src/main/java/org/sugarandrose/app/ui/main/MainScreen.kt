@@ -20,7 +20,6 @@ import org.sugarandrose.app.ui.roses.RosesCacheManager
 import org.sugarandrose.app.util.manager.WebManager
 import javax.inject.Inject
 import org.sugarandrose.app.ui.base.BaseFragment
-import org.sugarandrose.app.ui.launcher.LauncherActivity
 
 const val PUSH_POST_ID_INTENT = "org.sugarandrose.app.ui.main.MainActivity.post_id_intent"
 

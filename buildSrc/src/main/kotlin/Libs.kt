@@ -23,33 +23,38 @@ object Libs {
      */
     const val core_ktx: String = "androidx.core:core-ktx:" + Versions.core_ktx
 
+    const val databinding_adapters: String = "androidx.databinding:databinding-adapters:" +
+            Versions.androidx_databinding
+
+    /**
+     * https://developer.android.com/studio
+     */
+    const val databinding_common: String = "androidx.databinding:databinding-common:" +
+            Versions.androidx_databinding
+
+    /**
+     * https://developer.android.com/studio
+     */
+    const val databinding_compiler: String = "androidx.databinding:databinding-compiler:" +
+            Versions.androidx_databinding
+
+    const val databinding_runtime: String = "androidx.databinding:databinding-runtime:" +
+            Versions.androidx_databinding
+
     /**
      * http://developer.android.com/tools/extras/support-library.html
      */
     const val fragment: String = "androidx.fragment:fragment:" + Versions.fragment
 
-    const val com_android_databinding_adapters: String = "com.android.databinding:adapters:" +
-            Versions.com_android_databinding
-
-    /**
-     * https://developer.android.com/studio
-     */
-    const val baselibrary: String = "com.android.databinding:baseLibrary:" +
-            Versions.com_android_databinding
-
-    /**
-     * http://tools.android.com
-     */
-    const val com_android_databinding_compiler: String = "com.android.databinding:compiler:" +
-            Versions.com_android_databinding
-
-    const val library: String = "com.android.databinding:library:" +
-            Versions.com_android_databinding
-
     /**
      * http://developer.android.com/tools/extras/support-library.html
      */
     const val customtabs: String = "com.android.support:customtabs:" + Versions.customtabs
+
+    /**
+     * https://developer.android.com/studio
+     */
+    const val aapt2: String = "com.android.tools.build:aapt2:" + Versions.aapt2
 
     /**
      * https://developer.android.com/studio
@@ -130,9 +135,8 @@ object Libs {
      */
     const val aboutlibraries: String = "com.mikepenz:aboutlibraries:" + Versions.aboutlibraries
 
-    const val com_patloew_navigationviewfragmentadapters_adapters: String =
-            "com.patloew.navigationviewfragmentadapters:adapters:" +
-            Versions.com_patloew_navigationviewfragmentadapters_adapters
+    const val adapters: String = "com.patloew.navigationviewfragmentadapters:adapters:" +
+            Versions.adapters
 
     /**
      * https://github.com/pinterest/ktlint
@@ -198,6 +202,11 @@ object Libs {
             Versions.rxpermissions
 
     const val buildsrcversions: String = "de.fayard:buildSrcVersions:" + Versions.buildsrcversions
+
+    /**
+     * https://github.com/coil-kt/coil
+     */
+    const val coil: String = "io.coil-kt:coil:" + Versions.coil
 
     const val io_fabric_tools_gradle: String = "io.fabric.tools:gradle:" +
             Versions.io_fabric_tools_gradle

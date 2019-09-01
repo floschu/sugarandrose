@@ -30,7 +30,7 @@ import androidx.databinding.BindingMethods
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
-import com.squareup.picasso.Picasso
+import coil.api.load
 import org.sugarandrose.app.R
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.util.extensions.fromRealmString
@@ -72,10 +72,9 @@ object BindingAdapters {
 
     @BindingAdapter("android:src")
     @JvmStatic
-    fun setImageWithPicassoString(view: ImageView, path: String?) {
-        if (!path.isNullOrEmpty()) {
-            Picasso.get().load(path).fit().centerCrop().into(view)
-        } else view.setImageDrawable(null)
+    fun setImageWithString(view: ImageView, path: String?) {
+        if (!path.isNullOrEmpty()) view.load(path) { crossfade(true) }
+        else view.setImageDrawable(null)
     }
 
     @BindingAdapter("loadUrl")
