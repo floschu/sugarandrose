@@ -1,8 +1,8 @@
 package org.sugarandrose.app.ui.base.viewmodel
 
-import android.databinding.BaseObservable
 import android.os.Bundle
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
+import androidx.databinding.BaseObservable
 import org.sugarandrose.app.ui.base.view.MvvmView
 
 /* Copyright 2016 Patrick Löwenstein

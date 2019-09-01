@@ -5,8 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.view.animation.FastOutSlowInInterpolator
+import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +19,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.util.extensions.isNetworkAvailable
 
@@ -45,9 +45,9 @@ class NoConnectionDialogFragment : DialogFragment() {
     var dialogRetryCallback: (() -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (showsDialog && dialog.window != null) {
-            dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
-            dialog.setCancelable(false)
+        if (showsDialog && dialog?.window != null) {
+            dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+            dialog?.setCancelable(false)
         }
 
         val view = inflater.inflate(R.layout.fragment_no_connection, container, false)
@@ -66,8 +66,8 @@ class NoConnectionDialogFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         Observable.interval(1, 3, TimeUnit.SECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -81,7 +81,7 @@ class NoConnectionDialogFragment : DialogFragment() {
             .let { disposable = it }
     }
 
-    override fun onDismiss(dialog: DialogInterface?) {
+    override fun onDismiss(dialog: DialogInterface) {
         rotationAnimation.cancel()
         disposable?.dispose()
         super.onDismiss(dialog)

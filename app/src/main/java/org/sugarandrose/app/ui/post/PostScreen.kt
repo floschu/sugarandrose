@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
-import android.databinding.Bindable
+import androidx.databinding.Bindable
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
@@ -24,7 +24,6 @@ import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.qualifier.ActivityDisposable
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
-import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.feedback.Toaster
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
@@ -37,7 +36,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import org.sugarandrose.app.util.videowebview.VideoEnabledWebChromeClient
 import org.sugarandrose.app.util.extensions.*
-
 
 /**
  * Created by Florian Schuster
@@ -64,7 +62,6 @@ interface PostMvvm {
         fun onWebViewError()
     }
 }
-
 
 class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), PostMvvm.View {
     @Inject
@@ -183,7 +180,6 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
     }
 }
 
-
 @PerActivity
 class PostViewModel @Inject
 constructor(@ActivityDisposable private val disposable: CompositeDisposable,
@@ -199,65 +195,65 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
 
     private var header =
 //            "<link rel=\"stylesheet\" type=\"text/header\" href=\"//fonts.googleapis.com/header?family=Oswald\" />" +
-            "<style type=\"text/css\">" +
-                    "@font-face {" +
-                    "font-family: Oswald;" +
-                    "src: url(\"file:///android_asset/oswald.ttf\")" +
-                    "}" +
-                    "body {" +
-                    "padding-bottom: 50px;" +
-                    "}" +
-                    "h1 {" +
-                    "font-family: Oswald;" +
-                    "}" +
-                    "h2 {" +
-                    "color: ${context.getColorHex(R.color.textBlackSecondary)};" +
-                    "font-family: Oswald;" +
-                    "}" +
-                    "h3 {" +
-                    "color: ${context.getColorHex(R.color.textBlackSecondary)};" +
-                    "font-family: Oswald;" +
-                    "}" +
-                    "p {" +
-                    "color: ${context.getColorHex(R.color.textBlackPrimary)};" +
-                    "}" +
-                    "a {" +
-                    "color: ${context.getColorHex(R.color.colorAccent)};" +
-                    "font-weight: bold;" +
-                    "text-decoration: none;" +
-                    "}" +
-                    "img {" +
-                    "display: inline;" +
-                    "width: auto;" +
-                    "height: auto;" +
-                    "max-width: 100%;" +
-                    "border-radius: 5px 5px 5px 5px;" +
-                    "margin-bottom: 5px;" +
-                    "}" +
-                    "</style>"
+        "<style type=\"text/css\">" +
+            "@font-face {" +
+            "font-family: Oswald;" +
+            "src: url(\"file:///android_asset/oswald.ttf\")" +
+            "}" +
+            "body {" +
+            "padding-bottom: 50px;" +
+            "}" +
+            "h1 {" +
+            "font-family: Oswald;" +
+            "}" +
+            "h2 {" +
+            "color: ${context.getColorHex(R.color.textBlackSecondary)};" +
+            "font-family: Oswald;" +
+            "}" +
+            "h3 {" +
+            "color: ${context.getColorHex(R.color.textBlackSecondary)};" +
+            "font-family: Oswald;" +
+            "}" +
+            "p {" +
+            "color: ${context.getColorHex(R.color.textBlackPrimary)};" +
+            "}" +
+            "a {" +
+            "color: ${context.getColorHex(R.color.colorAccent)};" +
+            "font-weight: bold;" +
+            "text-decoration: none;" +
+            "}" +
+            "img {" +
+            "display: inline;" +
+            "width: auto;" +
+            "height: auto;" +
+            "max-width: 100%;" +
+            "border-radius: 5px 5px 5px 5px;" +
+            "margin-bottom: 5px;" +
+            "}" +
+            "</style>"
 
     override fun init(path: String) {
         api.getPostsFromDeepLink(path)
-                .doOnSubscribe { loading = true }
-                .doOnEvent { _, _ -> loading = false }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (it.isNotEmpty()) init(it.first().id)
-                    else {
-                        toaster.show(R.string.post_uri_error)
-                        navigator.finishActivity()
-                    }
-                }, Timber::e)
-                .addTo(disposable)
+            .doOnSubscribe { loading = true }
+            .doOnEvent { _, _ -> loading = false }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                if (it.isNotEmpty()) init(it.first().id)
+                else {
+                    toaster.show(R.string.post_uri_error)
+                    navigator.finishActivity()
+                }
+            }, Timber::e)
+            .addTo(disposable)
     }
 
     override fun init(id: Long) {
         api.getPost(id)
-                .doOnSubscribe { loading = true }
-                .map(::LocalPost)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPostSuccess, { errorManager.handleWithRetrySnack(it) { init(id) } })
-                .addTo(disposable)
+            .doOnSubscribe { loading = true }
+            .map(::LocalPost)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this::onPostSuccess, { errorManager.handleWithRetrySnack(it) { init(id) } })
+            .addTo(disposable)
     }
 
     private fun onPostSuccess(post: LocalPost) {

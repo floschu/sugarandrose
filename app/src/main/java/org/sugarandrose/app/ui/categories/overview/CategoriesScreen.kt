@@ -1,8 +1,7 @@
 package org.sugarandrose.app.ui.categories.overview
 
-import android.databinding.Bindable
+import androidx.databinding.Bindable
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,7 +57,7 @@ interface CategoriesMvvm {
 
 
 class CategoriesFragment : BaseFragment<FragmentCategoriesBinding, CategoriesMvvm.ViewModel>(), CategoriesMvvm.View {
-    override val tutorialView: android.view.View get() = binding.etSearch
+    override val tutorialView: View get() = binding.etSearch
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(false)

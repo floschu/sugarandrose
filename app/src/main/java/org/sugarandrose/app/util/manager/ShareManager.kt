@@ -3,7 +3,7 @@ package org.sugarandrose.app.util.manager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.support.v4.content.FileProvider
+import androidx.core.content.FileProvider
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.sugarandrose.app.BuildConfig

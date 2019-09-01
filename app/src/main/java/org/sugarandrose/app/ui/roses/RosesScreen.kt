@@ -1,6 +1,6 @@
 package org.sugarandrose.app.ui.roses
 
-import android.databinding.Bindable
+import androidx.databinding.Bindable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

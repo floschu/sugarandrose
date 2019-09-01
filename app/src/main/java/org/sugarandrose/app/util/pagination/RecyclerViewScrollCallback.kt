@@ -1,13 +1,15 @@
 package org.sugarandrose.app.util.pagination
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * https://github.com/chetdeva/recyclerview-bindings
  */
 
-class RecyclerViewScrollCallback(private val visibleThreshold: Int,  // The minimum amount of items to have below your current scroll position before loading more.
-                                 private val layoutManager: RecyclerView.LayoutManager) : RecyclerView.OnScrollListener() {
+class RecyclerViewScrollCallback(
+    private val visibleThreshold: Int,  // The minimum amount of items to have below your current scroll position before loading more.
+    private val layoutManager: RecyclerView.LayoutManager
+) : RecyclerView.OnScrollListener() {
 
     // The current offset index of data you have loaded
     private var currentPage = 1
@@ -99,7 +101,7 @@ class RecyclerViewScrollCallback(private val visibleThreshold: Int,  // The mini
         fun build(): RecyclerViewScrollCallback {
             layoutManagerType = RecyclerViewUtil.computeLayoutManagerType(layoutManager)
             visibleThreshold = RecyclerViewUtil.computeVisibleThreshold(
-                    layoutManager, layoutManagerType, visibleThreshold)
+                layoutManager, layoutManagerType, visibleThreshold)
             return RecyclerViewScrollCallback(this)
         }
     }

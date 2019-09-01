@@ -16,26 +16,23 @@ package org.sugarandrose.app.util.bindingadapters
 
 import android.app.Activity
 import android.content.Intent
-import android.databinding.BindingAdapter
-import android.databinding.BindingMethod
-import android.databinding.BindingMethods
-import android.support.annotation.DrawableRes
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.view.ViewPager
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.BindingMethod
 import android.text.Html
 import android.view.View
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.databinding.BindingAdapter
+import androidx.databinding.BindingMethods
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager.widget.ViewPager
 import com.squareup.picasso.Picasso
-import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
-import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
-import org.sugarandrose.app.util.Utils
 import org.sugarandrose.app.util.extensions.fromRealmString
 import org.sugarandrose.app.util.pagination.RecyclerViewScrollCallback
 import org.threeten.bp.format.DateTimeFormatter
@@ -77,7 +74,7 @@ object BindingAdapters {
     @JvmStatic
     fun setImageWithPicassoString(view: ImageView, path: String?) {
         if (!path.isNullOrEmpty()) {
-            Picasso.with(view.context.applicationContext).load(path).fit().centerCrop().into(view)
+            Picasso.get().load(path).fit().centerCrop().into(view)
         } else view.setImageDrawable(null)
     }
 

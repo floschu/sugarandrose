@@ -1,9 +1,9 @@
 package org.sugarandrose.app.ui.home.viewpager
 
 import android.content.res.Resources
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import org.sugarandrose.app.R
 import org.sugarandrose.app.injection.qualifier.ChildFragmentManager
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -17,8 +17,10 @@ import javax.inject.Inject
  */
 
 @PerFragment
-class HomePagerAdapter @Inject
-internal constructor(@ChildFragmentManager fm: FragmentManager, private val resources: Resources) : FragmentPagerAdapter(fm) {
+class HomePagerAdapter @Inject constructor(
+    @ChildFragmentManager fm: FragmentManager,
+    private val resources: Resources
+) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     override fun getCount(): Int = 2
     override fun getItem(position: Int): Fragment = when (position) {
         0 -> NewFragment()

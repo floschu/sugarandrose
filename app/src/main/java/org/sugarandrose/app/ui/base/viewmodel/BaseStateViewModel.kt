@@ -14,10 +14,10 @@
 
 package org.sugarandrose.app.ui.base.viewmodel
 
-import android.databinding.BaseObservable
+import androidx.databinding.BaseObservable
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.annotation.CallSuper
+import androidx.annotation.CallSuper
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.util.extensions.getParcelable
 import javax.inject.Inject

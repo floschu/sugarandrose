@@ -5,8 +5,9 @@ package org.sugarandrose.app.data.model.remote
  * florian.schuster@tailored-apps.com
  */
 
-data class More(val id: Long,
-                val link: String,
-                val better_featured_image: FeaturedImage,
-                val title: DisplayText
+data class More(
+    val id: Long,
+    val link: String,
+    val better_featured_image: FeaturedImage,
+    val title: DisplayText
 )

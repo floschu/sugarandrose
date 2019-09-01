@@ -19,15 +19,12 @@ import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
 import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.util.manager.ErrorManager
-import timber.log.Timber
 import javax.inject.Inject
-
 
 /**
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
-
 
 interface CategoryDetailMvvm {
     interface View : MvvmView
@@ -41,7 +38,6 @@ interface CategoryDetailMvvm {
     }
 }
 
-
 class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, CategoryDetailMvvm.ViewModel>(), CategoryDetailMvvm.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,15 +50,21 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
             it.setDisplayHomeAsUpEnabled(true)
         }
 
-        binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
-            val view = binding.scrollView.getChildAt(binding.scrollView.childCount - 1)
-            val diff = view.bottom - (binding.scrollView.height + binding.scrollView.scrollY)
-            if (diff == 0 && !viewModel.adapterItems.loading) viewModel.loadNextPage()
-        }
+        val category: LocalCategory? = intent.getParcelableExtra(Navigator.EXTRA_ARG)
 
-        viewModel.category = intent.getParcelableExtra(Navigator.EXTRA_ARG)
-        viewModel.adapterCategories.data = viewModel.category.children
-        viewModel.adapterItems.displayFirstLoading = true
+        if (category != null) {
+            binding.scrollView.viewTreeObserver.addOnScrollChangedListener {
+                val view = binding.scrollView.getChildAt(binding.scrollView.childCount - 1)
+                val diff = view.bottom - (binding.scrollView.height + binding.scrollView.scrollY)
+                if (diff == 0 && !viewModel.adapterItems.loading) viewModel.loadNextPage()
+            }
+
+            viewModel.category = category
+            viewModel.adapterCategories.data = viewModel.category.children
+            viewModel.adapterItems.displayFirstLoading = true
+        } else {
+            finish()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,7 +74,6 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
         return super.onOptionsItemSelected(item)
     }
 }
-
 
 @PerActivity
 class CategoryDetailViewModel @Inject
@@ -93,14 +94,14 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
 
     override fun loadNextPage() {
         pagedPostLoadingManager.loadCategoryPage(category)
-                .doOnSubscribe { adapterItems.loading = true }
-                .doOnEvent { _, _ -> adapterItems.loading = false }
-                .doOnSuccess {
-                    adapterItems.endOfPages = it.isEmpty()
-                    adapterItems.displayFirstLoading = false
-                }
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(adapterItems::add, { errorManager.handleWithToast(it) })
-                .addTo(disposable)
+            .doOnSubscribe { adapterItems.loading = true }
+            .doOnEvent { _, _ -> adapterItems.loading = false }
+            .doOnSuccess {
+                adapterItems.endOfPages = it.isEmpty()
+                adapterItems.displayFirstLoading = false
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(adapterItems::add, { errorManager.handleWithToast(it) })
+            .addTo(disposable)
     }
 }

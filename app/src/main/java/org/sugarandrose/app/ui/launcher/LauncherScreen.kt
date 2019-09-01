@@ -2,9 +2,8 @@ package org.sugarandrose.app.ui.launcher
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.view.ViewCompat
 import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

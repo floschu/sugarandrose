@@ -9,7 +9,7 @@
             type="org.sugarandrose.app.ui.search.SearchMvvm.ViewModel" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,5 +25,5 @@
             android:layout_height="match_parent"
             android:foreground="?android:windowContentOverlay"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

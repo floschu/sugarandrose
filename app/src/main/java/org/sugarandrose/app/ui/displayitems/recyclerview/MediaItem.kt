@@ -1,6 +1,6 @@
 package org.sugarandrose.app.ui.displayitems.recyclerview
 
-import android.databinding.Bindable
+import androidx.databinding.Bindable
 import android.view.View
 import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.BR

@@ -1,7 +1,7 @@
 package org.sugarandrose.app.injection.modules
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable

@@ -7,6 +7,27 @@ import kotlin.String
  *   `$ ./gradlew buildSrcVersions`
  */
 object Libs {
+    /**
+     * http://developer.android.com/tools/extras/support-library.html
+     */
+    const val appcompat: String = "androidx.appcompat:appcompat:" + Versions.appcompat
+
+    /**
+     * http://tools.android.com
+     */
+    const val constraintlayout: String = "androidx.constraintlayout:constraintlayout:" +
+            Versions.constraintlayout
+
+    /**
+     * http://developer.android.com/tools/extras/support-library.html
+     */
+    const val core_ktx: String = "androidx.core:core-ktx:" + Versions.core_ktx
+
+    /**
+     * http://developer.android.com/tools/extras/support-library.html
+     */
+    const val fragment: String = "androidx.fragment:fragment:" + Versions.fragment
+
     const val com_android_databinding_adapters: String = "com.android.databinding:adapters:" +
             Versions.com_android_databinding
 
@@ -26,52 +47,9 @@ object Libs {
             Versions.com_android_databinding
 
     /**
-     * http://tools.android.com
-     */
-    const val constraint_layout: String = "com.android.support.constraint:constraint-layout:" +
-            Versions.constraint_layout
-
-    /**
-     * http://developer.android.com/tools/extras/support-library.html
-     */
-    const val appcompat_v7: String = "com.android.support:appcompat-v7:" + Versions.appcompat_v7
-
-    /**
-     * http://developer.android.com/tools/extras/support-library.html
-     */
-    const val cardview_v7: String = "com.android.support:cardview-v7:" + Versions.cardview_v7
-
-    /**
      * http://developer.android.com/tools/extras/support-library.html
      */
     const val customtabs: String = "com.android.support:customtabs:" + Versions.customtabs
-
-    /**
-     * http://developer.android.com/tools/extras/support-library.html
-     */
-    const val design: String = "com.android.support:design:" + Versions.design
-
-    const val ktlint: String = "com.pinterest:ktlint:" + Versions.ktlint
-
-    const val multidex: String = "com.android.support:multidex:" + Versions.multidex
-
-    /**
-     * http://developer.android.com/tools/extras/support-library.html
-     */
-    const val recyclerview_v7: String = "com.android.support:recyclerview-v7:" +
-            Versions.recyclerview_v7
-
-    /**
-     * http://developer.android.com/tools/extras/support-library.html
-     */
-    const val support_core_ui: String = "com.android.support:support-core-ui:" +
-            Versions.support_core_ui
-
-    /**
-     * http://developer.android.com/tools/extras/support-library.html
-     */
-    const val support_fragment: String = "com.android.support:support-fragment:" +
-            Versions.support_fragment
 
     /**
      * https://developer.android.com/studio
@@ -95,16 +73,15 @@ object Libs {
             Versions.subsampling_scale_image_view
 
     /**
-     * https://github.com/ben-manes/gradle-versions-plugin
-     */
-    const val gradle_versions_plugin: String = "com.github.ben-manes:gradle-versions-plugin:" +
-            Versions.gradle_versions_plugin
-
-    /**
      * https://github.com/deano2390/MaterialShowcaseView
      */
     const val materialshowcaseview: String = "com.github.deano2390:MaterialShowcaseView:" +
             Versions.materialshowcaseview
+
+    /**
+     * http://developer.android.com/tools/extras/support-library.html
+     */
+    const val material: String = "com.google.android.material:material:" + Versions.material
 
     /**
      * https://github.com/google/gson
@@ -156,6 +133,11 @@ object Libs {
     const val com_patloew_navigationviewfragmentadapters_adapters: String =
             "com.patloew.navigationviewfragmentadapters:adapters:" +
             Versions.com_patloew_navigationviewfragmentadapters_adapters
+
+    /**
+     * https://github.com/pinterest/ktlint
+     */
+    const val ktlint: String = "com.pinterest:ktlint:" + Versions.ktlint
 
     /**
      * https://github.com/timusus/RecyclerView-FastScroll

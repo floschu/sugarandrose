@@ -3,7 +3,7 @@ package org.sugarandrose.app.injection.components
 import org.sugarandrose.app.ui.launcher.LauncherActivity
 import org.sugarandrose.app.ui.onboarding.OnboardingActivity
 import android.content.Context
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import dagger.Component
 import io.reactivex.disposables.CompositeDisposable
 import org.sugarandrose.app.injection.modules.ActivityModule

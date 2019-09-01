@@ -10,57 +10,47 @@ import kotlin.String
  * YOU are responsible for updating manually the dependency version.
  */
 object Versions {
-    const val com_android_databinding: String = "3.1.2" // available: "3.5.0"
+    const val appcompat: String = "1.1.0-rc01"
 
-    const val constraint_layout: String = "1.1.3"
+    const val constraintlayout: String = "1.1.3"
 
-    const val appcompat_v7: String = "28.0.0"
+    const val core_ktx: String = "1.0.2"
 
-    const val cardview_v7: String = "28.0.0"
+    const val fragment: String = "1.0.0"
+
+    const val com_android_databinding: String = "3.5.0"
 
     const val customtabs: String = "28.0.0"
 
-    const val design: String = "28.0.0"
+    const val com_android_tools_build_gradle: String = "3.5.0"
 
-    const val ktlint: String = "0.34.2"
-
-    const val multidex: String = "1.0.3"
-
-    const val recyclerview_v7: String = "28.0.0"
-
-    const val support_core_ui: String = "28.0.0"
-
-    const val support_fragment: String = "28.0.0"
-
-    const val com_android_tools_build_gradle: String = "3.1.2" // available: "3.5.0"
-
-    const val lint_gradle: String = "26.1.2" // available: "26.5.0"
+    const val lint_gradle: String = "26.5.0"
 
     const val crashlytics: String = "2.10.1"
 
     const val subsampling_scale_image_view: String = "3.10.0"
 
-    const val gradle_versions_plugin: String = "0.21.0" // available: "0.24.0"
-
     const val materialshowcaseview: String = "1.3.4"
+
+    const val material: String = "1.0.0"
 
     const val gson: String = "2.8.5"
 
-    const val com_google_dagger: String = "2.23.1" // available: "2.24"
+    const val com_google_dagger: String = "2.24"
 
-    const val firebase_core: String = "16.0.9" // available: "17.2.0"
+    const val firebase_core: String = "17.2.0"
 
-    const val firebase_messaging: String = "18.0.0" // available: "20.0.0"
+    const val firebase_messaging: String = "20.0.0"
 
-    const val firebase_perf: String = "17.0.2" // available: "19.0.0"
+    const val firebase_perf: String = "19.0.0"
 
-    const val perf_plugin: String = "1.2.1" // available: "1.3.1"
+    const val perf_plugin: String = "1.3.1"
 
-    const val google_services: String = "4.2.0" // available: "4.3.1"
+    const val google_services: String = "4.3.1"
 
     const val picasso2_okhttp3_downloader: String = "1.1.0"
 
-    const val threetenabp: String = "1.2.0" // available: "1.2.1"
+    const val threetenabp: String = "1.2.1"
 
     const val timber: String = "4.7.1"
 
@@ -68,31 +58,33 @@ object Versions {
 
     const val com_patloew_navigationviewfragmentadapters_adapters: String = "0.3.0"
 
+    const val ktlint: String = "0.34.2"
+
     const val recyclerview_fastscroll: String = "1.0.20"
 
     const val com_squareup_leakcanary: String = "1.6.3"
 
-    const val com_squareup_okhttp3: String = "3.10.0" // available: "4.1.0"
+    const val com_squareup_okhttp3: String = "4.1.0"
 
-    const val picasso: String = "2.5.2" // available: "2.71828"
+    const val picasso: String = "2.71828"
 
-    const val com_squareup_retrofit2: String = "2.5.0" // available: "2.6.1"
+    const val com_squareup_retrofit2: String = "2.6.1"
 
     const val rxpermissions: String = "0.9.5"
 
     const val buildsrcversions: String = "0.4.2"
 
-    const val io_fabric_tools_gradle: String = "1.29.0" // available: "1.31.0"
+    const val io_fabric_tools_gradle: String = "1.31.0"
 
     const val rxandroid: String = "2.1.1"
 
-    const val rxjava: String = "2.2.9" // available: "2.2.12"
+    const val rxjava: String = "2.2.12"
 
-    const val rxkotlin: String = "2.3.0" // available: "2.4.0"
+    const val rxkotlin: String = "2.4.0"
 
     const val io_realm: String = "5.1.0" // available: "5.14.0"
 
-    const val org_jetbrains_kotlin: String = "1.3.31" // available: "1.3.50"
+    const val org_jetbrains_kotlin: String = "1.3.50"
 
     const val jsoup: String = "1.12.1"
 

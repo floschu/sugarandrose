@@ -22,8 +22,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.ConnectivityManager
 import android.os.Build
-import android.support.annotation.ColorRes
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.squareup.picasso.Picasso
@@ -33,15 +32,7 @@ import io.reactivex.schedulers.Schedulers
 import org.sugarandrose.app.R
 import java.io.IOException
 import java.util.*
-import android.support.v4.content.ContextCompat.startActivity
-
-
-fun Context.getCurrentLocale(): Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-    this.resources.configuration.locales.get(0)
-} else {
-    @Suppress("DEPRECATION")
-    this.resources.configuration.locale
-}
+import androidx.annotation.ColorRes
 
 inline fun <reified T> Context.castWithUnwrap(): T? {
     if (this is T) return this
@@ -58,7 +49,7 @@ inline fun <reified T> Context.castWithUnwrap(): T? {
 
 fun Context.rxPicasso(url: String?): Single<Bitmap> = Single.create { emitter: SingleEmitter<Bitmap> ->
     try {
-        val bitmap = Picasso.with(this).load(url).get()
+        val bitmap = Picasso.get().load(url).get()
         emitter.onSuccess(bitmap)
     } catch (e: IOException) {
         emitter.onError(e)
@@ -91,7 +82,7 @@ fun Context.shareApp() {
 fun Context.areYouSureDialog(callback: () -> Unit) = AlertDialog.Builder(this, R.style.DialogTheme).apply {
     setTitle(getString(R.string.dialog_are_you_sure_title))
     setMessage(getString(R.string.dialog_are_you_sure_text))
-    setPositiveButton(android.R.string.yes, { _, _ -> callback.invoke() })
+    setPositiveButton(android.R.string.yes) { _, _ -> callback.invoke() }
     setNegativeButton(android.R.string.no, null)
     setCancelable(true)
     show()

@@ -1,9 +1,9 @@
 package org.sugarandrose.app.ui.main
 
 import android.os.Bundle
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.patloew.navigationviewfragmentadapters.NavigationViewFragmentAdapter
 import org.sugarandrose.app.R
 import org.sugarandrose.app.ui.favorited.FavoritedFragment

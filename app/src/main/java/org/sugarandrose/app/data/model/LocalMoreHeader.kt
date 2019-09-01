@@ -1,6 +1,6 @@
 package org.sugarandrose.app.data.model
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 
 /**
  * Created by Florian Schuster

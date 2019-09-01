@@ -4,7 +4,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 import io.reactivex.rxkotlin.addTo
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.ActivityMainBinding

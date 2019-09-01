@@ -1,6 +1,6 @@
 package org.sugarandrose.app.ui.base.viewmodel
 
-import android.databinding.BaseObservable
+import androidx.databinding.BaseObservable
 import android.os.Bundle
 
 import org.sugarandrose.app.ui.base.view.MvvmView

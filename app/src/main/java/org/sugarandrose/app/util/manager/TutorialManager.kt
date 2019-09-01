@@ -1,8 +1,8 @@
 package org.sugarandrose.app.util.manager
 
 import android.content.Context
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
+import androidx.core.content.ContextCompat
 import android.view.View
 import org.sugarandrose.app.R
 import uk.co.deanwild.materialshowcaseview.IShowcaseListener

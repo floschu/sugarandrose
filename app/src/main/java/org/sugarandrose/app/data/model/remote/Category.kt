@@ -10,13 +10,14 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-class Category(var id: Int,
-               var name: String,
-               @SerializedName("description")
-               var image: String,
-               var link: String,
-               var count: Int,
-               var parent: Int
+data class Category(
+    var id: Int,
+    var name: String,
+    @SerializedName("description")
+    var image: String,
+    var link: String,
+    var count: Int,
+    var parent: Int
 ) : Parcelable {
     constructor() : this(0, "", "", "", 0, 0)
 }

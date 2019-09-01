@@ -2,8 +2,7 @@ package org.sugarandrose.app.ui.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.view.ViewCompat
+import androidx.core.app.ActivityOptionsCompat
 import android.widget.ImageView
 import javax.inject.Inject
 import org.sugarandrose.app.R

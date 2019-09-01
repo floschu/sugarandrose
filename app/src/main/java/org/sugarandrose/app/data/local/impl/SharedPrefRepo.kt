@@ -5,10 +5,8 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Base64
 import org.sugarandrose.app.data.local.PrefRepo
-
 import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerApplication
-
 import javax.inject.Inject
 
 /* Copyright 2017 Tailored Media GmbH

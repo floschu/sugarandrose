@@ -1,6 +1,6 @@
 package org.sugarandrose.app.ui.displayitems.recyclerview
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 import org.sugarandrose.app.R
 import org.sugarandrose.app.SugarAndRoseApp

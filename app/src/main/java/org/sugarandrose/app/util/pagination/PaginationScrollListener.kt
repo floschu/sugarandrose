@@ -1,7 +1,7 @@
 package org.sugarandrose.app.util.pagination
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 /**
  * Created by Florian Schuster
@@ -13,8 +13,8 @@ abstract class PaginationScrollListener(
 ) : RecyclerView.OnScrollListener() {
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        val layoutManager = recyclerView.layoutManager ?: return
-        val lastVisibleItemPosition = (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+        val layoutManager = recyclerView.layoutManager as? LinearLayoutManager ?: return
+        val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
         val totalItemCount = layoutManager.itemCount
 
         if (!isLoading() && (lastVisibleItemPosition + visibleThreshold > totalItemCount)) loadMoreItems()

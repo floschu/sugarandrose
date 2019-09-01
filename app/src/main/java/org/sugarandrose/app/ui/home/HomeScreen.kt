@@ -1,8 +1,8 @@
 package org.sugarandrose.app.ui.home
 
-import android.databinding.Bindable
+import androidx.databinding.Bindable
 import android.os.Bundle
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

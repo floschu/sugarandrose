@@ -1,14 +1,4 @@
-apply plugin: 'com.github.ben-manes.versions'
-
 buildscript {
-    ext.kotlinVersion = '1.3.31'
-    ext.gradlePluginVersion = '3.1.2'
-    ext.supportLibVersion = '28.0.0'
-    ext.realmVersion = '5.1.0'
-    ext.retrofitVersion = '2.5.0'
-    ext.okHttpVersion = '3.10.0'
-    ext.daggerVersion = '2.23.1'
-
     repositories {
         jcenter()
         google()
@@ -19,14 +9,12 @@ buildscript {
 
     dependencies {
         classpath Libs.buildsrcversions
-
-        classpath "com.android.tools.build:gradle:$gradlePluginVersion"
-        classpath "io.realm:realm-gradle-plugin:$realmVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'com.google.gms:google-services:4.2.0'
-        classpath 'io.fabric.tools:gradle:1.29.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.21.0'
-        classpath 'com.google.firebase:perf-plugin:1.2.1'
+        classpath Libs.com_android_tools_build_gradle
+        classpath Libs.realm_gradle_plugin
+        classpath Libs.kotlin_gradle_plugin
+        classpath Libs.google_services
+        classpath Libs.io_fabric_tools_gradle
+        classpath Libs.perf_plugin
     }
 }
 
