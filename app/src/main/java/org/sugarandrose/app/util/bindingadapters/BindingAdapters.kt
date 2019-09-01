@@ -73,14 +73,8 @@ object BindingAdapters {
     @BindingAdapter("android:src")
     @JvmStatic
     fun setImageWithString(view: ImageView, path: String?) {
-        if (!path.isNullOrEmpty()) view.load(path) { crossfade(true) }
+        if (!path.isNullOrEmpty()) view.load(path) { crossfade(500) }
         else view.setImageDrawable(null)
-    }
-
-    @BindingAdapter("loadUrl")
-    @JvmStatic
-    fun loadUrl(view: WebView, url: String) {
-        view.loadUrl(url)
     }
 
     @BindingAdapter("setColorScheme")
@@ -94,12 +88,6 @@ object BindingAdapters {
     fun setHtmlText(view: TextView, text: String) {
         @Suppress("DEPRECATION")
         view.text = Html.fromHtml(text)
-    }
-
-    @BindingAdapter("pageTransformer")
-    @JvmStatic
-    fun setPageTransformer(viewPager: ViewPager, transformer: ViewPager.PageTransformer) {
-        viewPager.setPageTransformer(false, transformer)
     }
 
     @BindingAdapter("onClickPhotoDetail")

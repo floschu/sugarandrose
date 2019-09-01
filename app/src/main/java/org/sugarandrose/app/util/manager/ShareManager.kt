@@ -6,7 +6,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.FileProvider
 import coil.Coil
-import coil.api.get
 import coil.api.load
 import io.reactivex.Completable
 import io.reactivex.Maybe

@@ -67,9 +67,9 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
 
     internal val fragmentComponent: FragmentComponent by lazy {
         DaggerFragmentComponent.builder()
-                .fragmentModule(FragmentModule(this))
-                .activityComponent((activity as BaseActivity<*, *>).activityComponent)
-                .build()
+            .fragmentModule(FragmentModule(this))
+            .activityComponent((activity as BaseActivity<*, *>).activityComponent)
+            .build()
     }
 
     @CallSuper
@@ -108,7 +108,7 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
 
     /* Sets the content view, creates the binding and attaches the view to the view model */
     protected fun setAndBindContentView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, @LayoutRes layoutResID: Int): View {
-        binding = DataBindingUtil.inflate<B>(inflater, layoutResID, container, false)
+        binding = DataBindingUtil.inflate(inflater, layoutResID, container, false)
         binding.setVariable(BR.vm, viewModel)
         viewModel.attachViewOrThrowRuntimeException(this, savedInstanceState)
         return binding.root
