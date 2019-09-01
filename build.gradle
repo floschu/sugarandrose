@@ -14,9 +14,12 @@ buildscript {
         google()
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
+        classpath Libs.buildsrcversions
+
         classpath "com.android.tools.build:gradle:$gradlePluginVersion"
         classpath "io.realm:realm-gradle-plugin:$realmVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -27,7 +30,11 @@ buildscript {
     }
 }
 
+apply plugin: "de.fayard.buildSrcVersions"
+
 allprojects {
+    apply from: rootProject.file("ktlint.gradle")
+
     repositories {
         jcenter()
         google()
@@ -37,4 +44,8 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+buildSrcVersions {
+    indent = "    "
 }
