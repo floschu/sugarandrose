@@ -15,8 +15,8 @@ android {
         applicationId "org.sugarandrose.app"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 26
-        versionName "1.0.2"
+        versionCode 27
+        versionName "1.0.3"
         vectorDrawables.useSupportLibrary = true
 
         setProperty("archivesBaseName", "SugarAndRose-v$versionName-b$versionCode")
