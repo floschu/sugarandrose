@@ -1,0 +1,33 @@
+default_platform(:android)
+
+platform :android do
+  desc "Builds a new version, pushes it to repository and deploys it to internal track"
+    lane :publish do
+      gradle(task: "buildSrcVersions ktlintFormat test")
+      increment_version_code_and_commit lane:self.runner.current_lane
+      gradle(task: "clean bundleRelease")
+      upload_to_play_store(
+        track: "internal",
+        skip_upload_apk: true,
+        skip_upload_metadata: true,
+        skip_upload_images: true,
+        skip_upload_screenshots: true
+      )
+      push_to_git_remote(remote_branch: git_branch)
+    end
+end
+
+desc "Tags the current commit with the tag name"
+private_lane :tagCurrentVersion do |options|
+  add_git_tag(tag: get_tag_name(options))
+end
+
+def increment_version_code_and_commit(options)
+  android_set_version_code
+  git_commit(path: ".", message: "New Version: " + get_tag_name(options))
+  tagCurrentVersion options
+end
+
+def get_tag_name(options)
+  return "v" + android_get_version_name + "-b" + android_get_version_code
+end
