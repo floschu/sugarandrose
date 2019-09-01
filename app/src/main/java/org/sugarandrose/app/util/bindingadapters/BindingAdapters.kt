@@ -18,7 +18,6 @@ import android.app.Activity
 import android.content.Intent
 import android.text.Html
 import android.view.View
-import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
@@ -29,7 +28,6 @@ import androidx.databinding.BindingMethod
 import androidx.databinding.BindingMethods
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.viewpager.widget.ViewPager
 import coil.api.load
 import org.sugarandrose.app.R
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
