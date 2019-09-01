@@ -5,7 +5,7 @@ platform :android do
     lane :publish do
       gradle(task: "buildSrcVersions ktlintFormat test")
       increment_version_code_and_commit lane:self.runner.current_lane
-      gradle(task: "clean bundleRelease")
+      gradle(task: "clean bundleProdRelease")
       upload_to_play_store(
         track: "internal",
         skip_upload_apk: true,
