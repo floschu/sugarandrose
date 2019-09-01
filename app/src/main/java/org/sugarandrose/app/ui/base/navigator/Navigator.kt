@@ -47,5 +47,4 @@ interface Navigator {
     fun replaceFragment(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String? = null)
     fun replaceFragmentAndAddToBackStack(@IdRes containerId: Int, fragment: Fragment, fragmentTag: String? = null, backstackTag: String? = null)
     fun popFragmentBackStackImmediate()
-
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentSearchBinding
 import org.sugarandrose.app.injection.scopes.PerFragment
@@ -13,8 +14,6 @@ import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.categories.overview.CategoriesFragment
 import org.sugarandrose.app.ui.textsearch.TextSearchFragment
-import org.sugarandrose.app.util.manager.TutorialManager
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -26,7 +25,6 @@ interface SearchMvvm {
 
     interface ViewModel : MvvmViewModel<View>
 }
-
 
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchMvvm.ViewModel>(), SearchMvvm.View {
     private var isInTextSearch = false
@@ -48,7 +46,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchMvvm.ViewModel>
 
     fun goToTextSearch() {
         val transaction = childFragmentManager.beginTransaction()
-//        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
         transaction.replace(R.id.container, TextSearchFragment(), null).addToBackStack(null).commit()
         childFragmentManager.executePendingTransactions()
         isInTextSearch = true
@@ -59,7 +56,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchMvvm.ViewModel>
         true
     } else false
 }
-
 
 @PerFragment
 class SearchViewModel @Inject

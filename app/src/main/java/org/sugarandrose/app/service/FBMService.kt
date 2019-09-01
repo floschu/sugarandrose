@@ -1,11 +1,9 @@
 package org.sugarandrose.app.service
 
-
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.sugarandrose.app.SugarAndRoseApp
 import timber.log.Timber
-
 
 /**
  * Created by Florian Schuster
@@ -32,4 +30,3 @@ class FBMService : FirebaseMessagingService() {
     private fun isNewPostPush(title: String, body: String) =
             title == "new_post" && body.matches(Regex("""[0-9]+"""))
 }
-

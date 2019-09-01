@@ -1,9 +1,10 @@
 package org.sugarandrose.app.ui.base
 
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import android.view.View
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.injection.components.ActivityViewHolderComponent
 import org.sugarandrose.app.injection.components.DaggerActivityViewHolderComponent
@@ -11,8 +12,6 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.extensions.attachViewOrThrowRuntimeException
 import org.sugarandrose.app.util.extensions.castWithUnwrap
-
-import javax.inject.Inject
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -61,7 +60,7 @@ abstract class BaseActivityViewHolder<B : ViewDataBinding, VM : MvvmViewModel<*>
     init {
         try {
             ActivityViewHolderComponent::class.java.getDeclaredMethod("inject", this::class.java).invoke(viewHolderComponent, this)
-        } catch(e: NoSuchMethodException) {
+        } catch (e: NoSuchMethodException) {
             throw RtfmException("You forgot to add \"fun inject(viewHolder: ${this::class.java.simpleName})\" in ActivityViewHolderComponent")
         }
     }
@@ -75,5 +74,4 @@ abstract class BaseActivityViewHolder<B : ViewDataBinding, VM : MvvmViewModel<*>
     fun executePendingBindings() {
         binding.executePendingBindings()
     }
-
 }

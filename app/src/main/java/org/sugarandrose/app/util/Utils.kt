@@ -2,11 +2,11 @@ package org.sugarandrose.app.util
 
 import android.content.Intent
 import android.net.Uri
-import androidx.annotation.LayoutRes
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
+import androidx.recyclerview.widget.RecyclerView
 
 /* Copyright 2017 Tailored Media GmbH
  *
@@ -38,5 +38,4 @@ object Utils {
     fun mail(mail: String): Intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$mail"))
     fun call(number: String): Intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$number"))
     fun maps(location: String): Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://maps.google.co.in/maps?q=$location"))
-
 }

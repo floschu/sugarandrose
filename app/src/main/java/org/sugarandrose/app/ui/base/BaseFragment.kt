@@ -1,16 +1,17 @@
 package org.sugarandrose.app.ui.base
 
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import android.os.Bundle
-import androidx.annotation.CallSuper
-import androidx.annotation.LayoutRes
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
+import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import com.squareup.leakcanary.RefWatcher
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.injection.components.DaggerFragmentComponent
 import org.sugarandrose.app.injection.components.FragmentComponent
@@ -20,7 +21,6 @@ import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.extensions.attachViewOrThrowRuntimeException
-import javax.inject.Inject
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -105,7 +105,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : MvvmViewModel<*>> : Fragme
         refWatcher.watch(this)
         refWatcher.watch(fragmentComponent)
     }
-
 
     /* Sets the content view, creates the binding and attaches the view to the view model */
     protected fun setAndBindContentView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, @LayoutRes layoutResID: Int): View {

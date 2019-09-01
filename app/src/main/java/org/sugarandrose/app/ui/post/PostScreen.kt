@@ -4,17 +4,23 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
-import androidx.databinding.Bindable
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.webkit.*
+import android.webkit.SslErrorHandler
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebSettings
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.databinding.Bindable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalPost
@@ -30,12 +36,15 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
+import org.sugarandrose.app.util.extensions.getColorHex
+import org.sugarandrose.app.util.extensions.hideStatusBar
+import org.sugarandrose.app.util.extensions.showSystemUi
+import org.sugarandrose.app.util.extensions.slideIn
+import org.sugarandrose.app.util.extensions.slideOut
 import org.sugarandrose.app.util.manager.ErrorManager
 import org.sugarandrose.app.util.manager.WebManager
-import timber.log.Timber
-import javax.inject.Inject
 import org.sugarandrose.app.util.videowebview.VideoEnabledWebChromeClient
-import org.sugarandrose.app.util.extensions.*
+import timber.log.Timber
 
 /**
  * Created by Florian Schuster
@@ -155,7 +164,6 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
             "mailto" -> navigator.startActivity(Intent.ACTION_SENDTO, uri)
             "tel" -> navigator.startActivity(Intent.ACTION_DIAL, uri)
             else -> webManager.open(uri)
-
         }
 
         override fun onPageFinished(view: WebView, url: String) {
@@ -182,13 +190,14 @@ class PostActivity : BaseActivity<ActivityPostBinding, PostMvvm.ViewModel>(), Po
 
 @PerActivity
 class PostViewModel @Inject
-constructor(@ActivityDisposable private val disposable: CompositeDisposable,
-            private val api: SugarAndRoseApi,
-            private val webManager: WebManager,
-            private val navigator: Navigator,
-            private val errorManager: ErrorManager,
-            private val toaster: Toaster,
-            @ActivityContext context: Context
+constructor(
+    @ActivityDisposable private val disposable: CompositeDisposable,
+    private val api: SugarAndRoseApi,
+    private val webManager: WebManager,
+    private val navigator: Navigator,
+    private val errorManager: ErrorManager,
+    private val toaster: Toaster,
+    @ActivityContext context: Context
 ) : BaseViewModel<PostMvvm.View>(), PostMvvm.ViewModel {
     override var post: LocalPost by NotifyPropertyChangedDelegate(LocalPost(), BR.post)
     override var loading: Boolean by NotifyPropertyChangedDelegate(false, BR.loading)

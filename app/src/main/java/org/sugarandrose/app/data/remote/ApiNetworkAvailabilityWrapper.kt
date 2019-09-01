@@ -2,7 +2,10 @@ package org.sugarandrose.app.data.remote
 
 import android.content.Context
 import io.reactivex.Single
-import org.sugarandrose.app.data.model.remote.*
+import org.sugarandrose.app.data.model.remote.Category
+import org.sugarandrose.app.data.model.remote.More
+import org.sugarandrose.app.data.model.remote.Post
+import org.sugarandrose.app.data.model.remote.Roses
 import org.sugarandrose.app.util.exceptions.NetworkUnavailableException
 import org.sugarandrose.app.util.extensions.isNetworkAvailable
 import retrofit2.adapter.rxjava2.Result

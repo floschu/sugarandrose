@@ -14,13 +14,11 @@
 
 package org.sugarandrose.app.ui.base.feedback
 
-import androidx.annotation.StringRes
 import android.widget.Toast
-
+import androidx.annotation.StringRes
 
 interface Toaster {
 
     fun show(title: String, duration: Int = Toast.LENGTH_LONG)
     fun show(@StringRes titleRes: Int, duration: Int = Toast.LENGTH_LONG)
-
 }

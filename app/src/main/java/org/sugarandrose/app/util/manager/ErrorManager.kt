@@ -1,6 +1,8 @@
 package org.sugarandrose.app.util.manager
 
 import android.content.res.Resources
+import java.io.IOException
+import javax.inject.Inject
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.injection.scopes.PerActivity
@@ -11,8 +13,6 @@ import org.sugarandrose.app.util.exceptions.NetworkUnavailableException
 import org.sugarandrose.app.util.views.NoConnectionDialogFragment
 import retrofit2.HttpException
 import timber.log.Timber
-import java.io.IOException
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -21,10 +21,12 @@ import javax.inject.Inject
 
 @PerActivity
 class ErrorManager @Inject
-constructor(private val res: Resources,
-            private val navigator: Navigator,
-            private val snacker: Snacker,
-            private val toaster: Toaster) {
+constructor(
+    private val res: Resources,
+    private val navigator: Navigator,
+    private val snacker: Snacker,
+    private val toaster: Toaster
+) {
 
     fun handleWithToast(throwable: Throwable, retryCallback: (() -> Unit)? = null) {
         alertUser(throwable, { toaster.show(it) }, retryCallback)

@@ -1,8 +1,9 @@
 package org.sugarandrose.app.ui.displayitems.recyclerview
 
-import androidx.databinding.Bindable
 import android.view.View
+import androidx.databinding.Bindable
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalRose
@@ -17,7 +18,6 @@ import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.manager.EventLogManager
 import org.sugarandrose.app.util.manager.ShareManager
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -50,10 +50,11 @@ class RoseItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemRoseBindin
 
 @PerViewHolder
 class RoseItemViewModel @Inject
-constructor(@ActivityDisposable private val disposable: CompositeDisposable,
-            private val favoritedRepo: FavoritedRepo,
-            private val shareManager: ShareManager,
-            private val eventLogManager: EventLogManager
+constructor(
+    @ActivityDisposable private val disposable: CompositeDisposable,
+    private val favoritedRepo: FavoritedRepo,
+    private val shareManager: ShareManager,
+    private val eventLogManager: EventLogManager
 ) : BaseViewModel<RoseItemMvvm.View>(), RoseItemMvvm.ViewModel {
     override lateinit var rose: LocalRose
     override var favorited: Boolean = false

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 
 class RecyclerViewScrollCallback(
-    private val visibleThreshold: Int,  // The minimum amount of items to have below your current scroll position before loading more.
+    private val visibleThreshold: Int, // The minimum amount of items to have below your current scroll position before loading more.
     private val layoutManager: RecyclerView.LayoutManager
 ) : RecyclerView.OnScrollListener() {
 

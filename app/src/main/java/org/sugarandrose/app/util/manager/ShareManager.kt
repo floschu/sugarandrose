@@ -11,6 +11,10 @@ import coil.api.load
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import javax.inject.Inject
 import org.sugarandrose.app.BuildConfig
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalMedia
@@ -19,10 +23,6 @@ import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster

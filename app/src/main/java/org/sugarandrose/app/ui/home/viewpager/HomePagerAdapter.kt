@@ -4,12 +4,12 @@ import android.content.res.Resources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.injection.qualifier.ChildFragmentManager
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.news.NewFragment
 import org.sugarandrose.app.ui.roses.RosesFragment
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -34,4 +34,3 @@ class HomePagerAdapter @Inject constructor(
         else -> ""
     }
 }
-

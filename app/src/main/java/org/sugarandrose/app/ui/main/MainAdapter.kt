@@ -16,8 +16,8 @@ import org.sugarandrose.app.ui.search.SearchFragment
  * florian.schuster@tailored-apps.com
  */
 
-class MainAdapter(fragmentManager: FragmentManager, @IdRes containerId: Int, @IdRes defaultMenuItemId: Int, savedInstanceState: Bundle?)
-    : NavigationViewFragmentAdapter(fragmentManager, containerId, defaultMenuItemId, savedInstanceState) {
+class MainAdapter(fragmentManager: FragmentManager, @IdRes containerId: Int, @IdRes defaultMenuItemId: Int, savedInstanceState: Bundle?) :
+    NavigationViewFragmentAdapter(fragmentManager, containerId, defaultMenuItemId, savedInstanceState) {
 
     override fun getFragment(@IdRes menuItemId: Int): Fragment = when (menuItemId) {
         R.id.bnv_new -> HomeFragment()

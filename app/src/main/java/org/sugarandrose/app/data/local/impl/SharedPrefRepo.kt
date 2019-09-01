@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.util.Base64
+import javax.inject.Inject
 import org.sugarandrose.app.data.local.PrefRepo
 import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerApplication
-import javax.inject.Inject
 
 /* Copyright 2017 Tailored Media GmbH
  *
@@ -34,11 +34,10 @@ constructor(@AppContext context: Context) : PrefRepo {
 
     override var onboardingDone: Boolean
         get() = prefs.getBoolean(ONBOARDING_DONE_KEY, false)
-        set(key) = prefs.edit().putBoolean(ONBOARDING_DONE_KEY,key).apply()
+        set(key) = prefs.edit().putBoolean(ONBOARDING_DONE_KEY, key).apply()
 
     companion object {
         private val REALM_ENCRYPTION_KEY = "realm_encryption_key"
         private val ONBOARDING_DONE_KEY = "onboarding_done_key"
     }
-
 }

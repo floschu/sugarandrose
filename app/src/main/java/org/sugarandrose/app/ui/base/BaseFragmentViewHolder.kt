@@ -1,12 +1,13 @@
 package org.sugarandrose.app.ui.base
 
 import android.content.Context
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import android.view.View
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.injection.components.DaggerFragmentViewHolderComponent
 import org.sugarandrose.app.injection.components.FragmentViewHolderComponent
@@ -14,7 +15,6 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.extensions.attachViewOrThrowRuntimeException
 import org.sugarandrose.app.util.extensions.castWithUnwrap
-import javax.inject.Inject
 
 /* Base class for ViewHolders when using a view model in a Fragment with data binding.
  * This class provides the binding and the view model to the subclass. The
@@ -35,18 +35,18 @@ abstract class BaseFragmentViewHolder<B : ViewDataBinding, VM : MvvmViewModel<*>
     @Inject lateinit var viewModel: VM
         protected set
 
-    protected abstract val fragmentContainerId : Int
+    protected abstract val fragmentContainerId: Int
 
     protected val viewHolderComponent: FragmentViewHolderComponent by lazy {
         DaggerFragmentViewHolderComponent.builder()
-                .fragmentComponent(itemView.context.getFragment<BaseFragment<*,*>>(fragmentContainerId)!!.fragmentComponent)
+                .fragmentComponent(itemView.context.getFragment<BaseFragment<*, *>>(fragmentContainerId)!!.fragmentComponent)
                 .build()
     }
 
     init {
         try {
             FragmentViewHolderComponent::class.java.getDeclaredMethod("inject", this::class.java).invoke(viewHolderComponent, this)
-        } catch(e: NoSuchMethodException) {
+        } catch (e: NoSuchMethodException) {
             throw RtfmException("You forgot to add \"fun inject(viewHolder: ${this::class.java.simpleName})\" in FragmentViewHolderComponent")
         }
     }

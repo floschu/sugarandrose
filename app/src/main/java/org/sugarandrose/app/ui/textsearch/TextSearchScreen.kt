@@ -1,21 +1,22 @@
 package org.sugarandrose.app.ui.textsearch
 
-import androidx.databinding.Bindable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.Bindable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentTextsearchBinding
 import org.sugarandrose.app.injection.qualifier.FragmentDisposable
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.ui.base.BaseFragment
-import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
@@ -23,13 +24,10 @@ import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.ui.search.SearchFragment
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.pagination.PaginationScrollListener
 import org.sugarandrose.app.util.extensions.hideKeyboard
 import org.sugarandrose.app.util.extensions.showKeyboard
 import org.sugarandrose.app.util.manager.ErrorManager
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
-
+import org.sugarandrose.app.util.pagination.PaginationScrollListener
 
 /**
  * Created by Florian Schuster
@@ -61,7 +59,6 @@ interface TextSearchMvvm {
     }
 }
 
-
 class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvvm.ViewModel>(), TextSearchMvvm.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -92,11 +89,11 @@ class TextSearchFragment : BaseFragment<FragmentTextsearchBinding, TextSearchMvv
     }
 }
 
-
 @PerFragment
 class TextSearchViewModel @Inject
-constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val errorManager: ErrorManager
+constructor(
+    @FragmentDisposable private val disposable: CompositeDisposable,
+    private val errorManager: ErrorManager
 ) : BaseViewModel<TextSearchMvvm.View>(), TextSearchMvvm.ViewModel {
 
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)

@@ -1,11 +1,12 @@
 package org.sugarandrose.app.ui.home
 
-import androidx.databinding.Bindable
 import android.os.Bundle
-import androidx.fragment.app.FragmentPagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.Bindable
+import androidx.fragment.app.FragmentPagerAdapter
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentHomeBinding
@@ -17,8 +18,6 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.home.viewpager.HomePagerAdapter
 import org.sugarandrose.app.ui.launcher.LauncherActivity
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import javax.inject.Inject
-
 
 /**
  * Created by Florian Schuster
@@ -38,7 +37,6 @@ interface HomeMvvm {
     }
 }
 
-
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeMvvm.ViewModel>(), HomeMvvm.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,9 +54,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeMvvm.ViewModel>(), Ho
     override fun setSelectedPage(page: Int) {
         viewModel.selectedPagePosition = page
     }
-
 }
-
 
 @PerFragment
 class HomeViewModel @Inject

@@ -10,10 +10,11 @@ import org.sugarandrose.app.data.model.remote.Category
  */
 
 @Parcelize
-class LocalCategory(var id: Int,
-                    var name: String,
-                    var image: String,
-                    var children: List<LocalCategory>
+class LocalCategory(
+    var id: Int,
+    var name: String,
+    var image: String,
+    var children: List<LocalCategory>
 ) : Parcelable {
     constructor(category: Category, children: List<LocalCategory>) : this(category.id, category.name, category.image, children)
     constructor() : this(0, "", "", emptyList())

@@ -9,12 +9,12 @@ import androidx.annotation.DrawableRes
 import androidx.browser.customtabs.CustomTabsClient
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.util.Utils
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster

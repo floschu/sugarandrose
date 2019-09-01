@@ -21,11 +21,11 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Build
-import androidx.core.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import org.sugarandrose.app.R
 import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
+import org.sugarandrose.app.R
 
 inline fun <reified T> Context.castWithUnwrap(): T? {
     if (this is T) return this

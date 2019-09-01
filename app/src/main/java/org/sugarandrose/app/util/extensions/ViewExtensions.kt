@@ -8,14 +8,13 @@ import android.view.animation.TranslateAnimation
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import timber.log.Timber
 
 /**
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
-
 
 fun View.isVisible(): Boolean = this.visibility == View.VISIBLE
 
@@ -37,7 +36,7 @@ fun View.slideOut(millis: Long): Completable {
 
 fun View.slideIn(millis: Long): Completable {
     this.clearAnimation()
-    val fadeIn =  TranslateAnimation(Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, 0f, Animation.RELATIVE_TO_SELF, 3f, Animation.RELATIVE_TO_SELF, 0f)
+    val fadeIn = TranslateAnimation(Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, 0f, Animation.RELATIVE_TO_SELF, 3f, Animation.RELATIVE_TO_SELF, 0f)
     fadeIn.interpolator = DecelerateInterpolator()
     fadeIn.duration = millis
     this.startAnimation(fadeIn)

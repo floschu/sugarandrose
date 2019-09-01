@@ -5,23 +5,23 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
 import android.widget.ImageView
+import androidx.fragment.app.DialogFragment
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import org.sugarandrose.app.R
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
-import android.view.animation.Animation
-import android.view.animation.RotateAnimation
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import org.sugarandrose.app.R
 import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.util.extensions.isNetworkAvailable
+import timber.log.Timber
 
 /**
  * Created by Florian Schuster

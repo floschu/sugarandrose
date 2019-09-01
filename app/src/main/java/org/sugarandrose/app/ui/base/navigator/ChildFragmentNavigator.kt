@@ -33,5 +33,4 @@ class ChildFragmentNavigator(private val fragment: Fragment) : ActivityNavigator
     override fun popChildFragmentBackstackImmediate() {
         fragment.childFragmentManager.popBackStackImmediate()
     }
-
 }

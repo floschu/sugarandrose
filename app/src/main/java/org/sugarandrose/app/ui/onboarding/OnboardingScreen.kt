@@ -2,8 +2,8 @@ package org.sugarandrose.app.ui.onboarding
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.app.ActivityOptionsCompat
 import android.widget.ImageView
+import androidx.core.app.ActivityOptionsCompat
 import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.local.PrefRepo

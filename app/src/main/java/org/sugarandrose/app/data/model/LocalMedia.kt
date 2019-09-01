@@ -13,11 +13,12 @@ import org.sugarandrose.app.util.extensions.toRealmString
  */
 
 @Parcelize
-open class LocalMedia(@PrimaryKey override var id: Long,
-                      var image: String,
-                      override var date: String,
-                      override var name: String = date,
-                      override var ANALYTICS_CATEGORY: String = "Media"
+open class LocalMedia(
+    @PrimaryKey override var id: Long,
+    var image: String,
+    override var date: String,
+    override var name: String = date,
+    override var ANALYTICS_CATEGORY: String = "Media"
 ) : Parcelable, RealmObject(), LocalDisplayItem {
     constructor() : this(0, "", "")
     constructor(media: Media) : this(media.id, media.source_url, media.date.toRealmString())

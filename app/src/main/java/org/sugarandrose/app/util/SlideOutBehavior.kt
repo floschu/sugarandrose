@@ -1,16 +1,15 @@
 package org.sugarandrose.app.util
 
 import android.content.Context
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import android.util.AttributeSet
 import android.view.View
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import io.reactivex.disposables.Disposable
 import org.sugarandrose.app.util.extensions.isVisible
 import org.sugarandrose.app.util.extensions.slideIn
 import org.sugarandrose.app.util.extensions.slideOut
-
 
 /**
  * Created by Florian Schuster

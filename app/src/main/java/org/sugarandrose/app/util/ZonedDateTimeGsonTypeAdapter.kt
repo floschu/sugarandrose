@@ -3,14 +3,11 @@ package org.sugarandrose.app.util
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonWriter
+import java.io.IOException
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
-
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
-
-import java.io.IOException
-
 
 /**
  * Created by Florian Schuster

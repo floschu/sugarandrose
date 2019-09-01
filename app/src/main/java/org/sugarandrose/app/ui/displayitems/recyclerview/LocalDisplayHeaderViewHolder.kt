@@ -12,7 +12,6 @@ import org.sugarandrose.app.ui.base.viewmodel.NoOpViewModel
  * florian.schuster@tailored-apps.com
  */
 
-
 class LocalDisplayHeaderViewHolder(itemView: View) : BaseActivityViewHolder<ItemDisplayHeaderBinding, NoOpViewModel<MvvmView>>(itemView), MvvmView {
 
     init {

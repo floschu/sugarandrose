@@ -1,6 +1,5 @@
 package org.sugarandrose.app.injection.scopes
 
-
 import javax.inject.Scope
 
 /* Copyright 2016 Patrick Löwenstein

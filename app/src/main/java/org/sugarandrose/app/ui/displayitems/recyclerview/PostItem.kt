@@ -1,8 +1,9 @@
 package org.sugarandrose.app.ui.displayitems.recyclerview
 
-import androidx.databinding.Bindable
 import android.view.View
+import androidx.databinding.Bindable
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalPost
@@ -20,7 +21,6 @@ import org.sugarandrose.app.util.manager.EventLogManager
 import org.sugarandrose.app.util.manager.ShareManager
 import org.sugarandrose.app.util.manager.TutorialManager
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -60,12 +60,13 @@ class PostItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemPostBindin
 
 @PerViewHolder
 class PostItemViewModel @Inject
-constructor(@ActivityDisposable private val disposable: CompositeDisposable,
-            private val navigator: Navigator,
-            private val favoritedRepo: FavoritedRepo,
-            private val shareManager: ShareManager,
-            private val eventLogManager: EventLogManager,
-            private val tutorialManager: TutorialManager
+constructor(
+    @ActivityDisposable private val disposable: CompositeDisposable,
+    private val navigator: Navigator,
+    private val favoritedRepo: FavoritedRepo,
+    private val shareManager: ShareManager,
+    private val eventLogManager: EventLogManager,
+    private val tutorialManager: TutorialManager
 ) : BaseViewModel<PostItemMvvm.View>(), PostItemMvvm.ViewModel {
     override lateinit var post: LocalPost
     override var favorited: Boolean = false

@@ -1,7 +1,5 @@
 package org.sugarandrose.app.injection.components
 
-import org.sugarandrose.app.ui.launcher.LauncherActivity
-import org.sugarandrose.app.ui.onboarding.OnboardingActivity
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import dagger.Component
@@ -15,10 +13,16 @@ import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.feedback.Snacker
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailActivity
+import org.sugarandrose.app.ui.launcher.LauncherActivity
 import org.sugarandrose.app.ui.main.MainActivity
+import org.sugarandrose.app.ui.onboarding.OnboardingActivity
 import org.sugarandrose.app.ui.photo.PhotoDetailActivity
 import org.sugarandrose.app.ui.post.PostActivity
-import org.sugarandrose.app.util.manager.*
+import org.sugarandrose.app.util.manager.ErrorManager
+import org.sugarandrose.app.util.manager.ShareManager
+import org.sugarandrose.app.util.manager.SocialMediaManager
+import org.sugarandrose.app.util.manager.TutorialManager
+import org.sugarandrose.app.util.manager.WebManager
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -48,7 +52,6 @@ interface ActivityComponent : ActivityComponentProvides {
     fun inject(activity: PostActivity)
     fun inject(activity: PhotoDetailActivity)
     fun inject(activity: CategoryDetailActivity)
-
 }
 
 interface ActivityComponentProvides : AppComponentProvides {

@@ -1,7 +1,7 @@
 package org.sugarandrose.app.ui.categories.recyclerview
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.util.NotifyDatasetChangedDelegate

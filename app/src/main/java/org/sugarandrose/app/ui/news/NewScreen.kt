@@ -1,13 +1,14 @@
 package org.sugarandrose.app.ui.news
 
-import androidx.databinding.Bindable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.Bindable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentNewBinding
@@ -20,9 +21,8 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
-import org.sugarandrose.app.util.pagination.PaginationScrollListener
 import org.sugarandrose.app.util.manager.ErrorManager
-import javax.inject.Inject
+import org.sugarandrose.app.util.pagination.PaginationScrollListener
 
 /**
  * Created by Florian Schuster
@@ -42,7 +42,6 @@ interface NewMvvm {
         val adapter: DisplayItemAdapter
     }
 }
-
 
 class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMvvm.View {
 
@@ -65,11 +64,11 @@ class NewFragment : BaseFragment<FragmentNewBinding, NewMvvm.ViewModel>(), NewMv
     }
 }
 
-
 @PerFragment
 class NewViewModel @Inject
-constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val errorManager: ErrorManager
+constructor(
+    @FragmentDisposable private val disposable: CompositeDisposable,
+    private val errorManager: ErrorManager
 ) : BaseViewModel<NewMvvm.View>(), NewMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(false, BR.refreshing)
 

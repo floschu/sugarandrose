@@ -115,10 +115,6 @@ object Libs {
 
     const val google_services: String = "com.google.gms:google-services:" + Versions.google_services
 
-    const val picasso2_okhttp3_downloader: String =
-            "com.jakewharton.picasso:picasso2-okhttp3-downloader:" +
-            Versions.picasso2_okhttp3_downloader
-
     /**
      * https://github.com/JakeWharton/ThreeTenABP/
      */
@@ -171,11 +167,6 @@ object Libs {
      * https://github.com/square/okhttp
      */
     const val okhttp: String = "com.squareup.okhttp3:okhttp:" + Versions.com_squareup_okhttp3
-
-    /**
-     * https://github.com/square/picasso/
-     */
-    const val picasso: String = "com.squareup.picasso:picasso:" + Versions.picasso
 
     /**
      * https://github.com/square/retrofit/

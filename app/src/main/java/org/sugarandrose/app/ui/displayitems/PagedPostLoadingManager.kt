@@ -5,7 +5,6 @@ import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.LocalPost
 import org.sugarandrose.app.data.model.remote.Post
-import retrofit2.HttpException
 import retrofit2.adapter.rxjava2.Result
 
 /**

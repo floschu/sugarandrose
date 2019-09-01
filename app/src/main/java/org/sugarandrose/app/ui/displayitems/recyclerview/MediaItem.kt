@@ -1,8 +1,9 @@
 package org.sugarandrose.app.ui.displayitems.recyclerview
 
-import androidx.databinding.Bindable
 import android.view.View
+import androidx.databinding.Bindable
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalMedia
@@ -17,7 +18,6 @@ import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import org.sugarandrose.app.util.manager.EventLogManager
 import org.sugarandrose.app.util.manager.ShareManager
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -50,10 +50,11 @@ class MediaItemViewHolder(itemView: View) : BaseActivityViewHolder<ItemMediaBind
 
 @PerViewHolder
 class MediaItemViewModel @Inject
-constructor(@ActivityDisposable private val disposable: CompositeDisposable,
-            private val favoritedRepo: FavoritedRepo,
-            private val shareManager: ShareManager,
-            private val eventLogManager: EventLogManager
+constructor(
+    @ActivityDisposable private val disposable: CompositeDisposable,
+    private val favoritedRepo: FavoritedRepo,
+    private val shareManager: ShareManager,
+    private val eventLogManager: EventLogManager
 ) : BaseViewModel<MediaItemMvvm.View>(), MediaItemMvvm.ViewModel {
     override lateinit var media: LocalMedia
     override var favorited: Boolean = false
@@ -73,7 +74,6 @@ constructor(@ActivityDisposable private val disposable: CompositeDisposable,
 
         if (favorited) eventLogManager.logFavorite(media)
     }
-
 
     override fun onShareClick() {
         shareManager.shareMedia(media)

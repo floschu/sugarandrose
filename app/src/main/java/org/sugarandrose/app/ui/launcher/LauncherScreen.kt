@@ -8,6 +8,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.Int
 import org.sugarandrose.app.R
@@ -21,7 +22,6 @@ import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.main.MainActivity
 import org.sugarandrose.app.ui.onboarding.OnboardingActivity
-import java.util.concurrent.TimeUnit
 
 private const val layout: Int = R.layout.activity_launcher
 
@@ -67,8 +67,9 @@ class LauncherActivity : BaseActivity<ActivityLauncherBinding, LauncherMvvm.View
 
 @PerActivity
 class LauncherViewModel @Inject
-constructor(@ActivityDisposable private val disposable: CompositeDisposable,
-            private val prefRepo: PrefRepo
+constructor(
+    @ActivityDisposable private val disposable: CompositeDisposable,
+    private val prefRepo: PrefRepo
 ) : BaseViewModel<LauncherMvvm.View>(), LauncherMvvm.ViewModel {
 
     override fun init() {

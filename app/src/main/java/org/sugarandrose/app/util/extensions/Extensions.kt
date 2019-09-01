@@ -13,7 +13,7 @@ import org.sugarandrose.app.ui.base.viewmodel.NoOpViewModel
  * florian.schuster@tailored-apps.com
  */
 
-//ViewModel
+// ViewModel
 
 fun <V : MvvmView> MvvmViewModel<V>.attachViewOrThrowRuntimeException(view: MvvmView, savedInstanceState: Bundle?) {
     try {
@@ -37,7 +37,7 @@ fun Activity.hideStatusBar() {
             View.SYSTEM_UI_FLAG_FULLSCREEN
 }
 
-//Bundle
+// Bundle
 
 fun <T : Parcelable> Bundle.getParcelable(key: String, defaultObject: T): T = if (containsKey(key)) {
     getParcelable(key)!!

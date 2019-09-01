@@ -14,13 +14,13 @@
 
 package org.sugarandrose.app.ui.base.viewmodel
 
-import androidx.databinding.BaseObservable
 import android.os.Bundle
 import android.os.Parcelable
 import androidx.annotation.CallSuper
+import androidx.databinding.BaseObservable
+import javax.inject.Inject
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.util.extensions.getParcelable
-import javax.inject.Inject
 
 /**
  * Base class that implements the ViewModel interface and provides a base implementation for
@@ -66,6 +66,4 @@ abstract class BaseStateViewModel<V : MvvmView, S : Parcelable> : BaseObservable
             state = savedInstanceState.getParcelable(KEY_STATE, state)
         }
     }
-
 }
-

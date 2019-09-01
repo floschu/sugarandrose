@@ -5,11 +5,10 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
 import org.sugarandrose.app.data.model.LocalMorePage
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.injection.scopes.PerApplication
-import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -20,10 +19,10 @@ import javax.inject.Inject
 class MoreCacheManager @Inject
 constructor(private val api: SugarAndRoseApi) {
     val MORE_PAGES = listOf(
-            api.getMore(1635), //rezeptindex
-            api.getMore(2887),  //rosenglossar
-            api.getMore(10030),  //rosenindex
-            api.getMore(129) //diy
+            api.getMore(1635), // rezeptindex
+            api.getMore(2887), // rosenglossar
+            api.getMore(10030), // rosenindex
+            api.getMore(129) // diy
     )
 
     private var data = emptyList<LocalMorePage>()

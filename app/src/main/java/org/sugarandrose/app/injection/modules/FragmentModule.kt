@@ -44,5 +44,4 @@ class FragmentModule(private val fragment: Fragment) {
     @PerFragment
     @FragmentDisposable
     internal fun provideFragmentCompositeDisposable(): CompositeDisposable = CompositeDisposable()
-
 }

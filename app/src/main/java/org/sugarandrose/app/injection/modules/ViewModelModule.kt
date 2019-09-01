@@ -1,10 +1,5 @@
 package org.sugarandrose.app.injection.modules
 
-
-import org.sugarandrose.app.ui.launcher.LauncherViewModel
-import org.sugarandrose.app.ui.launcher.LauncherMvvm
-import org.sugarandrose.app.ui.onboarding.OnboardingViewModel
-import org.sugarandrose.app.ui.onboarding.OnboardingMvvm
 import dagger.Binds
 import dagger.Module
 import org.sugarandrose.app.ui.categories.detail.CategoryDetailMvvm
@@ -13,11 +8,18 @@ import org.sugarandrose.app.ui.categories.overview.CategoriesMvvm
 import org.sugarandrose.app.ui.categories.overview.CategoriesViewModel
 import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemMvvm
 import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewModel
-import org.sugarandrose.app.ui.displayitems.recyclerview.*
+import org.sugarandrose.app.ui.displayitems.recyclerview.MediaItemMvvm
+import org.sugarandrose.app.ui.displayitems.recyclerview.MediaItemViewModel
+import org.sugarandrose.app.ui.displayitems.recyclerview.PostItemMvvm
+import org.sugarandrose.app.ui.displayitems.recyclerview.PostItemViewModel
+import org.sugarandrose.app.ui.displayitems.recyclerview.RoseItemMvvm
+import org.sugarandrose.app.ui.displayitems.recyclerview.RoseItemViewModel
 import org.sugarandrose.app.ui.favorited.FavoritedMvvm
 import org.sugarandrose.app.ui.favorited.FavoritedViewModel
 import org.sugarandrose.app.ui.home.HomeMvvm
 import org.sugarandrose.app.ui.home.HomeViewModel
+import org.sugarandrose.app.ui.launcher.LauncherMvvm
+import org.sugarandrose.app.ui.launcher.LauncherViewModel
 import org.sugarandrose.app.ui.main.MainMvvm
 import org.sugarandrose.app.ui.main.MainViewModel
 import org.sugarandrose.app.ui.more.MoreMvvm
@@ -28,6 +30,8 @@ import org.sugarandrose.app.ui.more.recyclerview.MorePageItemMvvm
 import org.sugarandrose.app.ui.more.recyclerview.MorePageItemViewModel
 import org.sugarandrose.app.ui.news.NewMvvm
 import org.sugarandrose.app.ui.news.NewViewModel
+import org.sugarandrose.app.ui.onboarding.OnboardingMvvm
+import org.sugarandrose.app.ui.onboarding.OnboardingViewModel
 import org.sugarandrose.app.ui.post.PostMvvm
 import org.sugarandrose.app.ui.post.PostViewModel
 import org.sugarandrose.app.ui.roses.RosesMvvm

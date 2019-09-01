@@ -16,13 +16,14 @@ import org.threeten.bp.format.DateTimeFormatter
  */
 
 @Parcelize
-open class LocalPost(@PrimaryKey override var id: Long,
-                     override var date: String,
-                     override var name: String,
-                     var url: String,
-                     var image: String?,
-                     var content: String?,
-                     override var ANALYTICS_CATEGORY: String = "Post"
+open class LocalPost(
+    @PrimaryKey override var id: Long,
+    override var date: String,
+    override var name: String,
+    var url: String,
+    var image: String?,
+    var content: String?,
+    override var ANALYTICS_CATEGORY: String = "Post"
 ) : Parcelable, RealmObject(), LocalDisplayItem {
     constructor() : this(0, ZonedDateTime.now().toRealmString(), "", "", null, "", "")
     constructor(post: Post) : this(post.id, post.date.toRealmString(), post.title.rendered, post.link, post.better_featured_image.source_url, post.content?.rendered)

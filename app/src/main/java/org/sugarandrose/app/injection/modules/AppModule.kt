@@ -45,7 +45,6 @@ class AppModule(private val app: Application) {
     @PerApplication
     internal fun provideResources(): Resources = app.resources
 
-
     @Provides
     @PerApplication
     internal fun provideRefWatcher(): RefWatcher = LeakCanary.install(app)
@@ -59,7 +58,6 @@ class AppModule(private val app: Application) {
         }.build()
         return Realm.getInstance(config)
     }
-
 
     @Provides
     @PerApplication

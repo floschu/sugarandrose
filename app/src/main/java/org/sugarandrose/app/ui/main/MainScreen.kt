@@ -6,10 +6,12 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.annotation.IdRes
 import io.reactivex.rxkotlin.addTo
+import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.ActivityMainBinding
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.BaseActivity
+import org.sugarandrose.app.ui.base.BaseFragment
 import org.sugarandrose.app.ui.base.navigator.Navigator
 import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
@@ -18,8 +20,6 @@ import org.sugarandrose.app.ui.home.HomeFragment
 import org.sugarandrose.app.ui.post.PostActivity
 import org.sugarandrose.app.ui.roses.RosesCacheManager
 import org.sugarandrose.app.util.manager.WebManager
-import javax.inject.Inject
-import org.sugarandrose.app.ui.base.BaseFragment
 
 const val PUSH_POST_ID_INTENT = "org.sugarandrose.app.ui.main.MainActivity.post_id_intent"
 
@@ -34,7 +34,6 @@ interface MainMvvm {
         fun openPost(postId: Long)
     }
 }
-
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), MainMvvm.View {
     private lateinit var adapter: MainAdapter
@@ -93,12 +92,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainMvvm.ViewModel>(), Ma
     }
 }
 
-
 @PerActivity
 class MainViewModel @Inject
-constructor(private val navigator: Navigator,
-            private val resources: Resources,
-            private val webManager: WebManager
+constructor(
+    private val navigator: Navigator,
+    private val resources: Resources,
+    private val webManager: WebManager
 ) : BaseViewModel<MainMvvm.View>(), MainMvvm.ViewModel {
     private val postRegex = Regex("""2[0-9]{3}/[0-9]{2}/[0-9]{2}/*/""")
 

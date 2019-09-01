@@ -1,8 +1,8 @@
 package org.sugarandrose.app.util.pagination
 
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 /**
@@ -20,16 +20,21 @@ object RecyclerViewUtil {
         }
     }
 
-    fun computeVisibleThreshold(layoutManager: RecyclerView.LayoutManager,
-                                layoutManagerType: LayoutManagerType, visibleThreshold: Int): Int =
+    fun computeVisibleThreshold(
+        layoutManager: RecyclerView.LayoutManager,
+        layoutManagerType: LayoutManagerType,
+        visibleThreshold: Int
+    ): Int =
             when (layoutManagerType) {
                 LayoutManagerType.GRID -> (layoutManager as GridLayoutManager).spanCount * visibleThreshold
                 LayoutManagerType.STAGGERED_GRID -> (layoutManager as StaggeredGridLayoutManager).spanCount * visibleThreshold
                 LayoutManagerType.LINEAR, LayoutManagerType.DEFAULT -> visibleThreshold
             }
 
-    fun getLastVisibleItemPosition(layoutManager: RecyclerView.LayoutManager,
-                                   layoutManagerType: LayoutManagerType): Int =
+    fun getLastVisibleItemPosition(
+        layoutManager: RecyclerView.LayoutManager,
+        layoutManagerType: LayoutManagerType
+    ): Int =
             when (layoutManagerType) {
                 LayoutManagerType.LINEAR, LayoutManagerType.GRID -> (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
                 LayoutManagerType.STAGGERED_GRID -> {

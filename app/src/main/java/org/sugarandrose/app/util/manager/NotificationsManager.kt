@@ -12,13 +12,13 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.injection.qualifier.AppContext
 import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.ui.main.MainActivity
 import org.sugarandrose.app.ui.main.PUSH_POST_ID_INTENT
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster

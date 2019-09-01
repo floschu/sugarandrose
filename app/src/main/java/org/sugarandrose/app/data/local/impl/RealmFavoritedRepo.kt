@@ -4,6 +4,8 @@ import io.reactivex.Flowable
 import io.reactivex.rxkotlin.Flowables
 import io.realm.Realm
 import io.realm.RealmObject
+import javax.inject.Inject
+import javax.inject.Provider
 import org.sugarandrose.app.data.local.FavoritedRepo
 import org.sugarandrose.app.data.model.LocalDisplayItem
 import org.sugarandrose.app.data.model.LocalMedia
@@ -12,8 +14,6 @@ import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.injection.scopes.PerApplication
 import org.sugarandrose.app.util.extensions.fromRealmString
 import org.sugarandrose.app.util.extensions.use
-import javax.inject.Inject
-import javax.inject.Provider
 
 @PerApplication
 class RealmFavoritedRepo @Inject

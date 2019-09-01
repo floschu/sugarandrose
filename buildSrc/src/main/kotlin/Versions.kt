@@ -50,8 +50,6 @@ object Versions {
 
     const val google_services: String = "4.3.1"
 
-    const val picasso2_okhttp3_downloader: String = "1.1.0"
-
     const val threetenabp: String = "1.2.1"
 
     const val timber: String = "4.7.1"
@@ -67,8 +65,6 @@ object Versions {
     const val com_squareup_leakcanary: String = "1.6.3"
 
     const val com_squareup_okhttp3: String = "4.1.0"
-
-    const val picasso: String = "2.71828"
 
     const val com_squareup_retrofit2: String = "2.6.1"
 

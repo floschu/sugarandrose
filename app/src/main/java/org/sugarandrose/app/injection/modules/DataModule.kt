@@ -28,5 +28,4 @@ abstract class DataModule {
 
     @Binds
     internal abstract fun bindPrefRepo(repo: SharedPrefRepo): PrefRepo
-
 }

@@ -1,11 +1,9 @@
 package org.sugarandrose.app.ui.base.viewmodel
 
-import androidx.databinding.BaseObservable
 import android.os.Bundle
-
-import org.sugarandrose.app.ui.base.view.MvvmView
-
+import androidx.databinding.BaseObservable
 import javax.inject.Inject
+import org.sugarandrose.app.ui.base.view.MvvmView
 
 /* Copyright 2016 Patrick Löwenstein
  *
@@ -34,5 +32,4 @@ constructor() : BaseObservable(), MvvmViewModel<V> {
     override fun saveInstanceState(outState: Bundle?) {}
 
     override fun detachView() {}
-
 }

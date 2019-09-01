@@ -1,23 +1,19 @@
 package org.sugarandrose.app.ui.categories
 
-import com.google.gson.annotations.Until
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
 import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.data.model.remote.Category
 import org.sugarandrose.app.data.remote.SugarAndRoseApi
 import org.sugarandrose.app.injection.scopes.PerApplication
-import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
  * florian.schuster@tailored-apps.com
  */
-
 
 @PerApplication
 class CategoriesCacheManager @Inject

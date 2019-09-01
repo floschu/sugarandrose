@@ -1,7 +1,8 @@
 package org.sugarandrose.app.ui.more.recyclerview
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalMore
 import org.sugarandrose.app.data.model.LocalMoreHeader
@@ -10,8 +11,6 @@ import org.sugarandrose.app.data.model.LocalMorePage
 import org.sugarandrose.app.injection.scopes.PerFragment
 import org.sugarandrose.app.util.NotifyDatasetChangedDelegate
 import org.sugarandrose.app.util.Utils
-import javax.inject.Inject
-
 
 /**
  * Created by Florian Schuster

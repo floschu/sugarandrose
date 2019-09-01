@@ -14,10 +14,10 @@
 
 package org.sugarandrose.app.ui.base.feedback
 
-import androidx.annotation.StringRes
-import androidx.fragment.app.FragmentActivity
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 
 open class ActivitySnacker(val activity: FragmentActivity) : Snacker {
@@ -30,7 +30,6 @@ open class ActivitySnacker(val activity: FragmentActivity) : Snacker {
 
     override fun show(title: CharSequence, actionText: CharSequence, action: () -> Unit) = showInternal(title, action, actionText)
     override fun show(titleRes: Int, actionTextRes: Int, action: () -> Unit) = showInternal(activity.getString(titleRes), action, activity.getString(actionTextRes))
-
 
     private fun showInternal(title: CharSequence, action: (() -> Unit)?, actionText: CharSequence?) {
         hideSnack()

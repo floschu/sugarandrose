@@ -5,6 +5,7 @@ import android.view.MenuItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalCategory
 import org.sugarandrose.app.databinding.ActivityCategoryDetailBinding
@@ -19,7 +20,6 @@ import org.sugarandrose.app.ui.categories.recyclerview.CategoriesAdapter
 import org.sugarandrose.app.ui.displayitems.PagedPostLoadingManager
 import org.sugarandrose.app.ui.displayitems.recyclerview.DisplayItemAdapter
 import org.sugarandrose.app.util.manager.ErrorManager
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -77,8 +77,9 @@ class CategoryDetailActivity : BaseActivity<ActivityCategoryDetailBinding, Categ
 
 @PerActivity
 class CategoryDetailViewModel @Inject
-constructor(@ActivityDisposable private val disposable: CompositeDisposable,
-            private val errorManager: ErrorManager
+constructor(
+    @ActivityDisposable private val disposable: CompositeDisposable,
+    private val errorManager: ErrorManager
 ) : BaseViewModel<CategoryDetailMvvm.View>(), CategoryDetailMvvm.ViewModel {
 
     override val adapterCategories: CategoriesAdapter = CategoriesAdapter()

@@ -5,7 +5,11 @@ import org.sugarandrose.app.injection.modules.ViewHolderModule
 import org.sugarandrose.app.injection.modules.ViewModelModule
 import org.sugarandrose.app.injection.scopes.PerViewHolder
 import org.sugarandrose.app.ui.categories.recyclerview.CategoryItemViewHolder
-import org.sugarandrose.app.ui.displayitems.recyclerview.*
+import org.sugarandrose.app.ui.displayitems.recyclerview.LoadingViewHolder
+import org.sugarandrose.app.ui.displayitems.recyclerview.LocalDisplayHeaderViewHolder
+import org.sugarandrose.app.ui.displayitems.recyclerview.MediaItemViewHolder
+import org.sugarandrose.app.ui.displayitems.recyclerview.PostItemViewHolder
+import org.sugarandrose.app.ui.displayitems.recyclerview.RoseItemViewHolder
 
 /* Copyright 2017 Tailored Media GmbH
  *

@@ -3,10 +3,10 @@ package org.sugarandrose.app.util.manager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import javax.inject.Inject
 import org.sugarandrose.app.injection.qualifier.ActivityContext
 import org.sugarandrose.app.injection.scopes.PerActivity
 import org.sugarandrose.app.ui.base.navigator.Navigator
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
@@ -15,9 +15,10 @@ import javax.inject.Inject
 
 @PerActivity
 class SocialMediaManager @Inject
-constructor(@ActivityContext private val context: Context,
-            private val navigator: Navigator,
-            private val webManager: WebManager
+constructor(
+    @ActivityContext private val context: Context,
+    private val navigator: Navigator,
+    private val webManager: WebManager
 ) {
 
     fun openFacebook(name: String, id: String) {

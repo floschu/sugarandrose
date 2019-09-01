@@ -16,7 +16,6 @@ package org.sugarandrose.app.util.bindingadapters
 
 import android.app.Activity
 import android.content.Intent
-import androidx.databinding.BindingMethod
 import android.text.Html
 import android.view.View
 import android.webkit.WebView
@@ -26,6 +25,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.BindingAdapter
+import androidx.databinding.BindingMethod
 import androidx.databinding.BindingMethods
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -123,7 +123,8 @@ object BindingAdapters {
     @BindingAdapter("visibleThreshold", "onScrolledToBottom", "resetLoadingState")
     @JvmStatic
     fun setRecyclerViewScrollCallback(
-        recyclerView: RecyclerView, visibleThreshold: Int,
+        recyclerView: RecyclerView,
+        visibleThreshold: Int,
         onScrolledListener: RecyclerViewScrollCallback.OnScrolledListener,
         resetLoadingState: Boolean
     ) {

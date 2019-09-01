@@ -40,9 +40,7 @@ import org.sugarandrose.app.util.manager.NotificationsManager
  * FILE MODIFIED 2017 Tailored Media GmbH */
 @PerApplication
 @Component(modules = arrayOf(AppModule::class, NetModule::class, DataModule::class))
-interface AppComponent : AppComponentProvides {
-
-}
+interface AppComponent : AppComponentProvides
 
 interface AppComponentProvides {
     @AppContext

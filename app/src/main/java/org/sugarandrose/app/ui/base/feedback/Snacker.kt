@@ -16,7 +16,6 @@ package org.sugarandrose.app.ui.base.feedback
 
 import androidx.annotation.StringRes
 
-
 interface Snacker {
 
     fun show(title: CharSequence)
@@ -26,5 +25,4 @@ interface Snacker {
     fun show(@StringRes titleRes: Int, @StringRes actionTextRes: Int, action: (() -> Unit))
 
     fun hideSnack()
-
 }

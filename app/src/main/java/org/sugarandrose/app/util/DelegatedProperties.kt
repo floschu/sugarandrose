@@ -22,7 +22,7 @@ import kotlin.reflect.KProperty
 /**
  *  Delegated property that calls notifyChange() every time the property get's changed.
  */
-class NotifyChangeDelegate<T>(private var value: T) : ReadWriteProperty<BaseObservable,T>{
+class NotifyChangeDelegate<T>(private var value: T) : ReadWriteProperty<BaseObservable, T> {
     override fun getValue(thisRef: BaseObservable, property: KProperty<*>): T {
         return value
     }
@@ -53,7 +53,7 @@ class NotifyPropertyChangedDelegate<T>(private var value: T, private val propert
  *  Delegated property that calls notifyDataSetChanged() every time the property get's changed.
  */
 class NotifyDatasetChangedDelegate<T>(private var value: T) : ReadWriteProperty<RecyclerView.Adapter<*>, T> {
-    override fun getValue(thisRef: RecyclerView.Adapter<*>, property: KProperty<*>): T =  value
+    override fun getValue(thisRef: RecyclerView.Adapter<*>, property: KProperty<*>): T = value
 
     override fun setValue(thisRef: RecyclerView.Adapter<*>, property: KProperty<*>, value: T) {
         if (this.value != value) {

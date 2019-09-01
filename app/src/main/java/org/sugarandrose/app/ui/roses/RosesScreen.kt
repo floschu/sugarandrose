@@ -1,12 +1,13 @@
 package org.sugarandrose.app.ui.roses
 
-import androidx.databinding.Bindable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.Bindable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
+import javax.inject.Inject
 import org.sugarandrose.app.BR
 import org.sugarandrose.app.R
 import org.sugarandrose.app.databinding.FragmentRosesBinding
@@ -19,8 +20,6 @@ import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.ui.displayitems.recyclerview.FastScrollDisplayItemAdapter
 import org.sugarandrose.app.util.NotifyPropertyChangedDelegate
 import timber.log.Timber
-import javax.inject.Inject
-
 
 /**
  * Created by Florian Schuster
@@ -38,7 +37,6 @@ interface RosesMvvm {
     }
 }
 
-
 class RosesFragment : BaseFragment<FragmentRosesBinding, RosesMvvm.ViewModel>(), RosesMvvm.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -47,11 +45,11 @@ class RosesFragment : BaseFragment<FragmentRosesBinding, RosesMvvm.ViewModel>(),
     }
 }
 
-
 @PerFragment
 class RosesViewModel @Inject
-constructor(@FragmentDisposable private val disposable: CompositeDisposable,
-            private val rosesCacheManager: RosesCacheManager
+constructor(
+    @FragmentDisposable private val disposable: CompositeDisposable,
+    private val rosesCacheManager: RosesCacheManager
 ) : BaseViewModel<RosesMvvm.View>(), RosesMvvm.ViewModel {
     override var refreshing: Boolean by NotifyPropertyChangedDelegate(true, BR.refreshing)
 

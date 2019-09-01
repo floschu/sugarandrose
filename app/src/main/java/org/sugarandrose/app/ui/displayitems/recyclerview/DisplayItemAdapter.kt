@@ -1,11 +1,14 @@
 package org.sugarandrose.app.ui.displayitems.recyclerview
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import org.sugarandrose.app.R
-import org.sugarandrose.app.data.model.*
+import org.sugarandrose.app.data.model.LocalDisplayHeader
+import org.sugarandrose.app.data.model.LocalDisplayItem
+import org.sugarandrose.app.data.model.LocalMedia
+import org.sugarandrose.app.data.model.LocalPost
+import org.sugarandrose.app.data.model.LocalRose
 import org.sugarandrose.app.util.Utils
-
 
 /**
  * Created by Florian Schuster

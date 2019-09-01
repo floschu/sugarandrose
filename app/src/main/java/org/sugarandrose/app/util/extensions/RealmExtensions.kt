@@ -16,13 +16,12 @@ package org.sugarandrose.app.util.extensions
 
 import io.realm.Realm
 import io.realm.RealmModel
-import org.threeten.bp.ZonedDateTime
-import org.threeten.bp.format.DateTimeFormatter
-import timber.log.Timber
 import java.io.Closeable
 import javax.inject.Provider
 import kotlin.reflect.KMutableProperty1
-
+import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
+import timber.log.Timber
 
 inline fun <T : Closeable?, R> Provider<T>.use(consumer: (T) -> R): R = get().use(consumer)
 

@@ -1,8 +1,8 @@
 package org.sugarandrose.app.injection.modules
 
 import android.content.Context
-import androidx.fragment.app.FragmentManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
@@ -54,7 +54,6 @@ class ActivityModule(private val activity: AppCompatActivity) {
     @Provides
     @PerActivity
     internal fun provideSnacker(): Snacker = ActivitySnacker(activity)
-
 
     @Provides
     @PerActivity

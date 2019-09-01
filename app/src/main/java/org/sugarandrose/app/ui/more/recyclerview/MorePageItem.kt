@@ -1,6 +1,7 @@
 package org.sugarandrose.app.ui.more.recyclerview
 
 import android.view.View
+import javax.inject.Inject
 import org.sugarandrose.app.R
 import org.sugarandrose.app.data.model.LocalMorePage
 import org.sugarandrose.app.databinding.ItemMoreGridBinding
@@ -10,7 +11,6 @@ import org.sugarandrose.app.ui.base.view.MvvmView
 import org.sugarandrose.app.ui.base.viewmodel.BaseViewModel
 import org.sugarandrose.app.ui.base.viewmodel.MvvmViewModel
 import org.sugarandrose.app.util.manager.WebManager
-import javax.inject.Inject
 
 /**
  * Created by Florian Schuster
