@@ -3,7 +3,6 @@ package org.sugarandrose.app.ui.displayitems.recyclerview
 import androidx.recyclerview.widget.RecyclerView
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView
 import org.sugarandrose.app.R
-import org.sugarandrose.app.SugarAndRoseApp
 import org.sugarandrose.app.data.model.LocalDisplayHeader
 import org.sugarandrose.app.data.model.LocalDisplayItem
 
